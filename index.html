@@ -3,127 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Mangrove Pollen Guide</title>
-
+    <meta name="description" content="Explore 17 mangrove species and identify pollen with an interactive dichotomous key.">
+    <meta name="theme-color" content="#244c3d">
+    <title>Mangrove Pollen Guide</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
 </head>
-    <style> 
-    h1 {
-        text-align: center;
-    }
-
-    .species-images {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 20px;
-        max-width: 900px;
-    }
-
-    .image-card img {
-        width: 90%;
-        height: 300px;
-        object-fit: contain;
-        cursor: zoom-in;
-        border-radius: 8px;
-        background: #f2f2f2;
-    }
-
-    .image-modal {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.9);
-        z-index: 9999;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-    }
-
-    .image-modal.active {
-        display: flex;
-    }
-
-    .image-modal img {
-        max-width:  90%;
-        max-height: 90%;
-        object-fit: contain;
-    }
-
-    .close-modal {
-        position: absolute;
-        top: 15px;
-        right: 25px;
-        color: white;
-        font-size: 35px;
-        background: none;
-        border: none;
-        cursor: pointer;
-    }
-
-    @media (max-width: 600px) {
-        .species-images {
-            grid-template-columns: 1fr;
-        }
-    }
-</style>    
-    
-
-</head>
-
 <body>
-
-    <h1>Mangrove Pollen Guide</h1> </p> Ebuenga & Imperial | BS Biology | A.Y 2026-2027</p>
-    
-    
-    <p>
-        Palynology is the study of spores and plant pollen grains.
-        It provides information relevant to airborne allergies,
-        ecosystem changes due to global warming, and bee forage.
-        This guide examines the pollen morphology of mangrove species
-        to identify and characterize their pollen features.
-    </p>
-
-    <!-- SECTION 1: SPECIES EXPLORER -->
-    <section id="species-explorer">
-
-        <h2> Mangrove Species</h2>
-
-        <p>
-            Whole-plant and flower characteristics.
-        </p>
-
-        <div id="species-list"></div>
-
-        <div id="species-profile"></div>
-
-    </section>
-
-    <hr>
-
-    <!-- SECTION 2: DICHOTOMOUS KEY -->
-    <section id="dichotomous-key">
-
-        <h2> Dichotomous Key</h2>
-
-        <p>
-            A dichotomous key is a tool used to identify a wide
-            variety of living organisms and non-living objects.
-            It consists of paired statements describing and contrasting
-            physical features or observable characteristics, providing
-            a step-by-step guide toward identification.
-        </p>
-
-        <p>
-            Select the lead that best describes your pollen sample.
-        </p>
-
-        <div id="key-container"></div>
-
-    </section>
-<div id="image-modal" class="image-modal">
-    <button id="close-modal" class="close-modal">&times;</button>
-    <img id="modal-image" src="" alt="Enlarged photograph">
-</div>
-    <script src="script.js"></script>
-
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header"><div class="header-inner wrap">
+        <a class="brand" href="#" aria-label="Mangrove Pollen Guide home">
+            <svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 33V16M20 25C7 26 6 15 7 9c8 0 14 4 13 16ZM20 20C20 8 28 6 34 6c0 8-4 15-14 14Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="m12 15 8 10M28 12l-8 8" stroke="currentColor" stroke-width="1.3"/></svg>
+            <span>Mangrove <span class="brand-light">/ Pollen Guide</span></span>
+        </a>
+        <nav aria-label="Main navigation"><a href="#species-explorer">Species explorer</a><a href="#dichotomous-key">Identification key <span aria-hidden="true">↗</span></a><a href="#about">About</a></nav>
+    </div></header>
+    <main id="main">
+        <section class="hero wrap" aria-labelledby="page-title">
+            <div class="hero-copy">
+                <p class="eyebrow"><span class="status-dot"></span> A field guide to palynology</p>
+                <h1 id="page-title">Mangrove<br><em>Pollen Guide</em></h1>
+                <p class="hero-description">A closer look at coastal life. Explore mangrove species and the microscopic features that tell them apart.</p>
+                <div class="hero-actions"><a class="button button-primary" href="#species-explorer">Explore the species <span aria-hidden="true">↗</span></a><a class="text-link" href="#dichotomous-key">Identify a sample <span aria-hidden="true">→</span></a></div>
+                <p class="hero-credit">Ebuenga &amp; Imperial <span>·</span> BS Biology <span>·</span> A.Y. 2026–2027</p>
+            </div>
+            <figure class="hero-image">
+                <img src="plant_images/plant_rhizophora_stylosa.jpg" alt="Rhizophora stylosa mangroves with branching prop roots in coastal water" fetchpriority="high">
+                <div class="image-label">From the field</div>
+                <figcaption><span><i>Rhizophora stylosa</i><small>Rhizophoraceae</small></span><span class="figure-number">Species / 11</span></figcaption>
+            </figure>
+        </section>
+        <div class="guide-strip wrap" aria-label="Guide overview">
+            <span><strong>17</strong> mangrove species</span>
+            <span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 19V5h16v14H4Zm0-4 5-5 4 4 3-3 4 4M15 8h.01" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> Plant, flower &amp; pollen photographs</span>
+            <span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v7m0 0H5v10m7-10h7v10M2 20h6m8 0h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Step-by-step identification</span>
+        </div>
+        <section id="species-explorer" class="explorer wrap section-space" aria-labelledby="species-heading">
+            <div class="section-heading"><div><p class="eyebrow">01 / The collection</p><h2 id="species-heading">Meet the mangroves</h2></div><p>Explore whole-plant, flower, and pollen characteristics.<br>Select a species to take a closer look.</p></div>
+            <div class="explorer-layout">
+                <aside class="species-sidebar" aria-label="Choose a mangrove species">
+                    <label class="search-field" for="species-search"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.6"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input type="search" id="species-search" placeholder="Search species…" aria-label="Search mangrove species" autocomplete="off"></label>
+                    <div class="list-heading"><span>Scientific name</span><span id="species-count" role="status">17 species</span></div>
+                    <div id="species-list" class="species-list"></div>
+                    <p class="sidebar-note">Names are arranged alphabetically.</p>
+                </aside>
+                <article id="species-profile" class="species-profile" aria-label="Selected species"></article>
+            </div>
+            <noscript><p>Enable JavaScript to browse the species photographs and use the interactive identification key.</p></noscript>
+        </section>
+        <section id="dichotomous-key" class="key-section" aria-labelledby="key-heading">
+            <div class="key-layout wrap">
+                <div class="key-intro"><p class="eyebrow">02 / The identification tool</p><h2 id="key-heading">One observation.<br>Two possibilities.</h2><p>Follow the dichotomous key to identify your pollen sample. At each step, choose the statement that best describes what you observe.</p><div class="key-tip"><span aria-hidden="true">↳</span><p>Look closely at the aperture, shape, surface pattern, and size of your pollen grain.</p></div></div>
+                <div id="key-container" class="key-card" aria-label="Interactive dichotomous key"></div>
+            </div>
+        </section>
+        <section id="about" class="about-section wrap" aria-labelledby="about-heading">
+            <div><p class="eyebrow">The science behind the guide</p><h2 id="about-heading">Small grains.<br>A wider perspective.</h2></div>
+            <div><p>Palynology is the study of spores and plant pollen grains. It provides information relevant to airborne allergies, ecosystem changes due to global warming, and bee forage.</p><p>This guide examines the pollen morphology of mangrove species to identify and characterize their pollen features.</p></div>
+        </section>
+    </main>
+    <footer class="site-footer wrap"><span>Mangrove Pollen Guide</span><p>Ebuenga &amp; Imperial · BS Biology · A.Y. 2026–2027</p><a href="#">Back to top ↑</a></footer>
+    <dialog id="image-modal" class="image-modal" aria-labelledby="modal-caption">
+        <button id="close-modal" class="close-modal" type="button" aria-label="Close enlarged photograph">×</button>
+        <figure><img id="modal-image" alt=""><figcaption id="modal-caption"></figcaption></figure>
+    </dialog>
 </body>
 </html>

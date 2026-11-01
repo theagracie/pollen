@@ -178,264 +178,227 @@ const keyData = {
 };
 
 let screenHistory = [];
+const keyContainer = document.getElementById("key-container");
+
+function keyControls() {
+    return `<div class="key-controls">
+        <button type="button" data-key-action="back" ${screenHistory.length ? "" : "disabled"}>← Previous step</button>
+        <button type="button" data-key-action="restart">↻ Start over</button>
+    </div>`;
+}
+
+function focusKeyHeading() {
+    keyContainer.querySelector("[tabindex]").focus({ preventScroll: true });
+}
 
 function showCouplet(number) {
     const couplet = keyData[number];
-    const container = document.getElementById("key-container");
-
-    if (!couplet) {
-        container.innerHTML = "<p>Couplet not found.</p>";
-        return;
-    }
-
-    container.innerHTML = `
-        <h3>Couplet ${number}</h3>
-
-        <button onclick="chooseLead('A', ${number})">
-            ${number}a. ${couplet.leadA.text}
-        </button>
-
-        <br><br>
-
-        <button onclick="chooseLead('B', ${number})">
-            ${number}b. ${couplet.leadB.text}
-        </button>
-
-        <br><br>
-
-        ${screenHistory.length > 0
-            ? '<button onclick="goBack()">Back</button>'
-            : ''
-        }
-
-        <button onclick="restartKey()">Start Over</button>
-    `;
+    if (!couplet) return;
+    keyContainer.innerHTML = `
+        <div class="key-card-top"><span class="eyebrow">Dichotomous key</span><span class="step-label">Step ${screenHistory.length + 1}</span></div>
+        <h3 tabindex="-1">Couplet ${number}</h3>
+        <p class="key-instruction">Which statement describes your sample?</p>
+        ${["A", "B"].map(lead => `<button type="button" class="lead-button" data-lead="${lead}" data-couplet="${number}">
+            <span class="lead-letter">${number}${lead.toLowerCase()}</span>
+            <span>${couplet["lead" + lead].text}</span><span aria-hidden="true">→</span>
+        </button>`).join("")}
+        ${keyControls()}`;
 }
 
 function chooseLead(lead, number) {
-    const couplet = keyData[number];
-
-    const selected = lead === "A"
-        ? couplet.leadA
-        : couplet.leadB;
-
+    const selected = keyData[number]["lead" + lead];
     screenHistory.push(number);
-
-    const container = document.getElementById("key-container");
-
     if (selected.result) {
-        container.innerHTML = `
-            <h3>Identification Result</h3>
-
-            <h2><i>${selected.result}</i></h2>
-
-            <button onclick="goBack()">Back</button>
-            <button onclick="restartKey()">Start Over</button>
-        `;
+        keyContainer.innerHTML = `
+            <div class="key-card-top"><span class="eyebrow">Identification result</span><span class="step-label">${screenHistory.length} observation${screenHistory.length === 1 ? "" : "s"}</span></div>
+            <h3 tabindex="-1">Your key leads to</h3>
+            <p class="result-name">${selected.result}</p>
+            <a href="#species-profile" class="button button-primary result-link" data-result="${selected.result}">Explore this species <span aria-hidden="true">↗</span></a>
+            ${keyControls()}`;
     } else {
         showCouplet(selected.next);
     }
+    focusKeyHeading();
 }
 
 function goBack() {
-    if (screenHistory.length > 0) {
-        const previousCouplet = screenHistory.pop();
-        showCouplet(previousCouplet);
+    if (screenHistory.length) {
+        showCouplet(screenHistory.pop());
+        focusKeyHeading();
     }
 }
 
 function restartKey() {
     screenHistory = [];
     showCouplet(1);
+    focusKeyHeading();
 }
 
-showCouplet(1);
+keyContainer.addEventListener("click", event => {
+    const choice = event.target.closest("[data-lead]");
+    const action = event.target.closest("[data-key-action]");
+    const result = event.target.closest("[data-result]");
+    if (choice) chooseLead(choice.dataset.lead, Number(choice.dataset.couplet));
+    if (action?.dataset.keyAction === "back") goBack();
+    if (action?.dataset.keyAction === "restart") restartKey();
+    if (result) {
+        speciesSearch.value = "";
+        showSpecies(result.dataset.result);
+        renderSpeciesList();
+        document.getElementById("pollen-detail").open = true;
+        document.getElementById("profile-name").focus({ preventScroll: true });
+    }
+});
 
 const mangroveSpecies = [
-    "Nypa fruticans",
-    "Sonneratia alba",
-    "Excoecaria agallocha",
-    "Lumnitzera racemosa",
-    "Lumnitzera littorea",
-    "Pemphis acidula",
-    "Avicennia marina",
-    "Ceriops decandra",
-    "Xylocarpus granatum",
-    "Acanthus ilicifolius",
-    "Rhizophora stylosa",
-    "Rhizophora mucronata",
-    "Ceriops tagal",
-    "Bruguiera gymnorhiza",
-    "Avicennia rumphiana",
-    "Scyphiphora hydrophyllacea",
-    "Rhizophora apiculata"
+    "Nypa fruticans", "Sonneratia alba", "Excoecaria agallocha",
+    "Lumnitzera racemosa", "Lumnitzera littorea", "Pemphis acidula",
+    "Avicennia marina", "Ceriops decandra", "Xylocarpus granatum",
+    "Acanthus ilicifolius", "Rhizophora stylosa", "Rhizophora mucronata",
+    "Ceriops tagal", "Bruguiera gymnorhiza", "Avicennia rumphiana",
+    "Scyphiphora hydrophyllacea", "Rhizophora apiculata"
 ];
-
-
-const speciesList = document.getElementById("species-list");
-const speciesProfile = document.getElementById("species-profile");
-
-// Arrange species alphabetically
+// Figure numbers follow the original identification key, before alphabetical sorting.
+const speciesFigures = Object.fromEntries(mangroveSpecies.map((species, index) => [species, index + 1]));
 mangroveSpecies.sort((a, b) => a.localeCompare(b));
-
-// Automatically create image filenames from species names
-function getImagePath(species, type) {
-    const speciesName = species
-        .toLowerCase()
-        .replace(/\s+/g, "_");
-
-    return `${type}_images/${type}_${speciesName}.jpg`;
-}
 
 const speciesFamilies = {
     "Rhizophora mucronata": "Rhizophoraceae",
     "Rhizophora stylosa": "Rhizophoraceae"
 };
-let selectedSpecies = null;
-// Generate the clickable species list
-mangroveSpecies.forEach(species => {
+// Preserve the original asset filenames, including spelling and extension differences.
+const imageOverrides = {
+    "plant:Ceriops tagal": "plant_images/plant_ceriops_tagal.jpeg",
+    "flower:Ceriops tagal": "flower_images/flower_ceriops_tagal.jpeg",
+    "plant:Xylocarpus granatum": "plant_images/plant_xylocarpus_granatum.jpeg",
+    "plant:Rhizophora apiculata": "plant_images/plant_rhizophora_acpiculata.jpg",
+    "flower:Avicennia rumphiana": "flower_images/flower_aviccenia_rumphiana.jpg"
+};
 
-    const button = document.createElement("button");
-
-    button.textContent = species;
-    button.style.margin = "5px";
-
-    button.addEventListener("click", function () {
-
-        const plantPath = getImagePath(species, "plant");
-        const flowerPath = getImagePath(species, "flower");
-
-       
-speciesProfile.innerHTML = `
-    <hr>
-
-    <h3><i>${species}</i></h3>
-
-    <!-- FIRST DROPDOWN -->
-    <details class="photo-toggle">
-
-        <summary>Plant and Flower Photographs</summary>
-
-        <div class="species-images">
-
-            <div class="image-card">
-                <h4>Whole Plant</h4>
-                <img id="plant-photo"
-                     src="${plantPath}"
-                     alt="Whole plant of ${species}">
-            </div>
-
-            <div class="image-card">
-                <h4>Flower</h4>
-                <img id="flower-photo"
-                     src="${flowerPath}"
-                     alt="Flower of ${species}">
-            </div>
-
-        </div>
-
-    </details>
-
-    <!-- SECOND DROPDOWN: PUT IT HERE -->
-    <details class="taxonomy-toggle">
-
-        <summary>Taxonomic Classification</summary>
-
-        <table>
-            <tr>
-                <th>Family</th>
-                <td>${speciesFamilies[species] || "Not yet entered"}</td>
-            </tr>
-            <tr>
-                <th>Genus</th>
-                <td><i>${species.split(" ")[0]}</i></td>
-            </tr>
-            <tr>
-                <th>Species</th>
-                <td><i>${species}</i></td>
-            </tr>
-        </table>
-
-    </details>
-
-`;
-
-        const plantPhoto = document.getElementById("plant-photo");
-        const flowerPhoto = document.getElementById("flower-photo");
-
-        plantPhoto.addEventListener("click", function () {
-            openImageModal(plantPath, `Whole plant of ${species}`);
-        });
-
-        flowerPhoto.addEventListener("click", function () {
-            openImageModal(flowerPath, `Flower of ${species}`);
-        });
-
-        plantPhoto.onerror = function () {
-            this.replaceWith("Whole-plant photograph not available.");
-        };
-
-        flowerPhoto.onerror = function () {
-            this.replaceWith("Flower photograph not available.");
-        };
-
-    }); // Closes the button click event
-
-    speciesList.appendChild(button);
-
-}); // Closes the species list loop
-
-
-// IMAGE ENLARGEMENT FUNCTIONS
-
-function openImageModal(imagePath, description) {
-    const modal = document.getElementById("image-modal");
-    const modalImage = document.getElementById("modal-image");
-
-    if (!modal || !modalImage) {
-        console.error("Image modal was not found in index.html.");
-        return;
-    }
-
-    modalImage.src = imagePath;
-    modalImage.alt = description;
-
-    modal.classList.add("active");
+function getImagePath(species, type) {
+    return imageOverrides[`${type}:${species}`] ||
+        `${type}_images/${type}_${species.toLowerCase().replace(/\s+/g, "_")}.jpg`;
 }
 
-
-function closeImageModal() {
-    const modal = document.getElementById("image-modal");
-
-    if (modal) {
-        modal.classList.remove("active");
-    }
+function getPollenPath(figure, view) {
+    if (figure === 10 && view === "a") return "pollen_images/FIg-10a.JPG";
+    if (figure === 13 && view === "b") return "pollen_images/Fig-13b.jpeg";
+    return `pollen_images/Fig-${figure}${view}.JPG`;
 }
 
+const speciesList = document.getElementById("species-list");
+const speciesProfile = document.getElementById("species-profile");
+const speciesSearch = document.getElementById("species-search");
+let selectedSpecies = "Avicennia marina";
 
-// Close using the X button
-const closeButton = document.getElementById("close-modal");
-
-if (closeButton) {
-    closeButton.addEventListener("click", closeImageModal);
-}
-
-
-// Close by clicking outside the photograph
-const imageModal = document.getElementById("image-modal");
-
-if (imageModal) {
-    imageModal.addEventListener("click", function(event) {
-        if (event.target === this) {
-            closeImageModal();
-        }
+function renderSpeciesList() {
+    const query = speciesSearch.value.trim().toLowerCase();
+    const matches = mangroveSpecies.filter(species => species.toLowerCase().includes(query));
+    speciesList.replaceChildren();
+    document.getElementById("species-count").textContent = `${matches.length} species`;
+    matches.forEach(species => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "species-button";
+        button.setAttribute("aria-pressed", String(species === selectedSpecies));
+        button.dataset.species = species;
+        button.textContent = species;
+        const arrow = document.createElement("span");
+        arrow.setAttribute("aria-hidden", "true");
+        arrow.textContent = "→";
+        button.appendChild(arrow);
+        speciesList.appendChild(button);
     });
+    if (!matches.length) {
+        const message = document.createElement("p");
+        message.className = "empty-state";
+        message.textContent = "No species found. Try a different scientific name.";
+        speciesList.appendChild(message);
+    }
+    speciesList.scrollTop = 0;
 }
 
+function photoCard(path, description, title, reference, lazy = false) {
+    return `<figure class="image-card">
+        <button type="button" class="photo-button" data-image="${path}" data-description="${description}" aria-label="Enlarge: ${description}">
+            <img src="${path}" alt="${description}" ${lazy ? 'loading="lazy"' : ""}>
+            <span class="zoom-hint" aria-hidden="true">⤢</span>
+        </button>
+        <figcaption>${title}<span>${reference}</span></figcaption>
+    </figure>`;
+}
 
-// Close by pressing Escape
-document.addEventListener("keydown", function(event) {
-    if (event.key === "Escape") {
-        closeImageModal();
-    }
+function showSpecies(species) {
+    selectedSpecies = species;
+    speciesList.querySelectorAll("[data-species]").forEach(button => {
+        button.setAttribute("aria-pressed", String(button.dataset.species === species));
+    });
+    const figure = speciesFigures[species];
+    speciesProfile.innerHTML = `
+        <div class="profile-heading"><div><p class="eyebrow">Species profile / ${String(figure).padStart(2, "0")}</p>
+            <h3 id="profile-name" tabindex="-1">${species}</h3></div><span class="specimen-tag">Mangrove collection</span></div>
+        <div class="species-images">
+            ${photoCard(getImagePath(species, "plant"), `Whole plant of ${species}`, "Whole plant", "Field photograph")}
+            ${photoCard(getImagePath(species, "flower"), `Flower of ${species}`, "Flower", "Detail photograph")}
+        </div>
+        <p class="photo-note">Select a photograph to view it in full. Images retain their original proportions.</p>
+        <details id="pollen-detail" class="profile-detail"><summary>Pollen photographs</summary>
+            <div class="species-images pollen-photos">
+                ${photoCard(getPollenPath(figure, "a"), `Pollen of ${species}, figure ${figure}a`, "Pollen grain", `Fig. ${figure}a`, true)}
+                ${photoCard(getPollenPath(figure, "b"), `Pollen of ${species}, figure ${figure}b`, "Pollen grain", `Fig. ${figure}b`, true)}
+            </div>
+        </details>
+        <details class="profile-detail"><summary>Taxonomic classification</summary>
+            <table aria-label="Taxonomic classification of ${species}"><tbody>
+                <tr><th scope="row">Family</th><td>${speciesFamilies[species] || "Not yet entered"}</td></tr>
+                <tr><th scope="row">Genus</th><td><i>${species.split(" ")[0]}</i></td></tr>
+                <tr><th scope="row">Species</th><td><i>${species}</i></td></tr>
+            </tbody></table>
+        </details>`;
+}
+
+speciesSearch.addEventListener("input", renderSpeciesList);
+speciesList.addEventListener("click", event => {
+    const button = event.target.closest("[data-species]");
+    if (button) showSpecies(button.dataset.species);
 });
+
+speciesProfile.addEventListener("click", event => {
+    const photo = event.target.closest("[data-image]");
+    if (photo) openImageModal(photo.dataset.image, photo.dataset.description);
+});
+// Capture image errors, including cached failures, without leaving a broken image button.
+speciesProfile.addEventListener("error", event => {
+    if (event.target.tagName !== "IMG") return;
+    const fallback = document.createElement("p");
+    fallback.className = "unavailable-photo";
+    fallback.textContent = "Photograph not available.";
+    event.target.closest(".photo-button").replaceWith(fallback);
+}, true);
+
+const imageModal = document.getElementById("image-modal");
+function openImageModal(path, description) {
+    const image = document.getElementById("modal-image");
+    image.src = path;
+    image.alt = description;
+    document.getElementById("modal-caption").textContent = description;
+    imageModal.showModal();
+    document.documentElement.classList.add("modal-open");
+}
+function closeImageModal() {
+    imageModal.close();
+}
+document.getElementById("close-modal").addEventListener("click", closeImageModal);
+imageModal.addEventListener("click", event => {
+    if (event.target !== imageModal) return;
+    const bounds = imageModal.getBoundingClientRect();
+    if (event.clientX < bounds.left || event.clientX > bounds.right ||
+        event.clientY < bounds.top || event.clientY > bounds.bottom) closeImageModal();
+});
+imageModal.addEventListener("close", () => {
+    document.documentElement.classList.remove("modal-open");
+});
+
+renderSpeciesList();
+showSpecies(selectedSpecies);
+showCouplet(1);
