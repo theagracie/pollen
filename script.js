@@ -177,6 +177,163 @@ const keyData = {
     }
 };
 
+const pollenMorphologyData = {
+
+    "Nypa fruticans": {
+        morphologicType: "",
+        surfacePattern: "",
+        polarSizeRange: "",
+        equatorialSizeRange: "",
+        apertureCount: "",
+        dispersalForm: ""
+    },
+
+    "Sonneratia alba": {
+        morphologicType: "",
+        surfacePattern: "",
+        polarSizeRange: "",
+        equatorialSizeRange: "",
+        apertureCount: "",
+        dispersalForm: ""
+    },
+
+    "Excoecaria agallocha": {
+        morphologicType: "",
+        surfacePattern: "",
+        polarSizeRange: "",
+        equatorialSizeRange: "",
+        apertureCount: "",
+        dispersalForm: ""
+    },
+
+    "Lumnitzera racemosa": {
+        morphologicType: "",
+        surfacePattern: "",
+        polarSizeRange: "",
+        equatorialSizeRange: "",
+        apertureCount: "",
+        dispersalForm: ""
+    },
+
+    "Lumnitzera littorea": {
+        morphologicType: "",
+        surfacePattern: "",
+        polarSizeRange: "",
+        equatorialSizeRange: "",
+        apertureCount: "",
+        dispersalForm: ""
+    },
+
+    "Pemphis acidula": {
+        morphologicType: "",
+        surfacePattern: "",
+        polarSizeRange: "",
+        equatorialSizeRange: "",
+        apertureCount: "",
+        dispersalForm: ""
+    },
+
+    "Avicennia marina": {
+        morphologicType: "",
+        surfacePattern: "",
+        polarSizeRange: "",
+        equatorialSizeRange: "",
+        apertureCount: "",
+        dispersalForm: ""
+    },
+
+    "Ceriops decandra": {
+        morphologicType: "",
+        surfacePattern: "",
+        polarSizeRange: "",
+        equatorialSizeRange: "",
+        apertureCount: "",
+        dispersalForm: ""
+    },
+
+    "Xylocarpus granatum": {
+        morphologicType: "",
+        surfacePattern: "",
+        polarSizeRange: "",
+        equatorialSizeRange: "",
+        apertureCount: "",
+        dispersalForm: ""
+    },
+
+    "Acanthus ilicifolius": {
+        morphologicType: "",
+        surfacePattern: "",
+        polarSizeRange: "",
+        equatorialSizeRange: "",
+        apertureCount: "",
+        dispersalForm: ""
+    },
+
+    "Rhizophora stylosa": {
+        morphologicType: "",
+        surfacePattern: "",
+        polarSizeRange: "",
+        equatorialSizeRange: "",
+        apertureCount: "",
+        dispersalForm: ""
+    },
+
+    "Rhizophora mucronata": {
+        morphologicType: "",
+        surfacePattern: "",
+        polarSizeRange: "",
+        equatorialSizeRange: "",
+        apertureCount: "",
+        dispersalForm: ""
+    },
+
+    "Ceriops tagal": {
+        morphologicType: "",
+        surfacePattern: "",
+        polarSizeRange: "",
+        equatorialSizeRange: "",
+        apertureCount: "",
+        dispersalForm: ""
+    },
+
+    "Bruguiera gymnorhiza": {
+        morphologicType: "",
+        surfacePattern: "",
+        polarSizeRange: "",
+        equatorialSizeRange: "",
+        apertureCount: "",
+        dispersalForm: ""
+    },
+
+    "Avicennia rumphiana": {
+        morphologicType: "",
+        surfacePattern: "",
+        polarSizeRange: "",
+        equatorialSizeRange: "",
+        apertureCount: "",
+        dispersalForm: ""
+    },
+
+    "Scyphiphora hydrophyllacea": {
+        morphologicType: "",
+        surfacePattern: "",
+        polarSizeRange: "",
+        equatorialSizeRange: "",
+        apertureCount: "",
+        dispersalForm: ""
+    },
+
+    "Rhizophora apiculata": {
+        morphologicType: "",
+        surfacePattern: "",
+        polarSizeRange: "",
+        equatorialSizeRange: "",
+        apertureCount: "",
+        dispersalForm: ""
+    }
+
+};
+
 let screenHistory = [];
 const pollenFigureNumbers = {
     "Nypa fruticans": 1,
@@ -251,47 +408,67 @@ function chooseLead(lead, number) {
 function showPollenImages(species) {
 
     const figure = pollenFigureNumbers[species];
+    const morphology = pollenMorphologyData[species] || {};
     const container = document.getElementById("key-container");
 
-    if (!figure) {
-        container.innerHTML = `
-            <h3>Identification Result</h3>
-            <h2><i>${species}</i></h2>
-            <p>Pollen photographs are not yet available.</p>
-            <button onclick="goBack()">Back</button>
-            <button onclick="restartKey()">Start Over</button>
-        `;
-        return;
-    }
+    const polarPath = figure
+        ? `pollen_images/Fig-${figure}a.jpg`
+        : "";
 
-    const polarPath = `pollen_images/Fig-${figure}a.jpg`;
+    const equatorialPath = figure === 13
+        ? "pollen_images/Fig-13b.jpeg"
+        : figure
+            ? `pollen_images/Fig-${figure}b.jpg`
+            : "";
 
-const equatorialPath = figure === 13
-    ? "pollen_images/Fig-13b.jpeg"
-    : `pollen_images/Fig-${figure}b.jpg`;
     container.innerHTML = `
         <h3>Identification Result</h3>
+
         <h2><i>${species}</i></h2>
 
-        <div class="species-images">
+        <h3>Pollen Morphological Characteristics</h3>
 
-            <div class="image-card">
-                <h4>Polar View</h4>
-                <img id="polar-photo"
-                     src="${polarPath}"
-                     alt="Polar view of ${species}">
+        <table>
+            <tr>
+                <th>Aperture Count</th>
+                <td>${morphology.apertureCount || "Not entered"}</td>
+            </tr>
+
+            <tr>
+                <th>Dispersal Form</th>
+                <td>${morphology.dispersalForm || "Not entered"}</td>
+            </tr>
+
+            <tr>
+                <th>Morphologic Type</th>
+                <td>${morphology.morphologicType || "Not entered"}</td>
+            </tr>
+        </table>
+
+        <h3>Pollen Micrographs</h3>
+
+        ${figure ? `
+            <div class="species-images">
+
+                <div class="image-card">
+                    <h4>Polar View</h4>
+                    <img id="polar-photo"
+                         src="${polarPath}"
+                         alt="Polar view of ${species}">
+                </div>
+
+                <div class="image-card">
+                    <h4>Equatorial View</h4>
+                    <img id="equatorial-photo"
+                         src="${equatorialPath}"
+                         alt="Equatorial view of ${species}">
+                </div>
+
             </div>
-
-            <div class="image-card">
-                <h4>Equatorial View</h4>
-                <img id="equatorial-photo"
-                     src="${equatorialPath}"
-                     alt="Equatorial view of ${species}">
-            </div>
-
-        </div>
+        ` : "<p>Pollen photographs are not available.</p>"}
 
         <br>
+
         <button onclick="goBack()">Back</button>
         <button onclick="restartKey()">Start Over</button>
     `;
@@ -299,23 +476,26 @@ const equatorialPath = figure === 13
     const polarPhoto = document.getElementById("polar-photo");
     const equatorialPhoto = document.getElementById("equatorial-photo");
 
-    polarPhoto.addEventListener("click", function() {
-        openImageModal(polarPath, `Polar view of ${species}`);
-    });
+    if (polarPhoto) {
+        polarPhoto.addEventListener("click", function() {
+            openImageModal(polarPath, `Polar view of ${species}`);
+        });
 
-    equatorialPhoto.addEventListener("click", function() {
-        openImageModal(equatorialPath, `Equatorial view of ${species}`);
-    });
+        polarPhoto.onerror = function() {
+            this.replaceWith("Polar image not found. Check filename.");
+        };
+    }
 
-    polarPhoto.onerror = function() {
-        this.replaceWith("Polar image not found. Check filename.");
-    };
+    if (equatorialPhoto) {
+        equatorialPhoto.addEventListener("click", function() {
+            openImageModal(equatorialPath, `Equatorial view of ${species}`);
+        });
 
-    equatorialPhoto.onerror = function() {
-        this.replaceWith("Equatorial image not found. Check filename.");
-    };
+        equatorialPhoto.onerror = function() {
+            this.replaceWith("Equatorial image not found. Check filename.");
+        };
+    }
 }
-
 function goBack() {
     if (screenHistory.length > 0) {
         const previousCouplet = screenHistory.pop();
