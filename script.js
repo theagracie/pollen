@@ -178,7 +178,25 @@ const keyData = {
 };
 
 let screenHistory = [];
-
+const pollenFigureNumbers = {
+    "Nypa fruticans": 1,
+    "Sonneratia alba": 2,
+    "Excoecaria agallocha": 3,
+    "Lumnitzera racemosa": 4,
+    "Lumnitzera littorea": 5,
+    "Pemphis acidula": 6,
+    "Avicennia marina": 7,
+    "Ceriops decandra": 8,
+    "Xylocarpus granatum": 9,
+    "Acanthus ilicifolius": 10,
+    "Rhizophora stylosa": 11,
+    "Rhizophora mucronata": 12,
+    "Ceriops tagal": 13,
+    "Bruguiera gymnorhiza": 14,
+    "Avicennia rumphiana": 15,
+    "Scyphiphora hydrophyllacea": 16,
+    "Rhizophora apiculata": 17
+};
 function showCouplet(number) {
     const couplet = keyData[number];
     const container = document.getElementById("key-container");
@@ -212,6 +230,7 @@ function showCouplet(number) {
     `;
 }
 
+
 function chooseLead(lead, number) {
     const couplet = keyData[number];
 
@@ -221,20 +240,78 @@ function chooseLead(lead, number) {
 
     screenHistory.push(number);
 
-    const container = document.getElementById("key-container");
-
     if (selected.result) {
-        container.innerHTML = `
-            <h3>Identification Result</h3>
-
-            <h2><i>${selected.result}</i></h2>
-
-            <button onclick="goBack()">Back</button>
-            <button onclick="restartKey()">Start Over</button>
-        `;
+        showPollenImages(selected.result);
     } else {
         showCouplet(selected.next);
     }
+}
+
+
+function showPollenImages(species) {
+
+    const figure = pollenFigureNumbers[species];
+    const container = document.getElementById("key-container");
+
+    if (!figure) {
+        container.innerHTML = `
+            <h3>Identification Result</h3>
+            <h2><i>${species}</i></h2>
+            <p>Pollen photographs are not yet available.</p>
+            <button onclick="goBack()">Back</button>
+            <button onclick="restartKey()">Start Over</button>
+        `;
+        return;
+    }
+
+    const polarPath = `pollen_images/Fig-${figure}a.jpg`;
+const equatorialPath = `pollen_images/Fig-${figure}b.jpg`;
+
+    container.innerHTML = `
+        <h3>Identification Result</h3>
+        <h2><i>${species}</i></h2>
+
+        <div class="species-images">
+
+            <div class="image-card">
+                <h4>Polar View</h4>
+                <img id="polar-photo"
+                     src="${polarPath}"
+                     alt="Polar view of ${species}">
+            </div>
+
+            <div class="image-card">
+                <h4>Equatorial View</h4>
+                <img id="equatorial-photo"
+                     src="${equatorialPath}"
+                     alt="Equatorial view of ${species}">
+            </div>
+
+        </div>
+
+        <br>
+        <button onclick="goBack()">Back</button>
+        <button onclick="restartKey()">Start Over</button>
+    `;
+
+    const polarPhoto = document.getElementById("polar-photo");
+    const equatorialPhoto = document.getElementById("equatorial-photo");
+
+    polarPhoto.addEventListener("click", function() {
+        openImageModal(polarPath, `Polar view of ${species}`);
+    });
+
+    equatorialPhoto.addEventListener("click", function() {
+        openImageModal(equatorialPath, `Equatorial view of ${species}`);
+    });
+
+    polarPhoto.onerror = function() {
+        this.replaceWith("Polar image not found. Check filename.");
+    };
+
+    equatorialPhoto.onerror = function() {
+        this.replaceWith("Equatorial image not found. Check filename.");
+    };
 }
 
 function goBack() {
