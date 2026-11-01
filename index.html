@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Mangrove Pollen Guide</title>
+
+</head>
+    <style> 
+    h1 {
+        text-align: center;
+    }
+
+    .species-images {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+        max-width: 900px;
+    }
+
+    .image-card img {
+        width: 90%;
+        height: 300px;
+        object-fit: contain;
+        cursor: zoom-in;
+        border-radius: 8px;
+        background: #f2f2f2;
+    }
+
+    .image-modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .image-modal.active {
+        display: flex;
+    }
+
+    .image-modal img {
+        max-width:  90%;
+        max-height: 90%;
+        object-fit: contain;
+    }
+
+    .close-modal {
+        position: absolute;
+        top: 15px;
+        right: 25px;
+        color: white;
+        font-size: 35px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+        .species-images {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>    
+    
+
+</head>
+
+<body>
+
+    <h1>Mangrove Pollen Guide</h1> </p> Ebuenga & Imperial | BS Biology | A.Y 2026-2027</p>
+    
+    
+    <p>
+        Palynology is the study of spores and plant pollen grains.
+        It provides information relevant to airborne allergies,
+        ecosystem changes due to global warming, and bee forage.
+        This guide examines the pollen morphology of mangrove species
+        to identify and characterize their pollen features.
+    </p>
+
+    <!-- SECTION 1: SPECIES EXPLORER -->
+    <section id="species-explorer">
+
+        <h2> Mangrove Species</h2>
+
+        <p>
+            Whole-plant and flower characteristics.
+        </p>
+
+        <div id="species-list"></div>
+
+        <div id="species-profile"></div>
+
+    </section>
+
+    <hr>
+
+    <!-- SECTION 2: DICHOTOMOUS KEY -->
+    <section id="dichotomous-key">
+
+        <h2> Dichotomous Key</h2>
+
+        <p>
+            A dichotomous key is a tool used to identify a wide
+            variety of living organisms and non-living objects.
+            It consists of paired statements describing contrasting
+            physical features or observable characteristics, providing
+            a step-by-step guide toward identification.
+        </p>
+
+        <p>
+            Select the lead that best describes your pollen sample.
+        </p>
+
+        <div id="key-container"></div>
+
+    </section>
+<div id="image-modal" class="image-modal">
+    <button id="close-modal" class="close-modal">&times;</button>
+    <img id="modal-image" src="" alt="Enlarged photograph">
+</div>
+    <script src="script.js"></script>
+
+</body>
+</html>

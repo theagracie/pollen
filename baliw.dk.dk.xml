@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DKey version="2.0.0">
+<introduction></introduction>
+<key>
+<couplet number="1">
+<lead> <text>Aperture 1-zonosulcate (Fig. 1a, 1b )</text> <endpoint>&lt;span style=&quot; font-style:italic;&quot;&gt;Nypa fruticans&lt;/span&gt;</endpoint> </lead>
+<lead> <text>Aperture not 1-zonosulcate &lt;br /&gt;&lt;br /&gt;</text> <pointer>2</pointer> </lead>
+</couplet>
+<couplet number="2">
+<lead> <text>Aperture triporate (Fig. 2a, 2b)&lt;br /&gt;</text> <endpoint>&lt;span style=&quot; font-style:italic;&quot;&gt;Sonneratia alba&lt;/span&gt;</endpoint> </lead>
+<lead> <text>Aperture not triporate </text> <pointer>3</pointer> </lead>
+</couplet>
+<couplet number="3">
+<lead> <text>Pollen shape suboblate (Fig. 3a, 3b)</text> <endpoint>&lt;span style=&quot; font-style:italic;&quot;&gt;Excoecaria agallocha&lt;/span&gt;</endpoint> </lead>
+<lead> <text>Pollen shape not suboblate </text> <pointer>4</pointer> </lead>
+</couplet>
+<couplet number="4">
+<lead> <text>Pollen shape circular </text> <pointer>5</pointer> </lead>
+<lead> <text>Pollen shape prolate/subprolate </text> <pointer>6</pointer> </lead>
+</couplet>
+<couplet number="5">
+<lead> <text>Surface pattern reticulate (Fig. 4a, 4b)</text> <endpoint>&lt;span style=&quot; font-style:italic;&quot;&gt;Lumnitzera racemosa&lt;/span&gt;</endpoint> </lead>
+<lead> <text>Surface pattern not reticulate</text> <pointer>7</pointer> </lead>
+</couplet>
+<couplet number="6">
+<lead> <text>Pollen shape prolate </text> <pointer>8</pointer> </lead>
+<lead> <text>Pollen shape subprolate </text> <pointer>9</pointer> </lead>
+</couplet>
+<couplet number="7">
+<lead> <text>Surface pattern granulate (Fig. 5a, 5b)</text> <endpoint>&lt;span style=&quot; font-style:italic;&quot;&gt;Lumnitzera littorea&lt;/span&gt;</endpoint> </lead>
+<lead> <text>Surface pattern scabrate (Fig. 6a, 6b)</text> <endpoint>&lt;span style=&quot; font-style:italic;&quot;&gt;Pemphis acidula&lt;/span&gt;</endpoint> </lead>
+</couplet>
+<couplet number="8">
+<lead> <text>Surface pattern microreticulate (Fig. 7a, 7b)</text> <endpoint>&lt;span style=&quot; font-style:italic;&quot;&gt;Avicennia marina&lt;/span&gt;</endpoint> </lead>
+<lead> <text>Surface pattern psilate (Fig. 8a, 8b)</text> <endpoint>&lt;span style=&quot; font-style:italic;&quot;&gt;Ceriops decandra&lt;/span&gt;</endpoint> </lead>
+</couplet>
+<couplet number="9">
+<lead> <text>Aperture count 4 (Fig. 9a, 9b)</text> <endpoint>&lt;span style=&quot; font-style:italic;&quot;&gt;Xylocarpus granatum&lt;/span&gt;</endpoint> </lead>
+<lead> <text>Aperture count 3 </text> <pointer>10</pointer> </lead>
+</couplet>
+<couplet number="10">
+<lead> <text>Aperture type tricolpate (Fig. 10a, 10b)</text> <endpoint>&lt;span style=&quot; font-style:italic;&quot;&gt;Acanthus ilicifolius&lt;/span&gt;</endpoint> </lead>
+<lead> <text>Aperture type tricolporate </text> <pointer>11</pointer> </lead>
+</couplet>
+<couplet number="11">
+<lead> <text>Surface pattern perforate (Fig. 11a, 11b)</text> <endpoint>&lt;span style=&quot; font-style:italic;&quot;&gt;Rhizophora stylosa&lt;/span&gt;</endpoint> </lead>
+<lead> <text>Surface pattern not perforate </text> <pointer>12</pointer> </lead>
+</couplet>
+<couplet number="12">
+<lead> <text>Surffae pattern psilate-scabrate (Fig. 12a, 12b)</text> <endpoint>&lt;span style=&quot; font-style:italic;&quot;&gt;Rhizophora mucronata&lt;/span&gt;</endpoint> </lead>
+<lead> <text>Surface pattern not psilate-scabrate </text> <pointer>13</pointer> </lead>
+</couplet>
+<couplet number="13">
+<lead> <text>Surface pattern scabrate (Fig. 13a, 13b)</text> <endpoint>&lt;span style=&quot; font-style:italic;&quot;&gt;Ceriops tagal&lt;/span&gt;</endpoint> </lead>
+<lead> <text>Surface pattern reticulate </text> <pointer>14</pointer> </lead>
+</couplet>
+<couplet number="14">
+<lead> <text>Size category minuta (Fig. 14a, 14b)</text> <endpoint>&lt;span style=&quot; font-style:italic;&quot;&gt;Bruguiera gymnorhiza&lt;/span&gt;</endpoint> </lead>
+<lead> <text>Size category: media </text> <pointer>15</pointer> </lead>
+</couplet>
+<couplet number="15">
+<lead> <text>Average size &amp;gt; 30 um (Fig. 15a, 15b)</text> <endpoint>&lt;span style=&quot; font-style:italic;&quot;&gt;Avicennia rumphiana&lt;/span&gt;</endpoint> </lead>
+<lead> <text>Average size &amp;lt; 30 um &lt;br /&gt;&lt;br /&gt;</text> <pointer>16</pointer> </lead>
+</couplet>
+<couplet number="16">
+<lead> <text>Average size &amp;gt; 25 um (Fig. 16a, 16b)</text> <endpoint>&lt;span style=&quot; font-style:italic;&quot;&gt;Scyphiphora hydrophyllacea&lt;/span&gt;&lt;br /&gt;&lt;br /&gt;</endpoint> </lead>
+<lead> <text>Average size &amp;lt; 25 um (Fig. 17a, 17b)</text> <endpoint>&lt;span style=&quot; font-style:italic;&quot;&gt;Rhizophora apiculata&lt;/span&gt;</endpoint> </lead>
+</couplet>
+</key>
+</DKey>
