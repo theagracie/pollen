@@ -425,27 +425,40 @@ function showPollenImages(species) {
         <h3>Identification Result</h3>
 
         <h2><i>${species}</i></h2>
+<h3>Pollen Morphological Characteristics</h3>
 
-        <h3>Pollen Morphological Characteristics</h3>
+<table>
+    <tr>
+        <th>Morphologic Type</th>
+        <td>${morphology.morphologicType || "Not entered"}</td>
+    </tr>
 
-        <table>
-            <tr>
-                <th>Aperture Count</th>
-                <td>${morphology.apertureCount || "Not entered"}</td>
-            </tr>
+    <tr>
+        <th>Surface Pattern</th>
+        <td>${morphology.surfacePattern || "Not entered"}</td>
+    </tr>
 
-            <tr>
-                <th>Dispersal Form</th>
-                <td>${morphology.dispersalForm || "Not entered"}</td>
-            </tr>
+    <tr>
+        <th>Aperture Count</th>
+        <td>${morphology.apertureCount || "Not entered"}</td>
+    </tr>
 
-            <tr>
-                <th>Morphologic Type</th>
-                <td>${morphology.morphologicType || "Not entered"}</td>
-            </tr>
-        </table>
+    <tr>
+        <th>Polar Size Range (µm)</th>
+        <td>${morphology.polarSizeRange || "Not entered"}</td>
+    </tr>
 
-        <h3>Pollen Micrographs</h3>
+    <tr>
+        <th>Equatorial Size Range (µm)</th>
+        <td>${morphology.equatorialSizeRange || "Not entered"}</td>
+    </tr>
+
+    <tr>
+        <th>Dispersal Form</th>
+        <td>${morphology.dispersalForm || "Not entered"}</td>
+    </tr>
+</table>
+
 
         ${figure ? `
             <div class="species-images">
