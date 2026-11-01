@@ -265,8 +265,10 @@ function showPollenImages(species) {
     }
 
     const polarPath = `pollen_images/Fig-${figure}a.jpg`;
-const equatorialPath = `pollen_images/Fig-${figure}b.jpg`;
 
+const equatorialPath = figure === 13
+    ? "pollen_images/Fig-13b.jpeg"
+    : `pollen_images/Fig-${figure}b.jpg`;
     container.innerHTML = `
         <h3>Identification Result</h3>
         <h2><i>${species}</i></h2>
