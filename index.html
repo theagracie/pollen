@@ -7,7 +7,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Mangrove Pollen Guide</title>
 
+
+
     <style>
+/* HEADER LOGO */
+
+.header-logo {
+    width: 160px;
+    height: 140px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+@media (max-width: 650px) {
+    .header-logo {
+        width: 50px;
+        height: 60px;
+    }
+}
         * {
             box-sizing: border-box;
         }
@@ -49,11 +66,17 @@ h1, h2, h3, h4,
         }
 
         .home-header {
-            text-align: center;
-            max-width: 900px;
-            width: 100%;
-            margin: 0 auto;
-        }
+    position: relative;
+    width: calc(50% + 48px);
+    max-width: none;
+    margin: -35px -24px 0;
+    padding: 28px 34px;
+
+    background: #EAF1E9;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
 
         .home-header h1 {
             font-size: 36px;
@@ -335,6 +358,204 @@ h1, h2, h3, h4,
                 flex-wrap: wrap;
             }
         }
+
+    /* WHITE AND FOREST GREEN COVER DESIGN */
+
+.home-page {
+    background: #FFFFFF;
+    color: #294D38;
+}
+
+/* Header and title */
+
+.home-header h1 {
+    color: #294D38;
+}
+
+.home-subtitle {
+    color: #456B50;
+}
+
+.home-authors {
+    color: #456B50;
+}
+
+/* About the Guide */
+
+.home-about h2 {
+    color: #294D38;
+}
+
+.home-about p {
+    color: #456B50;
+}
+
+/* Navigation buttons */
+
+.nav-card {
+    background: #345747;
+    color: #FFFFFF;
+    border: 1px solid #345747;
+}
+
+.nav-card:hover {
+    background: #456B50;
+}
+
+.nav-card-text strong,
+.nav-card-text small,
+.nav-arrow {
+    color: #FFFFFF;
+}
+
+/* Footer */
+
+.home-footer {
+    color: #456B50;
+}
+/* BOTANICAL COVER HEADER */
+
+.home-header {
+    position: relative;
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 28px 34px;
+    background: #EAF1E9;
+    border: 1px solid #D5E1D4;
+    border-left: 6px solid #456B50;
+    border-radius: 14px;
+    text-align: left;
+    overflow: hidden;
+}
+
+.header-kicker {
+    color: #718772;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.header-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-copy {
+    position: relative;
+    z-index: 1;
+}
+
+.home-header h1 {
+    color: #294D38;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    font-size: clamp(30px, 4vw, 43px);
+    text-align: left;
+    margin: 0;
+    letter-spacing: 0.3px;
+}
+
+.home-header .home-subtitle {
+    color: #456B50;
+    font-size: 21px;
+    text-align: left;
+    margin: 0;
+}
+
+.home-header .home-authors {
+    color: #637A67;
+    font-size: 12px;
+    text-align: left;
+    margin: 8px 0 0;
+}
+
+.header-leaf {
+    font-size: 88px;
+    color: #9CAF9A;
+    line-height: 1;
+    transform: rotate(-18deg);
+    opacity: 0.8;
+    flex-shrink: 0;
+}
+
+/* MOBILE HEADER */
+
+@media (max-width: 650px) {
+
+    .home-header {
+        padding: 22px 18px;
+    }
+
+    .header-leaf {
+        font-size: 55px;
+    }
+
+    .header-kicker {
+        font-size: 9px;
+    }
+}
+/* HEADER LOGO */
+
+.header-logo {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+@media (max-width: 650px) {
+    .header-logo {
+        width: 85px;
+        height: 85px;
+    }
+}
+/* FULL-WIDTH HEADER OVERRIDE */
+
+.home-page .home-header {
+    width: calc(100% + 48px) !important;
+    max-width: none !important;
+    margin: 0 -24px !important;
+
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    background: #EAF1E9;
+    padding: 30px 34px;
+}
+.home-header .header-logo {
+    width: 250px !important;
+    height: 200px !important;
+    max-width: none !important;
+    object-fit: contain !important;
+}
+.home-page .home-header {
+    width: calc(100% - 48px) !important;
+    max-width: 1200px !important;
+    margin: 20px auto !important;
+    padding: 10px 24px !important;
+    box-sizing: border-box;
+}
+
+.home-page .header-main {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 24px;
+    position: static;
+}
+
+.home-page .header-logo {
+    position: static !important;
+    transform: scale(1.15);
+    width: 130px !important;
+    height: 130px !important;
+    object-fit: contain;
+    flex-shrink: 0;
+}
     </style>
 </head>
 
@@ -346,17 +567,36 @@ h1, h2, h3, h4,
 
         <header class="home-header">
 
-            <h1>Pagburak kan Bakhaw</h1>
+    <div class="header-kicker">
+        INTERACTIVE PALYNOLOGICAL GUIDE
+    </div>
 
-            <p class="home-subtitle">
-                Mangrove Pollen Guide
-            </p>
+    <div class="header-main">
 
-            <p class="home-authors">
-                Site by: Ebuenga & Imperial
-            </p>
+    <div class="header-copy">
 
-        </header>
+        <h1>Pagburak kan Bakhaw | Mangrove Pollen Guide</h1>
+        </p>
+
+        <p class="home-authors">
+            Site by: Ebuenga & Imperial
+        </p>
+
+    </div>
+
+    <img src="mangrove-logo/mangrove-logo.png"
+         alt="Mangrove Pollen Guide Logo"
+         class="header-logo">
+
+</div>
+
+        <div class="header-leaf" aria-hidden="true">
+            
+        </div>
+
+    </div>
+
+</header>
 
         <div class="home-about">
 
