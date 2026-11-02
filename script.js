@@ -358,6 +358,12 @@ function showCouplet(number) {
     const couplet = keyData[number];
     const container = document.getElementById("key-container");
 
+    const resultContainer = document.getElementById("key-result");
+
+    if (resultContainer) {
+        resultContainer.innerHTML = "";
+    }
+
     if (!couplet) {
         container.innerHTML = "<p>Couplet not found.</p>";
         return;
@@ -366,13 +372,15 @@ function showCouplet(number) {
     container.innerHTML = `
         <h3>Couplet ${number}</h3>
 
-        <button onclick="chooseLead('A', ${number})">
+        <button id="lead-${number}-A"
+                onclick="chooseLead('A', ${number})">
             ${number}a. ${couplet.leadA.text}
         </button>
 
         <br><br>
 
-        <button onclick="chooseLead('B', ${number})">
+        <button id="lead-${number}-B"
+                onclick="chooseLead('B', ${number})">
             ${number}b. ${couplet.leadB.text}
         </button>
 
@@ -389,18 +397,33 @@ function showCouplet(number) {
 
 
 function chooseLead(lead, number) {
+
     const couplet = keyData[number];
 
     const selected = lead === "A"
         ? couplet.leadA
         : couplet.leadB;
 
-    screenHistory.push(number);
-
     if (selected.result) {
+
+        // Remove only the lead that was selected
+        const selectedButton = document.getElementById(
+            `lead-${number}-${lead}`
+        );
+
+        if (selectedButton) {
+            selectedButton.remove();
+        }
+
+        // Display the identified species above the remaining lead
         showPollenImages(selected.result);
+
     } else {
+
+        // Continue to the next couplet
+        screenHistory.push(number);
         showCouplet(selected.next);
+
     }
 }
 
@@ -409,7 +432,7 @@ function showPollenImages(species) {
 
     const figure = pollenFigureNumbers[species];
     const morphology = pollenMorphologyData[species] || {};
-    const container = document.getElementById("key-container");
+    const container = document.getElementById("key-result");
 
     const polarPath = figure
         ? `pollen_images/Fig-${figure}a.jpg`
@@ -483,9 +506,6 @@ function showPollenImages(species) {
 </div>
 
     <br>
-
-    <button onclick="goBack()">Back</button>
-    <button onclick="restartKey()">Start Over</button>
 `;
 
     const polarPhoto = document.getElementById("polar-photo");
