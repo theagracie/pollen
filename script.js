@@ -180,39 +180,39 @@ const keyData = {
 const pollenMorphologyData = {
 
     "Nypa fruticans": {
-        morphologicType: "",
-        surfacePattern: "",
-        polarSizeRange: "",
-        equatorialSizeRange: "",
-        apertureCount: "",
-        dispersalForm: ""
+        morphologicType: "Subprolate",
+        surfacePattern: "Echinate",
+        polarSizeRange: "25.12-55.73",
+        equatorialSizeRange: "21.29-61.72",
+        apertureCount: "1",
+        dispersalForm: "monad"
     },
 
     "Sonneratia alba": {
-        morphologicType: "",
-        surfacePattern: "",
-        polarSizeRange: "",
-        equatorialSizeRange: "",
-        apertureCount: "",
-        dispersalForm: ""
+        morphologicType: "triporate",
+        surfacePattern: "granulate",
+        polarSizeRange: "52.26-74.17",
+        equatorialSizeRange: "43.12-61.17",
+        apertureCount: "3",
+        dispersalForm: "monad"
     },
 
     "Excoecaria agallocha": {
-        morphologicType: "",
-        surfacePattern: "",
-        polarSizeRange: "",
-        equatorialSizeRange: "",
-        apertureCount: "",
-        dispersalForm: ""
+        morphologicType: "tricolporate",
+        surfacePattern: "reticulate",
+        polarSizeRange: "26.36-57.68",
+        equatorialSizeRange: "22.19-42.05",
+        apertureCount: "3",
+        dispersalForm: "monad"
     },
 
     "Lumnitzera racemosa": {
-        morphologicType: "",
-        surfacePattern: "",
-        polarSizeRange: "",
-        equatorialSizeRange: "",
-        apertureCount: "",
-        dispersalForm: ""
+        morphologicType: "tricolporate",
+        surfacePattern: "reticulate",
+        polarSizeRange: "34.08-39.01",
+        equatorialSizeRange: "17.87-37.55",
+        apertureCount: "3",
+        dispersalForm: "monad"
     },
 
     "Lumnitzera littorea": {
@@ -421,70 +421,74 @@ function showPollenImages(species) {
             ? `pollen_images/Fig-${figure}b.jpg`
             : "";
 
-    container.innerHTML = `
-        <h3>Identification Result</h3>
+   container.innerHTML = `
+    <h3>Identification Result</h3>
 
-        <h2><i>${species}</i></h2>
-<h3>Pollen Morphological Characteristics</h3>
+    <h2><i>${species}</i></h2>
 
-<table>
-    <tr>
-        <th>Morphologic Type</th>
-        <td>${morphology.morphologicType || "Not entered"}</td>
-    </tr>
+    <h3>Pollen Micrographs</h3>
 
-    <tr>
-        <th>Surface Pattern</th>
-        <td>${morphology.surfacePattern || "Not entered"}</td>
-    </tr>
+    ${figure ? `
+        <div class="species-images">
 
-    <tr>
-        <th>Aperture Count</th>
-        <td>${morphology.apertureCount || "Not entered"}</td>
-    </tr>
-
-    <tr>
-        <th>Polar Size Range (µm)</th>
-        <td>${morphology.polarSizeRange || "Not entered"}</td>
-    </tr>
-
-    <tr>
-        <th>Equatorial Size Range (µm)</th>
-        <td>${morphology.equatorialSizeRange || "Not entered"}</td>
-    </tr>
-
-    <tr>
-        <th>Dispersal Form</th>
-        <td>${morphology.dispersalForm || "Not entered"}</td>
-    </tr>
-</table>
-
-
-        ${figure ? `
-            <div class="species-images">
-
-                <div class="image-card">
-                    <h4>Polar View</h4>
-                    <img id="polar-photo"
-                         src="${polarPath}"
-                         alt="Polar view of ${species}">
-                </div>
-
-                <div class="image-card">
-                    <h4>Equatorial View</h4>
-                    <img id="equatorial-photo"
-                         src="${equatorialPath}"
-                         alt="Equatorial view of ${species}">
-                </div>
-
+            <div class="image-card">
+                <h4>Polar View</h4>
+                <img id="polar-photo"
+                     src="${polarPath}"
+                     alt="Polar view of ${species}">
             </div>
-        ` : "<p>Pollen photographs are not available.</p>"}
 
-        <br>
+            <div class="image-card">
+                <h4>Equatorial View</h4>
+                <img id="equatorial-photo"
+                     src="${equatorialPath}"
+                     alt="Equatorial view of ${species}">
+            </div>
 
-        <button onclick="goBack()">Back</button>
-        <button onclick="restartKey()">Start Over</button>
-    `;
+        </div>
+    ` : "<p>Pollen photographs are not available.</p>"}
+
+    <h3>Pollen Morphological Characteristics</h3>
+
+    <div class="detail-list">
+
+    <p>
+        <strong>Morphologic type:</strong>
+        ${morphology.morphologicType || "Not entered"}
+    </p>
+
+    <p>
+        <strong>Surface pattern:</strong>
+        ${morphology.surfacePattern || "Not entered"}
+    </p>
+
+    <p>
+        <strong>Aperture count:</strong>
+        ${morphology.apertureCount || "Not entered"}
+    </p>
+
+    <p>
+        <strong>Polar size range:</strong>
+        ${morphology.polarSizeRange || "Not entered"}
+    </p>
+
+    <p>
+        <strong>Equatorial size range:</strong>
+        ${morphology.equatorialSizeRange || "Not entered"}
+    </p>
+
+    <p>
+        <strong>Dispersal form:</strong>
+        ${morphology.dispersalForm || "Not entered"}
+    </p>
+
+</div>
+
+    <br>
+
+    <button onclick="goBack()">Back</button>
+    <button onclick="restartKey()">Start Over</button>
+`;
 
     const polarPhoto = document.getElementById("polar-photo");
     const equatorialPhoto = document.getElementById("equatorial-photo");
@@ -613,21 +617,24 @@ speciesProfile.innerHTML = `
 
         <summary>Taxonomic Classification</summary>
 
-        <table>
-            <tr>
-                <th>Family</th>
-                <td>${speciesFamilies[species] || "Not yet entered"}</td>
-            </tr>
-            <tr>
-                <th>Genus</th>
-                <td><i>${species.split(" ")[0]}</i></td>
-            </tr>
-            <tr>
-                <th>Species</th>
-                <td><i>${species}</i></td>
-            </tr>
-        </table>
+        <div class="detail-list">
 
+    <p>
+        <strong>Family:</strong>
+        ${speciesFamilies[species] || "Not yet entered"}
+    </p>
+
+    <p>
+        <strong>Genus:</strong>
+        <i>${species.split(" ")[0]}</i>
+    </p>
+
+    <p>
+        <strong>Species:</strong>
+        <i>${species}</i>
+    </p>
+
+</div>
     </details>
 
 `;
@@ -711,3 +718,19 @@ document.addEventListener("keydown", function(event) {
         closeImageModal();
     }
 });
+function showPage(pageId) {
+
+    const pages = document.querySelectorAll(".page");
+
+    pages.forEach(page => {
+        page.classList.remove("active");
+    });
+
+    const selectedPage = document.getElementById(pageId);
+
+    if (selectedPage) {
+        selectedPage.classList.add("active");
+    }
+
+    window.scrollTo(0, 0);
+}

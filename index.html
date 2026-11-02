@@ -1,128 +1,600 @@
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Mangrove Pollen Guide</title>
 
-</head>
-    <style> 
-    h1 {
-        text-align: center;
-    }
-
-    .species-images {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 20px;
-        max-width: 900px;
-    }
-
-    .image-card img {
-        width: 90%;
-        height: 300px;
-        object-fit: contain;
-        cursor: zoom-in;
-        border-radius: 8px;
-        background: #f2f2f2;
-    }
-
-    .image-modal {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.9);
-        z-index: 9999;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-    }
-
-    .image-modal.active {
-        display: flex;
-    }
-
-    .image-modal img {
-        max-width:  90%;
-        max-height: 90%;
-        object-fit: contain;
-    }
-
-    .close-modal {
-        position: absolute;
-        top: 15px;
-        right: 25px;
-        color: white;
-        font-size: 35px;
-        background: none;
-        border: none;
-        cursor: pointer;
-    }
-
-    @media (max-width: 600px) {
-        .species-images {
-            grid-template-columns: 1fr;
+    <style>
+        * {
+            box-sizing: border-box;
         }
-    }
-</style>    
-    
 
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #263F35;
+            background: #f4f6f3;
+            line-height: 1.6;
+        }
+
+        /* PAGE NAVIGATION */
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .home-page.page.active {
+            display: flex;
+        }
+
+        /* COVER PAGE */
+
+        .home-page {
+            min-height: 100vh;
+            flex-direction: column;
+            justify-content: space-between;
+            background: linear-gradient(145deg, #1E382E, #355747);
+            color: white;
+            padding: 35px 24px 20px;
+        }
+
+        .home-header {
+            text-align: center;
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .home-header h1 {
+            font-size: 36px;
+            margin-bottom: 2px;
+        }
+
+        .home-subtitle {
+            font-size: 21px;
+            font-style: italic;
+            color: #d8e6d9;
+            margin: 0;
+        }
+
+        .home-tagline {
+            font-size: 13px;
+            color: #e4ece5;
+            margin-top: 8px;
+        }
+
+        .home-authors {
+            font-size: 13px;
+            color: #d8e6d9;
+        }
+
+        /* ABOUT THE GUIDE */
+
+        .home-about {
+            max-width: 760px;
+            text-align: center;
+            margin: 30px auto 0;
+        }
+
+        .home-about h2 {
+            font-size: 19px;
+            letter-spacing: 1px;
+        }
+
+        .home-about p {
+            font-size: 14px;
+            color: #e4ece5;
+        }
+
+        /* CENTER NAVIGATION OPTIONS */
+
+        .home-navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            max-width: 600px;
+            margin: auto auto 35px;
+        }
+
+        .nav-card {
+            width: 280px;
+            min-height: 65px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            background: #f1f3ec;
+            color: #263F35;
+            border: none;
+            border-radius: 9px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.2s ease;
+        }
+
+        .nav-card:hover {
+            background: #dce8dc;
+            transform: translateY(-3px);
+        }
+
+        .nav-card-icon {
+            font-size: 25px;
+        }
+
+        .nav-card-text {
+            flex: 1;
+        }
+
+        .nav-card-text strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        .nav-card-text small {
+            display: block;
+            font-size: 11px;
+            color: #52675a;
+        }
+
+        .nav-arrow {
+            font-size: 20px;
+        }
+
+        .home-footer {
+            text-align: center;
+            color: #d8e6d9;
+            font-size: 12px;
+        }
+
+        /* CONTENT PAGES */
+
+        .content-wrap {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px 20px 50px;
+        }
+
+        .top-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .back-button {
+            padding: 9px 16px;
+            border: none;
+            border-radius: 6px;
+            background: #345747;
+            color: white;
+            cursor: pointer;
+        }
+
+        .content-section {
+            background: white;
+            padding: 22px;
+            margin-bottom: 24px;
+            border-radius: 10px;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        /* YOUR EXISTING IMAGE GALLERY */
+
+        .species-images {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+            max-width: 900px;
+        }
+
+        .image-card img {
+            width: 90%;
+            height: 300px;
+            object-fit: contain;
+            cursor: zoom-in;
+            border-radius: 8px;
+            background: #f2f2f2;
+        }
+
+        /* TABLES */
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 800px;
+            margin: 15px auto;
+        }
+
+        th, td {
+            border: 1px solid #d6ddd6;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #e9efe9;
+        }
+
+        /* GLOSSARY */
+
+        .glossary-entry {
+            background: white;
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            border-left: 4px solid #dff1e5;
+            border-radius: 5px;
+        }
+
+        .glossary-entry strong {
+            color: #345747;
+        }
+
+        /* IMAGE ENLARGEMENT */
+
+        .image-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .image-modal.active {
+            display: flex;
+        }
+
+        .image-modal img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: white;
+            font-size: 35px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* MOBILE VIEW */
+
+        @media (max-width: 650px) {
+
+            .home-header h1 {
+                font-size: 28px;
+            }
+
+            .home-navigation {
+                flex-direction: column;
+                margin-top: 45px;
+            }
+
+            .nav-card {
+                width: 100%;
+                max-width: 340px;
+            }
+
+            .species-images {
+                grid-template-columns: 1fr;
+            }
+
+            .image-card img {
+                height: 250px;
+            }
+
+            .top-navigation {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <h1>Mangrove Pollen Guide</h1> </p> Ebuenga & Imperial | BS Biology | A.Y 2026-2027</p>
-    
-    
-    <p>
-        Palynology is the study of spores and plant pollen grains.
-        It provides information relevant to airborne allergies,
-        ecosystem changes due to global warming, and bee forage.
-        This guide examines the pollen morphology of mangrove species
-        to identify and characterize their pollen features.
-    </p>
+    <!-- HOME / COVER PAGE -->
 
-    <!-- SECTION 1: SPECIES EXPLORER -->
-    <section id="species-explorer">
+    <section id="home-page" class="page home-page active">
 
-        <h2> Mangrove Species</h2>
+        <header class="home-header">
 
-        <p>
-            Whole-plant and flower characteristics.
-        </p>
+            <h1>Pagburak kan Bakhaw</h1>
 
-        <div id="species-list"></div>
+            <p class="home-subtitle">
+                Mangrove Pollen Guide
+            </p>
 
-        <div id="species-profile"></div>
+            <p class="home-authors">
+                Site by: Ebuenga & Imperial
+            </p>
+
+        </header>
+
+        <div class="home-about">
+
+            <h2>ABOUT THE GUIDE</h2>
+
+            <p>
+                Palynology is the study of spores and plant pollen grains. 
+                It provides information relevant 
+                to airborne allergies, ecosystem changes due to global warming, 
+                and for understanding bee foraging. 
+                This guide will serve as a reference for the 
+            identification and characterization through photographs and dichotomous key 
+            of pollen features.
+            </p>
+
+        </div>
+
+        <!-- NAVIGATION OPTIONS -->
+
+        <div class="home-navigation">
+
+            <button class="nav-card"
+                    onclick="showPage('guide-page')">
+
+                <span class="nav-card-text">
+                    <strong>Mangrove Guide</strong>
+                    <small>Species and dichotomous key</small>
+                </span>
+
+                <span class="nav-arrow">→</span>
+
+            </button>
+
+
+            <button class="nav-card"
+                    onclick="showPage('glossary-page')">
+
+                <span class="nav-card-text">
+                    <strong>Glossary</strong>
+                    <small>Pollen terms and definitions</small>
+                </span>
+
+                <span class="nav-arrow">→</span>
+
+            </button>
+
+        </div>
+
+        <footer class="home-footer">
+            BS Biology | Ateneo de Naga University | A.Y. 2026–2027
+        </footer>
 
     </section>
 
-    <hr>
 
-    <!-- SECTION 2: DICHOTOMOUS KEY -->
-    <section id="dichotomous-key">
+    <!-- MANGROVE GUIDE PAGE -->
 
-        <h2> Dichotomous Key</h2>
+    <section id="guide-page" class="page content-page">
 
-        <p>
-            A dichotomous key is a tool used to identify a wide
-            variety of living organisms and non-living objects.
-            It consists of paired statements describing and contrasting
-            physical features or observable characteristics, providing
-            a step-by-step guide toward identification.
-        </p>
+        <div class="content-wrap">
 
-        <p>
-            Select the lead that best describes your pollen sample.
-        </p>
+            <div class="top-navigation">
 
-        <div id="key-container"></div>
+                <button class="back-button"
+                        onclick="showPage('home-page')">
+                    ← Home
+                </button>
+
+                <h1>Mangrove Guide</h1>
+
+            </div>
+
+        <!-- SECTION 1: DICHOTOMOUS KEY -->
+
+            <section id="dichotomous-key" class="content-section">
+
+                <h2>Dichotomous Key</h2>
+
+            <p>
+                    A dichotomous key is a tool used to identify a wide variaety of living organisms and non-lving objects. 
+                    It consist of paired statements describing and contrasting physical features or observable characteristics,
+                    providing a step-by-step guide toward identification.
+            </p>
+
+                <p>
+                    Select the lead that best describes your
+                    pollen sample.
+                </p>
+
+                <div id="key-container"></div>
+
+            </section>
+
+        <hr>
+
+            <!-- SECTION 2: SPECIES EXPLORER -->
+
+            <section id="species-explorer" class="content-section">
+
+                <h2>Mangrove Species</h2>
+
+                <p>
+                    Explore whole-plant and flower characteristics
+                    of the selected mangrove species.
+                </p>
+
+                <div id="species-list"></div>
+
+                <div id="species-profile"></div>
+
+            </section>
+
+
+            </div>
+
+        </section>  
+
+
+            
+    <!-- GLOSSARY PAGE -->
+
+    <section id="glossary-page" class="page content-page">
+
+        <div class="content-wrap">
+
+            <div class="top-navigation">
+
+                <button class="back-button"
+                        onclick="showPage('home-page')">
+                    ← Home
+                </button>
+
+                <h1>Glossary</h1>
+
+            </div>
+
+            <section class="content-section">
+
+                <h2>Glossary of Palynological Terms</h2>
+
+                <p>
+                    Definitions of selected terms used in describing
+                    pollen morphology and identification.
+                </p>
+
+                <div class="glossary-entry">
+                    <strong>Aperture</strong>
+                    <p>A specialized region or opening in the pollen wall.</p>
+                </div>
+
+                <div class="glossary-entry">
+                    <strong>Colpus</strong>
+                    <p>An elongated furrow-like aperture in a pollen grain.</p>
+                </div>
+
+                <div class="glossary-entry">
+                    <strong>Pore</strong>
+                    <p>A generally rounded aperture in the pollen wall.</p>
+                </div>
+
+                <div class="glossary-entry">
+                    <strong>Zonosulcate</strong>
+                    <p>Having a single sulcus arranged around the equatorial region of the pollen grain.</p>
+                </div>
+
+                <div class="glossary-entry">
+                    <strong>Triporate</strong>
+                    <p>Having three pores.</p>
+                </div>
+
+                <div class="glossary-entry">
+                    <strong>Tricolpate</strong>
+                    <p>Having three elongated apertures called colpi.</p>
+                </div>
+
+                <div class="glossary-entry">
+                    <strong>Tricolporate</strong>
+                    <p>Having three colpi, each associated with a pore.</p>
+                </div>
+
+                <div class="glossary-entry">
+                    <strong>Prolate</strong>
+                    <p>A pollen shape elongated along its polar axis.</p>
+                </div>
+
+                <div class="glossary-entry">
+                    <strong>Subprolate</strong>
+                    <p>A pollen shape that is somewhat elongated.</p>
+                </div>
+
+                <div class="glossary-entry">
+                    <strong>Suboblate</strong>
+                    <p>A pollen shape that is somewhat flattened.</p>
+                </div>
+
+                <div class="glossary-entry">
+                    <strong>Reticulate</strong>
+                    <p>A net-like surface pattern.</p>
+                </div>
+
+                <div class="glossary-entry">
+                    <strong>Microreticulate</strong>
+                    <p>A finely net-like surface pattern.</p>
+                </div>
+
+                <div class="glossary-entry">
+                    <strong>Granulate</strong>
+                    <p>A surface ornamentation characterized by small granules.</p>
+                </div>
+
+                <div class="glossary-entry">
+                    <strong>Scabrate</strong>
+                    <p>A rough pollen surface with small irregular projections.</p>
+                </div>
+
+                <div class="glossary-entry">
+                    <strong>Psilate</strong>
+                    <p>A smooth pollen surface.</p>
+                </div>
+
+                <div class="glossary-entry">
+                    <strong>Perforate</strong>
+                    <p>A surface with small holes or perforations.</p>
+                </div>
+
+                <div class="glossary-entry">
+                    <strong>Monad</strong>
+                    <p>A pollen dispersal unit consisting of a single pollen grain.</p>
+                </div>
+
+                <div class="glossary-entry">
+                    <strong>Polar View</strong>
+                    <p>The pollen grain viewed along its polar axis.</p>
+                </div>
+
+                <div class="glossary-entry">
+                    <strong>Equatorial View</strong>
+                    <p>The pollen grain viewed along its equatorial plane.</p>
+                </div>
+
+                <div class="glossary-entry">
+                    <strong>Micrometre (µm)</strong>
+                    <p>A unit of length equal to one-millionth of a metre.</p>
+                </div>
+
+            </section>
+
+        </div>
 
     </section>
-<div id="image-modal" class="image-modal">
-    <button id="close-modal" class="close-modal">&times;</button>
-    <img id="modal-image" src="" alt="Enlarged photograph">
-</div>
+
+
+    <!-- IMAGE ENLARGEMENT MODAL -->
+
+    <div id="image-modal" class="image-modal">
+
+        <button id="close-modal" class="close-modal">
+            &times;
+        </button>
+
+        <img id="modal-image"
+             src=""
+             alt="Enlarged photograph">
+
+    </div>
+
+
     <script src="script.js"></script>
 
 </body>
