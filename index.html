@@ -12,13 +12,21 @@
             box-sizing: border-box;
         }
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            color: #263F35;
-            background: #f4f6f3;
-            line-height: 1.6;
-        }
+        /* FONT STYLING */
+
+h1, h2, h3, h4,
+.home-subtitle {
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.home-header h1 {
+    font-size: 42px;
+    letter-spacing: 1px;
+}
+
+.home-subtitle {
+    font-size: 24px;
+}
 
         /* PAGE NAVIGATION */
 
@@ -237,6 +245,31 @@
             border-left: 4px solid #dff1e5;
             border-radius: 5px;
         }
+        .glossary-category {
+    border: 1px solid #d6ddd6;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    background: white;
+}
+
+.glossary-category summary {
+    cursor: pointer;
+    color: #345747;
+    font-weight: bold;
+    padding: 5px;
+}
+
+.glossary-category[open] summary {
+    margin-bottom: 12px;
+}
+
+.glossary-sources {
+    margin-top: 35px;
+    padding-top: 15px;
+    border-top: 1px solid #d6ddd6;
+    font-size: 13px;
+}
 
         .glossary-entry strong {
             color: #345747;
@@ -377,9 +410,14 @@
         </div>
 
         <footer class="home-footer">
-            BS Biology | Ateneo de Naga University | A.Y. 2026–2027
-        </footer>
+    BS Biology | Ateneo de Naga University | A.Y. 2026–2027 |
 
+    <a href="#"
+       onclick="showPage('acknowledgements-page'); return false;"
+       style="color: inherit; text-decoration: underline; cursor: pointer;">
+        Acknowledgements
+    </a>
+</footer>
     </section>
 
 
@@ -423,6 +461,7 @@
 
         <hr>
 
+    
             <!-- SECTION 2: SPECIES EXPLORER -->
 
             <section id="species-explorer" class="content-section">
@@ -430,8 +469,7 @@
                 <h2>Mangrove Species</h2>
 
                 <p>
-                    Explore whole-plant and flower characteristics
-                    of the selected mangrove species.
+                    Whole-plant and its flower.
                 </p>
 
                 <div id="species-list"></div>
@@ -466,11 +504,11 @@
 
             <section class="content-section">
 
-                
-<h2>Glossary of Palynological Terms</h2>
+                <h2>Glossary of Palynological Terms</h2>
 
 <p>
-    The following categories describe common pollen morphology and palynological terminology.
+    The following categories are about pollen
+    morphology and palynological terminology.
 </p>
 
 <!-- CATEGORY 1: SURFACE PATTERNS -->
@@ -726,12 +764,36 @@
 
 </div>
 
-            </section>
+<!-- ACKNOWLEDGEMENTS PAGE -->
+
+<section id="acknowledgements-page" class="page content-page">
+
+    <div class="content-wrap">
+
+        <div class="top-navigation">
+
+            <button class="back-button"
+                    onclick="showPage('home-page')">
+                ← Home
+            </button>
+
+            <h1>Acknowledgements</h1>
 
         </div>
 
-    </section>
+        <section class="content-section">
 
+            <p>
+                We extend our great appreciation to the mangrove guides especially to Manuel D. Domdom and Leon B. Dulva at Prieto Diaz, Sorsogon
+                for their invaluable assistance in the collection of mangrove samples and additional 
+                information on identifying species. Their expertise and guidance have been instrumental in this project.
+            </p>
+
+        </section>
+
+    </div>
+
+</section>
 
     <!-- IMAGE ENLARGEMENT MODAL -->
 

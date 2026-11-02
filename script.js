@@ -426,8 +426,6 @@ function showPollenImages(species) {
 
     <h2><i>${species}</i></h2>
 
-    <h3>Pollen Micrographs</h3>
-
     ${figure ? `
         <div class="species-images">
 
@@ -733,4 +731,15 @@ function showPage(pageId) {
     }
 
     window.scrollTo(0, 0);
+}
+function showReferences() {
+    showPage("glossary-page");
+
+    const references = document.getElementById("glossary-references");
+
+    if (references) {
+        references.scrollIntoView({
+            behavior: "smooth"
+        });
+    }
 }
