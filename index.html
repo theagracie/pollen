@@ -1031,6 +1031,16 @@ h1, h2, h3, h4,
 
         </button>
 
+        <button class="nav-card" onclick="showPage('comparison-page')">
+    <span class="nav-card-title">Compare Pollens</span>
+    <span class="nav-card-description">
+        Intrafamily and interfamily pollen differences.
+    </span>
+
+  <span class="nav-arrow">→</span>
+
+</button>
+
         <button class="nav-card"
                 onclick="showPage('glossary-page')">
 
@@ -1407,6 +1417,39 @@ h1, h2, h3, h4,
 </div>
 
 </section>
+<!-- COMPARATIVE POLLEN MORPHOLOGY PAGE -->
+<section id="comparison-page" class="page content-page">
+
+    <button class="back-button" onclick="showPage('home-page')">
+        ← Back to Home
+    </button>
+
+    <h1>Comparative Pollen Morphology</h1>
+
+    <p>
+        Explore similarities and differences in pollen
+        morphology among selected mangrove species.
+    </p>
+
+    <div class="comparison-options">
+
+        <button onclick="showComparisonType('intrafamilial')">
+            Intrafamilial Comparison
+            <span>Compare species within the same family.</span>
+        </button>
+
+        <button onclick="showComparisonType('interfamilial')">
+            Interfamilial Comparison
+            <span>Compare species from different families.</span>
+        </button>
+
+    </div>
+
+    <div id="comparison-selection"></div>
+
+    <div id="comparison-results"></div>
+
+</section>
 
 <!-- ACKNOWLEDGEMENTS PAGE -->
  
@@ -1467,3 +1510,4 @@ In addition, we would like to express our sincere gratitude to <b>SEAMANCOR</b>
 
 </body>
 </html>
+

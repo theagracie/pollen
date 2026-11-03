@@ -763,3 +763,36 @@ function showReferences() {
         });
     }
 }
+function showComparisonType(type) {
+
+    const selection = document.getElementById("comparison-selection");
+    const results = document.getElementById("comparison-results");
+
+    results.innerHTML = "";
+
+    if (type === "intrafamilial") {
+
+        selection.innerHTML = `
+            <h2>Intrafamily Comparison</h2>
+            <p>Select a family to compare its species.</p>
+
+            <button onclick="showFamilySpecies('Rhizophoraceae')">
+                Rhizophoraceae
+            </button>
+        `;
+
+    }
+
+    else if (type === "interfamilial") {
+
+        selection.innerHTML = `
+            <h2>Interfamily Comparison</h2>
+            <p>Select species from different families to compare.</p>
+
+            <button onclick="showInterfamilySelection()">
+                Select Species
+            </button>
+        `;
+
+    }
+}
