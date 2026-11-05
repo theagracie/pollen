@@ -788,11 +788,12 @@ function showPage(pageId, sectionId = null) {
     });
 
     // Scroll to a specific section if requested
-    if (sectionId) {
-        requestAnimationFrame(() => {
-            scrollToSection(sectionId);
-        });
-    }
+   requestAnimationFrame(() => {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+});
 }
 function showComparisonType(type) {
 

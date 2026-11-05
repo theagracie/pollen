@@ -18,13 +18,21 @@
     object-fit: contain;
     flex-shrink: 0;
 }
-..home-page .home-navigation {
+.home-page .home-navigation {
     grid-template-columns: 1fr;
 }
 
-} /* CLOSE THE MOBILE MEDIA QUERY */
+} /* CLOSE MOBILE LAYOUT */
 
 /* PAGE VISIBILITY FIX */
+.page {
+    display: none !important;
+}
+
+.page.active {
+    display: block !important;
+}
+
 @media (max-width: 650px) {
     .header-logo {
         width: 50px;
@@ -788,8 +796,7 @@ h1, h2, h3, h4,
     border-radius: 7px;
     text-align: left;
     cursor: pointer;
-    transition: background 0.2s ease, transform 0.2s ease;
-}
+transition: background 0.2s ease, transform 0.2s ease;}
 
 .home-page .nav-card:hover {
     background: #294D38;
@@ -967,27 +974,51 @@ h1, h2, h3, h4,
 .content-page .back-button {
     color: #FFFFFF;
 }
+/* ACKNOWLEDGEMENT PHOTO GALLERY */
+
 .guide-acknowledgement-gallery {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 25px;
+    gap: 30px;
     max-width: 650px;
     margin: 30px auto;
 }
 
 .guide-photo-card {
     width: 45%;
-    max-width: 280px;
+    max-width: 260px;
     text-align: center;
 }
 
 .guide-photo-card img {
     display: block;
     width: 100%;
-    height: 180px;
+    height: 190px;
     object-fit: cover;
-    border-radius: 12px;
+    border-radius: 10px;
+}
+
+.guide-photo-card p {
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* MOBILE VIEW */
+@media (max-width: 500px) {
+    .guide-acknowledgement-gallery {
+        gap: 12px;
+    }
+
+    .guide-photo-card {
+        width: 48%;
+    }
+
+    .guide-photo-card img {
+        height: 140px;
+    }
 }
 /* SCROLL POSITION ADJUSTMENTS */
 
@@ -996,6 +1027,74 @@ h1, h2, h3, h4,
 #key-result,
 #comparison-results {
     scroll-margin-top: 25px;
+}
+/* =====================================
+   DICHOTOMOUS KEY TWO-COLUMN LAYOUT
+===================================== */
+
+.dkey-layout {
+    display: grid !important;
+    grid-template-columns: 300px 1fr !important;
+    gap: 25px;
+    align-items: start;
+}
+
+
+/* LEFT PANEL: COUPLETS */
+
+.dkey-left-panel {
+    background: #f5f7f2;
+    padding: 25px;
+    border-radius: 12px;
+    min-width: 0;
+}
+
+
+/* RIGHT PANEL: POLLEN RESULTS */
+
+.dkey-right-panel {
+    background: #f5f7f2;
+    padding: 25px;
+    border-radius: 12px;
+    min-width: 0;
+    min-height: 300px;
+}
+
+
+/* MESSAGE BEFORE SPECIES IDENTIFICATION */
+
+#key-result:empty::before {
+    content: "Pollen images and morphological characteristics will appear here once a species has been identified.";
+    display: block;
+    color: #777;
+    text-align: center;
+    padding: 80px 20px;
+    line-height: 1.6;
+}
+
+
+/* KEEP IMAGES WITHIN THE RIGHT PANEL */
+
+.dkey-right-panel img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+/* MOBILE LAYOUT */
+
+@media (max-width: 500px) {
+
+    .dkey-layout {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .dkey-left-panel,
+    .dkey-right-panel {
+        padding: 18px;
+    }
+
 }
     </style>
 </head>
@@ -1136,11 +1235,24 @@ h1, h2, h3, h4,
                 </p>
 
               <!-- Species result first -->
-<div id="key-result"></div>
+<div class="dkey-layout">
 
-<!-- Remaining lead choices underneath -->
-<div id="key-container"></div>
+    <!-- LEFT SIDE: DICHOTOMOUS KEY -->
+    <div class="dkey-left-panel">
 
+        <div id="key-container"></div>
+
+    </div>
+
+
+    <!-- RIGHT SIDE: POLLEN IMAGES AND MORPHOLOGY -->
+    <div class="dkey-right-panel">
+
+        <div id="key-result"></div>
+
+    </div>
+
+</div>
 </section>
 
 <hr>
@@ -1458,8 +1570,7 @@ h1, h2, h3, h4,
         ← Back to Home
     </button>
 
-    <h1>Compare Pollen Morphology</h1>
-
+    <h1 id="comparison-heading">Compare Pollen Morphology</h1>
     <p>
         Similarities and differences in pollen
         morphology among the mangrove species.
@@ -1520,22 +1631,14 @@ In addition, we would like to express our sincere gratitude to <b>SEAMANCOR</b>
             </p>
 
 
-<div class="guide-acknowledgement-gallery">
+<<div class="guide-acknowledgement-gallery">
 
     <div class="guide-photo-card">
-        <img
-            src="acknowledgement_images/mangrove_guide_1.jpeg"
-            alt="Manuel D. Domdom"
-        >
-        <p>Manuel D. Domdom</p>
+    
     </div>
 
     <div class="guide-photo-card">
-        <img
-            src="acknowledgement_images/mangrove_guide_2.jpeg"
-            alt="Leon B. Dulva"
-        >
-        <p>Leon B. Dulva</p>
+    
     </div>
 
 </div>
