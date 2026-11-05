@@ -177,6 +177,18 @@ const keyData = {
     }
 };
 
+// AUTOMATIC SMOOTH SCROLLING
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+
+    if (section) {
+        section.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+}
+
 const pollenMorphologyData = {
 
     "Nypa fruticans": {
@@ -354,8 +366,7 @@ const pollenFigureNumbers = {
     "Scyphiphora hydrophyllacea": 16,
     "Rhizophora apiculata": 17
 };
-function showCouplet(number) {
-    const couplet = keyData[number];
+function showCouplet(number, shouldScroll = false) {    const couplet = keyData[number];
     const container = document.getElementById("key-container");
 
     const resultContainer = document.getElementById("key-result");
@@ -369,7 +380,7 @@ function showCouplet(number) {
         return;
     }
 
-    container.innerHTML = `
+       container.innerHTML = `
         <h3>Couplet ${number}</h3>
 
         <button id="lead-${number}-A"
@@ -393,6 +404,13 @@ function showCouplet(number) {
 
         <button onclick="restartKey()">Start Over</button>
     `;
+
+    if (shouldScroll) {
+        container.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
 }
 
 
@@ -417,13 +435,15 @@ function chooseLead(lead, number) {
 
         // Display the identified species above the remaining lead
         showPollenImages(selected.result);
-
+document.getElementById("key-result").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+});
     } else {
 
         // Continue to the next couplet
         screenHistory.push(number);
-        showCouplet(selected.next);
-
+showCouplet(selected.next, true);
     }
 }
 
@@ -534,13 +554,12 @@ function showPollenImages(species) {
 function goBack() {
     if (screenHistory.length > 0) {
         const previousCouplet = screenHistory.pop();
-        showCouplet(previousCouplet);
-    }
+showCouplet(previousCouplet, true);    }
 }
 
 function restartKey() {
     screenHistory = [];
-    showCouplet(1);
+    showCouplet(1,true);
 }
 
 showCouplet(1);
@@ -629,6 +648,7 @@ speciesProfile.innerHTML = `
         </div>
 
     </details>
+    
 
     <!-- SECOND DROPDOWN: PUT IT HERE -->
     <details class="taxonomy-toggle">
@@ -675,7 +695,18 @@ speciesProfile.innerHTML = `
         flowerPhoto.onerror = function () {
             this.replaceWith("Flower photograph not available.");
         };
+// Automatically open the photographs
+const photoDropdown = speciesProfile.querySelector(".photo-toggle");
 
+if (photoDropdown) {
+    photoDropdown.open = true;
+}
+
+// Automatically scroll to the selected species
+speciesProfile.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+});
     }); // Closes the button click event
 
     speciesList.appendChild(button);
@@ -736,7 +767,7 @@ document.addEventListener("keydown", function(event) {
         closeImageModal();
     }
 });
-function showPage(pageId) {
+function showPage(pageId, sectionId = null) {
 
     const pages = document.querySelectorAll(".page");
 
@@ -750,16 +781,16 @@ function showPage(pageId) {
         selectedPage.classList.add("active");
     }
 
-    window.scrollTo(0, 0);
-}
-function showReferences() {
-    showPage("glossary-page");
+    // Automatically return to the top
+    window.scrollTo({
+        top: 0,
+        behavior: "instant"
+    });
 
-    const references = document.getElementById("glossary-references");
-
-    if (references) {
-        references.scrollIntoView({
-            behavior: "smooth"
+    // Scroll to a specific section if requested
+    if (sectionId) {
+        requestAnimationFrame(() => {
+            scrollToSection(sectionId);
         });
     }
 }
@@ -795,4 +826,139 @@ function showComparisonType(type) {
         `;
 
     }
+}
+
+// SELECTED SPECIES FOR COMPARISON
+let selectedComparisonSpecies = [];
+
+const rhizophoraceaeSpecies = [
+    "Bruguiera gymnorhiza",
+    "Ceriops decandra",
+    "Ceriops tagal",
+    "Rhizophora apiculata",
+    "Rhizophora mucronata",
+    "Rhizophora stylosa"
+];
+
+function showFamilySpecies(family) {
+
+    const selection = document.getElementById("comparison-selection");
+    const results = document.getElementById("comparison-results");
+
+    selectedComparisonSpecies = [];
+    results.innerHTML = "";
+
+    let species = [];
+
+    if (family === "Rhizophoraceae") {
+        species = rhizophoraceaeSpecies;
+    }
+
+    selection.innerHTML = `
+        <h3>${family}</h3>
+        <p>Select 2–6 species to compare.</p>
+
+        <div id="comparison-species-list">
+            ${species.map(name => `
+                <label class="comparison-species-option">
+                    <input type="checkbox"
+                        value="${name}"
+                        onchange="updateComparisonSelection(this)">
+                    ${name}
+                </label>
+            `).join("")}
+        </div>
+
+        <p id="comparison-count">0 species selected</p>
+
+        <button id="compare-selected-button"
+            onclick="compareSelectedSpecies()"
+            disabled>
+            Compare Selected Species
+        </button>
+    `;
+}
+
+function updateComparisonSelection(checkbox) {
+
+    if (checkbox.checked) {
+        if (selectedComparisonSpecies.length >= 6) {
+            checkbox.checked = false;
+            return;
+        }
+
+        selectedComparisonSpecies.push(checkbox.value);
+
+    } else {
+        selectedComparisonSpecies =
+            selectedComparisonSpecies.filter(
+                name => name !== checkbox.value
+            );
+    }
+
+    document.getElementById("comparison-count").textContent =
+        selectedComparisonSpecies.length + " species selected";
+
+    document.getElementById("compare-selected-button").disabled =
+        selectedComparisonSpecies.length < 2;
+}
+
+function compareSelectedSpecies() {
+
+    const results = document.getElementById("comparison-results");
+
+    if (selectedComparisonSpecies.length < 2) {
+        alert("Please select at least two species.");
+        return;
+    }
+
+    const characteristics = [
+        "Polar Axis (P)",
+        "Equatorial Diameter (E)",
+        "P/E Ratio",
+        "Pollen Shape",
+        "Aperture Type",
+        "Surface Ornamentation",
+        "Size Category"
+    ];
+
+    let tableHTML = `
+        <h2>Comparative Pollen Morphology</h2>
+
+        <p>
+            Comparison of selected pollen species based
+            on their morphological characteristics.
+        </p>
+
+        <div style="overflow-x: auto;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Characteristics</th>
+                        ${selectedComparisonSpecies.map(name =>
+                            `<th>${name}</th>`
+                        ).join("")}
+                    </tr>
+                </thead>
+
+                <tbody>
+                    ${characteristics.map(characteristic => `
+                        <tr>
+                            <th>${characteristic}</th>
+                            ${selectedComparisonSpecies.map(() =>
+                                `<td>To be added</td>`
+                            ).join("")}
+                        </tr>
+                    `).join("")}
+                </tbody>
+            </table>
+        </div>
+    `;
+
+    results.innerHTML = tableHTML;
+
+    results.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
 }

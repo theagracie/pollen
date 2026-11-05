@@ -18,7 +18,13 @@
     object-fit: contain;
     flex-shrink: 0;
 }
+..home-page .home-navigation {
+    grid-template-columns: 1fr;
+}
 
+} /* CLOSE THE MOBILE MEDIA QUERY */
+
+/* PAGE VISIBILITY FIX */
 @media (max-width: 650px) {
     .header-logo {
         width: 50px;
@@ -50,7 +56,6 @@ h1, h2, h3, h4,
             display: block;
         }
 
-        }
 
         /* COVER PAGE */
 
@@ -763,9 +768,9 @@ h1, h2, h3, h4,
 
 .home-page .home-navigation {
     width: 100%;
-    max-width: 720px;
+    max-width: 1100px;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 14px;
     margin: 10px auto 35px;
 }
@@ -962,7 +967,36 @@ h1, h2, h3, h4,
 .content-page .back-button {
     color: #FFFFFF;
 }
+.guide-acknowledgement-gallery {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 25px;
+    max-width: 650px;
+    margin: 30px auto;
+}
 
+.guide-photo-card {
+    width: 45%;
+    max-width: 280px;
+    text-align: center;
+}
+
+.guide-photo-card img {
+    display: block;
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+/* SCROLL POSITION ADJUSTMENTS */
+
+#species-profile,
+#key-container,
+#key-result,
+#comparison-results {
+    scroll-margin-top: 25px;
+}
     </style>
 </head>
 
@@ -1424,11 +1458,11 @@ h1, h2, h3, h4,
         ← Back to Home
     </button>
 
-    <h1>Comparative Pollen Morphology</h1>
+    <h1>Compare Pollen Morphology</h1>
 
     <p>
-        Explore similarities and differences in pollen
-        morphology among selected mangrove species.
+        Similarities and differences in pollen
+        morphology among the mangrove species.
     </p>
 
     <div class="comparison-options">
@@ -1473,7 +1507,7 @@ h1, h2, h3, h4,
 
             <p>
                 We extend our great appreciation to the mangrove guides, 
-                especially <b>Manuel D. Domdomb</b> and <b>Leon B. Dulva</b> of Prieto Diaz, Sorsogon, 
+                especially <b>Manuel D. Domdom</b> and <b>Leon B. Dulva</b> of Prieto Diaz, Sorsogon, 
                 for their invaluable assistance in the collection of mangrove samples and the provision of additional information 
                 essential to species identification. Their expertise, knowledge, and guidance have been instrumental to the completion 
                 of this project.
@@ -1485,10 +1519,26 @@ In addition, we would like to express our sincere gratitude to <b>SEAMANCOR</b>
  Their support and willingness to accommodate our research have greatly contributed to the successful completion of this study.
             </p>
 
-        </section>
 
+<div class="guide-acknowledgement-gallery">
+
+    <div class="guide-photo-card">
+        <img
+            src="acknowledgement_images/mangrove_guide_1.jpeg"
+            alt="Manuel D. Domdom"
+        >
+        <p>Manuel D. Domdom</p>
     </div>
 
+    <div class="guide-photo-card">
+        <img
+            src="acknowledgement_images/mangrove_guide_2.jpeg"
+            alt="Leon B. Dulva"
+        >
+        <p>Leon B. Dulva</p>
+    </div>
+
+</div>
 </section>
 
     <!-- IMAGE ENLARGEMENT MODAL -->
