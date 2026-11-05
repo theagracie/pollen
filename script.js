@@ -767,6 +767,47 @@ document.addEventListener("keydown", function(event) {
         closeImageModal();
     }
 });
+// RESET INTERACTIVE SECTIONS WHEN RETURNING HOME
+function resetSections() {
+
+    // Reset the dichotomous key
+    screenHistory = [];
+    showCouplet(1);
+
+    // Clear selected mangrove species
+    const speciesProfile = document.getElementById("species-profile");
+
+    if (speciesProfile) {
+        speciesProfile.innerHTML = "";
+    }
+
+    selectedSpecies = null;
+
+    // Reset pollen comparison
+    selectedComparisonSpecies = [];
+
+    const selection = document.getElementById("comparison-selection");
+    const results = document.getElementById("comparison-results");
+
+    if (selection) {
+        selection.innerHTML = "";
+    }
+
+    if (results) {
+        results.innerHTML = "";
+    }
+
+    // Close expanded dropdowns
+    document.querySelectorAll(".page details").forEach(detail => {
+        detail.open = false;
+    });
+
+    // Close enlarged images
+    closeImageModal();
+}
+
+
+// PAGE NAVIGATION
 function showPage(pageId, sectionId = null) {
 
     const pages = document.querySelectorAll(".page");
@@ -781,19 +822,12 @@ function showPage(pageId, sectionId = null) {
         selectedPage.classList.add("active");
     }
 
-    // Automatically return to the top
+    // Return to the top
     window.scrollTo({
         top: 0,
         behavior: "instant"
     });
 
-    // Scroll to a specific section if requested
-   requestAnimationFrame(() => {
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-});
 }
 function showComparisonType(type) {
 
