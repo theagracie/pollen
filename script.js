@@ -821,7 +821,7 @@ function showPage(pageId, sectionId = null) {
     if (selectedPage) {
         selectedPage.classList.add("active");
     }
-
+    
     // Reset interactive sections when returning Home
     if (pageId === "home-page") {
 

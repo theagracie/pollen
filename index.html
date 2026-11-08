@@ -18,13 +18,9 @@
     object-fit: contain;
     flex-shrink: 0;
 }
-..home-page .home-navigation {
-    grid-template-columns: 1fr;
-}
-
-} /* CLOSE MOBILE LAYOUT */
 
 /* PAGE VISIBILITY FIX */
+
 .page {
     display: none !important;
 }
@@ -36,18 +32,20 @@
 .home-page.page.active {
     display: flex !important;
 }
+
 @media (max-width: 650px) {
     .header-logo {
         width: 50px;
         height: 60px;
     }
 }
-        * {
-            box-sizing: border-box;
-        }
 
-        /* FONT STYLING */
+* {
+    box-sizing: border-box;
+}
 
+
+/* FONT STYLING */
 body {
     font-family: Arial, sans-serif;
 }
@@ -889,6 +887,7 @@ transition: background 0.2s ease, transform 0.2s ease;}
     .home-page .home-navigation {
         grid-template-columns: 1fr;
     }
+}
 
 /* PAGE VISIBILITY FIX */
 
@@ -1676,4 +1675,3 @@ In addition, we would like to express our sincere gratitude to <b>SEAMANCOR</b>
 
 </body>
 </html>
-
