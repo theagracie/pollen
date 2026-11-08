@@ -822,12 +822,24 @@ function showPage(pageId, sectionId = null) {
         selectedPage.classList.add("active");
     }
 
-    // Return to the top
+    // Reset interactive sections when returning Home
+    if (pageId === "home-page") {
+
+        // Close opened species profile
+        document.getElementById("species-profile").innerHTML = "";
+
+        // Reset Dichotomous Key
+        screenHistory = [];
+        showCouplet(1, false);
+
+        // Clear comparison results
+        document.getElementById("comparison-results").innerHTML = "";
+    }
+
     window.scrollTo({
         top: 0,
         behavior: "instant"
     });
-
 }
 function showComparisonType(type) {
 
