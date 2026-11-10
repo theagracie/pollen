@@ -521,6 +521,11 @@ function showPollenImages(species) {
     </p>
 
     <p>
+    <strong>Size category:</strong>
+    ${morphology.sizeCategory || "Not entered"}
+    </p>
+    
+    <p>
         <strong>Aperture count:</strong>
         ${morphology.apertureCount || "Not entered"}
     </p>
