@@ -192,9 +192,9 @@ function scrollToSection(sectionId) {
 const pollenMorphologyData = {
 
     "Nypa fruticans": {
-        morphologicType: "Subprolate",
-        surfacePattern: "Echinate",
-        sizeCategory: "Magna",
+        morphologicType: "subprolate",
+        surfacePattern: "echinate",
+        sizeCategory: "magna",
         polarSizeRange: "25.12μm-55.73μm",
         equatorialSizeRange: "21.29μm-61.72μm",
         apertureCount: "1",
@@ -202,9 +202,9 @@ const pollenMorphologyData = {
     },
 
     "Sonneratia alba": {
-        morphologicType: "Prolate",
-        surfacePattern: "Granulate",
-        sizeCategory: "Magna",
+        morphologicType: "prolate",
+        surfacePattern: "granulate",
+        sizeCategory: "magna",
         polarSizeRange: "52.26μm-74.17μm",
         equatorialSizeRange: "43.12μm-61.17μm",
         apertureCount: "3",
@@ -212,9 +212,9 @@ const pollenMorphologyData = {
     },
 
     "Excoecaria agallocha": {
-        morphologicType: "Suboblate",
-        surfacePattern: "Reticulate",
-        sizeCategory:"Media",
+        morphologicType: "suboblate",
+        surfacePattern: "reticulate",
+        sizeCategory:"media",
         polarSizeRange: "26.36μm-57.68μm",
         equatorialSizeRange: "22.19μm-42.05μm",
         apertureCount: "3",
@@ -222,9 +222,9 @@ const pollenMorphologyData = {
     },
 
     "Lumnitzera racemosa": {
-        morphologicType: "Circular",
-        surfacePattern: "Reticulate",
-        sizeCategory: "Media",
+        morphologicType: "circular",
+        surfacePattern: "reticulate",
+        sizeCategory: "media",
         polarSizeRange: "34.08μm-39.01μm",
         equatorialSizeRange: "17.87μm-37.55μm",
         apertureCount: "3",
@@ -232,9 +232,9 @@ const pollenMorphologyData = {
     },
 
     "Lumnitzera littorea": {
-        morphologicType: "Circular",
-        surfacePattern: "Granulate",
-        sizeCategory: "Media",
+        morphologicType: "circular",
+        surfacePattern: "granulate",
+        sizeCategory: "media",
         polarSizeRange: "31.18μm-53.18μm",
         equatorialSizeRange: "30.48μm-53.84μm",
         apertureCount: "3",
@@ -242,9 +242,9 @@ const pollenMorphologyData = {
     },
 
     "Pemphis acidula": {
-        morphologicType: "Circular",
-        surfacePattern: "Scabrate",
-        sizeCatogery: "Media",
+        morphologicType: "circular",
+        surfacePattern: "scabrate",
+        sizeCategory: "media",
         polarSizeRange: "26.18μm-49.92μm",
         equatorialSizeRange: "24.06μm-48.14μm",
         apertureCount: "3-4",
@@ -252,9 +252,9 @@ const pollenMorphologyData = {
     },
 
     "Avicennia marina": {
-        morphologicType: "Prolate",
-        surfacePattern: "Microreticulate",
-        sizeCategory: "Media",
+        morphologicType: "prolate",
+        surfacePattern: "microreticulate",
+        sizeCategory: "media",
         polarSizeRange: "16.12μm-49.64μm",
         equatorialSizeRange: "14.65μm-45.58μm",
         apertureCount: "3",
@@ -262,9 +262,9 @@ const pollenMorphologyData = {
     },
 
     "Ceriops decandra": {
-        morphologicType: "Prolate",
-        surfacePattern: "Psilate",
-        sizeCategory: "Minuta",
+        morphologicType: "prolate",
+        surfacePattern: "psilate",
+        sizeCategory: "minuta",
         polarSizeRange: "15.71μm-29.08μm",
         equatorialSizeRange: "13.31μm-27.03μm",
         apertureCount: "3",
@@ -272,9 +272,9 @@ const pollenMorphologyData = {
     },
 
     "Xylocarpus granatum": {
-        morphologicType: "Subprolate",
-        surfacePattern: "Granulate",
-        sizeCategory: "Media",
+        morphologicType: "subprolate",
+        surfacePattern: "granulate",
+        sizeCategory: "media",
         polarSizeRange: "17.85μm-29.03μm",
         equatorialSizeRange: "15.4μm-26.26μm",
         apertureCount: "4",
@@ -282,9 +282,9 @@ const pollenMorphologyData = {
     },
 
     "Acanthus ilicifolius": {
-        morphologicType: "Subprolate",
-        surfacePattern: "Reticulate",
-        sizeCategory: "Magna",
+        morphologicType: "subprolate",
+        surfacePattern: "reticulate",
+        sizeCategory: "magna",
         polarSizeRange: "38.59μm-69.49μm",
         equatorialSizeRange: "31.39μm-52.75μm",
         apertureCount: "3",
@@ -292,9 +292,9 @@ const pollenMorphologyData = {
     },
 
     "Rhizophora stylosa": {
-        morphologicType: "Subprolate",
-        surfacePattern: "Perforate",
-        sizeCategory: "Minuta",
+        morphologicType: "subprolate",
+        surfacePattern: "perforate",
+        sizeCategory: "minuta",
         polarSizeRange: "18.06μm-32.24μm",
         equatorialSizeRange: "15.12μm-28.92μm",
         apertureCount: "3",
@@ -302,9 +302,9 @@ const pollenMorphologyData = {
     },
 
     "Rhizophora mucronata": {
-        morphologicType: "Subprolate",
-        surfacePattern: "Psilate-Scabrate",
-        sizeCategory: "Minuta",
+        morphologicType: "subprolate",
+        surfacePattern: "psilate-scabrate",
+        sizeCategory: "minuta",
         polarSizeRange: "16.64μm-26.31μm",
         equatorialSizeRange: "13.00μm-22.95μm",
         apertureCount: "3",
@@ -312,9 +312,9 @@ const pollenMorphologyData = {
     },
 
     "Ceriops tagal": {
-        morphologicType: "Subprolate",
-        surfacePattern: "Scabrate",
-        sizeCategory: "Minuta",
+        morphologicType: "subprolate",
+        surfacePattern: "scabrate",
+        sizeCategory: "minuta",
         polarSizeRange: "13.36μm-20.67μm",
         equatorialSizeRange: "12.79μm-19.63μm",
         apertureCount: "3",
@@ -322,9 +322,9 @@ const pollenMorphologyData = {
     },
 
     "Bruguiera gymnorhiza": {
-        morphologicType: "Subprolate",
-        surfacePattern: "Psilate",
-        sizeCategory: "Minuta",
+        morphologicType: "subprolate",
+        surfacePattern: "psilate",
+        sizeCategory: "minuta",
         polarSizeRange: "16.24μm-27.83μm",
         equatorialSizeRange: "16.24-μm-26.44μm",
         apertureCount: "3",
@@ -332,9 +332,9 @@ const pollenMorphologyData = {
     },
 
     "Avicennia rumphiana": {
-        morphologicType: "Subprolate",
-        surfacePattern: "Reticulate",
-        sizeCategory: "Media",
+        morphologicType: "subprolate",
+        surfacePattern: "reticulate",
+        sizeCategory: "media",
         polarSizeRange: "21.61μm-44.29μm",
         equatorialSizeRange: "18.35μm-42.75μm",
         apertureCount: "3",
@@ -342,9 +342,9 @@ const pollenMorphologyData = {
     },
 
     "Scyphiphora hydrophyllacea": {
-        morphologicType: "Subprolate",
-        surfacePattern: "Reticulate",
-        sizeCategory: "Media",
+        morphologicType: "subprolate",
+        surfacePattern: "reticulate",
+        sizeCategory: "media",
         polarSizeRange: "20.76μm-40.85μm",
         equatorialSizeRange: "15.22μm-40.85μm",
         apertureCount: "3",
@@ -352,9 +352,9 @@ const pollenMorphologyData = {
     },
 
     "Rhizophora apiculata": {
-        morphologicType: "Subprolate",
-        surfacePattern: "Reticulate",
-        sizeCategory: "Media",
+        morphologicType: "subprolate",
+        surfacePattern: "reticulate",
+        sizeCategory: "media",
         polarSizeRange: "16.12μm-29.40μm",
         equatorialSizeRange: "14.65μm-26.02μm",
         apertureCount: "3",
