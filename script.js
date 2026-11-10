@@ -471,6 +471,9 @@ function showPollenImages(species) {
     const morphology = pollenMorphologyData[species] || {};
     const container = document.getElementById("key-result");
 
+    const plantPath = getImagePath(species, "plant");
+    const flowerPath = getImagePath(species, "flower");
+
     const polarPath = figure
         ? `pollen_images/Fig-${figure}a.jpg`
         : "";
@@ -486,27 +489,55 @@ function showPollenImages(species) {
 
     <h2><i>${species}</i></h2>
 
-    ${figure ? `
-        <div class="species-images">
+<!-- PLANT AND FLOWER PHOTOGRAPHS -->
+<details class="photo-toggle">
 
-            <div class="image-card">
-                <h4>Polar View</h4>
-                <img id="polar-photo"
-                     src="${polarPath}"
-                     alt="Polar view of ${species}">
-            </div>
+    <summary>Plant and Flower Photographs</summary>
 
-            <div class="image-card">
-                <h4>Equatorial View</h4>
-                <img id="equatorial-photo"
-                     src="${equatorialPath}"
-                     alt="Equatorial view of ${species}">
-            </div>
+    <div class="species-images">
 
+        <div class="image-card">
+            <h4>Whole Plant</h4>
+            <img id="dkey-plant-photo"
+                 src="${plantPath}"
+                 alt="Whole plant of ${species}">
         </div>
-    ` : "<p>Pollen photographs are not available.</p>"}
 
-    <h3>Pollen Morphological Characteristics</h3>
+        <div class="image-card">
+            <h4>Flower</h4>
+            <img id="dkey-flower-photo"
+                 src="${flowerPath}"
+                 alt="Flower of ${species}">
+        </div>
+
+    </div>
+
+</details>
+
+<!-- POLLEN PHOTOGRAPHS -->
+${figure ? `
+    <div class="species-images">
+
+        <div class="image-card">
+            <h4>Polar View</h4>
+            <img id="polar-photo"
+                 src="${polarPath}"
+                 alt="Polar view of ${species}">
+        </div>
+
+        <div class="image-card">
+            <h4>Equatorial View</h4>
+            <img id="equatorial-photo"
+                 src="${equatorialPath}"
+                 alt="Equatorial view of ${species}">
+        </div>
+
+    </div>
+` : "<p>Pollen photographs are not available.</p>"}
+
+<h3>Pollen Morphological Characteristics</h3>
+
+<div class="detail-list">
 
     <div class="detail-list">
 
@@ -549,7 +580,50 @@ function showPollenImages(species) {
 
     <br>
 `;
+const dkeyPlantPhoto = document.getElementById("dkey-plant-photo");
+const dkeyFlowerPhoto = document.getElementById("dkey-flower-photo");
 
+if (dkeyPlantPhoto) {
+    dkeyPlantPhoto.addEventListener("click", function() {
+        openImageModal(plantPath, `Whole plant of ${species}`);
+    });
+
+    dkeyPlantPhoto.onerror = function() {
+        this.replaceWith("Whole-plant photograph not available.");
+    };
+}
+
+if (dkeyFlowerPhoto) {
+    dkeyFlowerPhoto.addEventListener("click", function() {
+        openImageModal(flowerPath, `Flower of ${species}`);
+    });
+
+    dkeyFlowerPhoto.onerror = function() {
+        this.replaceWith("Flower photograph not available.");
+    };
+}
+const dkeyPlantPhoto = document.getElementById("dkey-plant-photo");
+const dkeyFlowerPhoto = document.getElementById("dkey-flower-photo");
+
+if (dkeyPlantPhoto) {
+    dkeyPlantPhoto.addEventListener("click", function() {
+        openImageModal(plantPath, `Whole plant of ${species}`);
+    });
+
+    dkeyPlantPhoto.onerror = function() {
+        this.replaceWith("Whole-plant photograph not available.");
+    };
+}
+
+if (dkeyFlowerPhoto) {
+    dkeyFlowerPhoto.addEventListener("click", function() {
+        openImageModal(flowerPath, `Flower of ${species}`);
+    });
+
+    dkeyFlowerPhoto.onerror = function() {
+        this.replaceWith("Flower photograph not available.");
+    };
+}
     const polarPhoto = document.getElementById("polar-photo");
     const equatorialPhoto = document.getElementById("equatorial-photo");
 
