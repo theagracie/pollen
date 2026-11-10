@@ -490,30 +490,25 @@ function showPollenImages(species) {
     <h2><i>${species}</i></h2>
 
 <!-- PLANT AND FLOWER PHOTOGRAPHS -->
-<details class="photo-toggle">
+<h3>Plant and Flower Photographs</h3>
 
-    <summary>Plant and Flower Photographs</summary>
+<div class="species-images">
 
-    <div class="species-images">
-
-        <div class="image-card">
-            <h4>Whole Plant</h4>
-            <img id="dkey-plant-photo"
-                 src="${plantPath}"
-                 alt="Whole plant of ${species}">
-        </div>
-
-        <div class="image-card">
-            <h4>Flower</h4>
-            <img id="dkey-flower-photo"
-                 src="${flowerPath}"
-                 alt="Flower of ${species}">
-        </div>
-
+    <div class="image-card">
+        <h4>Whole Plant</h4>
+        <img id="dkey-plant-photo"
+             src="${plantPath}"
+             alt="Whole plant of ${species}">
     </div>
 
-</details>
+    <div class="image-card">
+        <h4>Flower</h4>
+        <img id="dkey-flower-photo"
+             src="${flowerPath}"
+             alt="Flower of ${species}">
+    </div>
 
+</div>
 <!-- POLLEN PHOTOGRAPHS -->
 ${figure ? `
     <div class="species-images">
