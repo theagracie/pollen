@@ -1108,6 +1108,54 @@ transition: background 0.2s ease, transform 0.2s ease;}
     }
 
 }
+
+/* DKEY IDENTIFICATION RESULT LAYOUT */
+
+.dkey-result-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 25px;
+    align-items: start;
+    margin: 25px 0;
+}
+
+/* POLLEN PANEL */
+.dkey-pollen-panel {
+    min-width: 0;
+}
+
+.dkey-pollen-panel .image-card img {
+    width: 100%;
+    max-height: 350px;
+    object-fit: contain;
+}
+
+/* BOTANICAL REFERENCE PANEL */
+.dkey-botanical-panel {
+    min-width: 0;
+}
+
+.dkey-botanical-panel .image-card img {
+    width: 100%;
+    max-height: 220px;
+    object-fit: contain;
+}
+
+/* MOBILE LAYOUT */
+@media (max-width: 650px) {
+    .dkey-result-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .dkey-pollen-panel .image-card img {
+        max-height: 300px;
+    }
+
+    .dkey-botanical-panel .image-card img {
+        max-height: 250px;
+    }
+}
+
     </style>
 </head>
 

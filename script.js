@@ -484,97 +484,106 @@ function showPollenImages(species) {
             ? `pollen_images/Fig-${figure}b.jpg`
             : "";
 
-   container.innerHTML = `
+  
+container.innerHTML = `
     <h3>Identification Result</h3>
 
     <h2><i>${species}</i></h2>
 
-<!-- PLANT AND FLOWER PHOTOGRAPHS -->
-<h3>Plant and Flower Photographs</h3>
+    <!-- OPTION A: POLLEN LEFT, BOTANICAL PHOTOS RIGHT -->
+    <div class="dkey-result-layout">
 
-<div class="species-images">
+        <!-- LEFT: POLLEN PHOTOGRAPHS -->
+        <div class="dkey-pollen-panel">
 
-    <div class="image-card">
-        <h4>Whole Plant</h4>
-        <img id="dkey-plant-photo"
-             src="${plantPath}"
-             alt="Whole plant of ${species}">
-    </div>
+            <h3>Pollen Morphology</h3>
 
-    <div class="image-card">
-        <h4>Flower</h4>
-        <img id="dkey-flower-photo"
-             src="${flowerPath}"
-             alt="Flower of ${species}">
-    </div>
+            ${figure ? `
+                <div class="image-card">
+                    <h4>Polar View</h4>
+                    <img id="polar-photo"
+                         src="${polarPath}"
+                         alt="Polar view of ${species}">
+                </div>
 
-</div>
-<!-- POLLEN PHOTOGRAPHS -->
-${figure ? `
-    <div class="species-images">
+                <div class="image-card">
+                    <h4>Equatorial View</h4>
+                    <img id="equatorial-photo"
+                         src="${equatorialPath}"
+                         alt="Equatorial view of ${species}">
+                </div>
+            ` : "<p>Pollen photographs are not available.</p>"}
 
-        <div class="image-card">
-            <h4>Polar View</h4>
-            <img id="polar-photo"
-                 src="${polarPath}"
-                 alt="Polar view of ${species}">
         </div>
 
-        <div class="image-card">
-            <h4>Equatorial View</h4>
-            <img id="equatorial-photo"
-                 src="${equatorialPath}"
-                 alt="Equatorial view of ${species}">
+        <!-- RIGHT: PLANT AND FLOWER PHOTOGRAPHS -->
+        <div class="dkey-botanical-panel">
+
+            <h3>Source Plant</h3>
+
+            <div class="image-card">
+                <h4>Whole Plant</h4>
+                <img id="dkey-plant-photo"
+                     src="${plantPath}"
+                     alt="Whole plant of ${species}">
+            </div>
+
+            <div class="image-card">
+                <h4>Flower</h4>
+                <img id="dkey-flower-photo"
+                     src="${flowerPath}"
+                     alt="Flower of ${species}">
+            </div>
+
         </div>
 
     </div>
-` : "<p>Pollen photographs are not available.</p>"}
 
-<h3>Pollen Morphological Characteristics</h3>
-
-<div class="detail-list">
+    <!-- POLLEN MORPHOLOGICAL CHARACTERISTICS -->
+    <h3>Pollen Morphological Characteristics</h3>
 
     <div class="detail-list">
 
-    <p>
-        <strong>Morphologic type:</strong>
-        ${morphology.morphologicType || "Not entered"}
-    </p>
+        <p>
+            <strong>Morphologic type:</strong>
+            ${morphology.morphologicType || "Not entered"}
+        </p>
 
-    <p>
-        <strong>Surface pattern:</strong>
-        ${morphology.surfacePattern || "Not entered"}
-    </p>
+        <p>
+            <strong>Surface pattern:</strong>
+            ${morphology.surfacePattern || "Not entered"}
+        </p>
 
-    <p>
-    <strong>Size category:</strong>
-    ${morphology.sizeCategory || "Not entered"}
-    </p>
-    
-    <p>
-        <strong>Aperture count:</strong>
-        ${morphology.apertureCount || "Not entered"}
-    </p>
+        <p>
+            <strong>Size category:</strong>
+            ${morphology.sizeCategory || "Not entered"}
+        </p>
 
-    <p>
-        <strong>Polar size range:</strong>
-        ${morphology.polarSizeRange || "Not entered"}
-    </p>
+        <p>
+            <strong>Aperture count:</strong>
+            ${morphology.apertureCount || "Not entered"}
+        </p>
 
-    <p>
-        <strong>Equatorial size range:</strong>
-        ${morphology.equatorialSizeRange || "Not entered"}
-    </p>
+        <p>
+            <strong>Polar size range:</strong>
+            ${morphology.polarSizeRange || "Not entered"}
+        </p>
 
-    <p>
-        <strong>Dispersal form:</strong>
-        ${morphology.dispersalForm || "Not entered"}
-    </p>
+        <p>
+            <strong>Equatorial size range:</strong>
+            ${morphology.equatorialSizeRange || "Not entered"}
+        </p>
 
-</div>
+        <p>
+            <strong>Dispersal form:</strong>
+            ${morphology.dispersalForm || "Not entered"}
+        </p>
+
+    </div>
 
     <br>
 `;
+
 const dkeyPlantPhoto = document.getElementById("dkey-plant-photo");
 const dkeyFlowerPhoto = document.getElementById("dkey-flower-photo");
 const polarPhoto = document.getElementById("polar-photo");
