@@ -485,18 +485,64 @@ function showPollenImages(species) {
             : "";
 
   
+
 container.innerHTML = `
     <h3>Identification Result</h3>
 
     <h2><i>${species}</i></h2>
 
-    <!-- OPTION A: POLLEN LEFT, BOTANICAL PHOTOS RIGHT -->
     <div class="dkey-result-layout">
 
-        <!-- LEFT: POLLEN PHOTOGRAPHS -->
+        <!-- LEFT: POLLEN CHARACTERISTICS -->
+        <div class="dkey-characteristics-panel">
+
+            <h3>Pollen Morphological Characteristics</h3>
+
+            <div class="detail-list">
+
+                <p>
+                    <strong>Morphologic type:</strong>
+                    ${morphology.morphologicType || "Not entered"}
+                </p>
+
+                <p>
+                    <strong>Surface pattern:</strong>
+                    ${morphology.surfacePattern || "Not entered"}
+                </p>
+
+                <p>
+                    <strong>Size category:</strong>
+                    ${morphology.sizeCategory || "Not entered"}
+                </p>
+
+                <p>
+                    <strong>Aperture count:</strong>
+                    ${morphology.apertureCount || "Not entered"}
+                </p>
+
+                <p>
+                    <strong>Polar size range:</strong>
+                    ${morphology.polarSizeRange || "Not entered"}
+                </p>
+
+                <p>
+                    <strong>Equatorial size range:</strong>
+                    ${morphology.equatorialSizeRange || "Not entered"}
+                </p>
+
+                <p>
+                    <strong>Dispersal form:</strong>
+                    ${morphology.dispersalForm || "Not entered"}
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- MIDDLE: POLLEN PHOTOGRAPHS -->
         <div class="dkey-pollen-panel">
 
-            <h3>Pollen Morphology</h3>
+            <h3>Pollen Photographs</h3>
 
             ${figure ? `
                 <div class="image-card">
@@ -516,7 +562,7 @@ container.innerHTML = `
 
         </div>
 
-        <!-- RIGHT: PLANT AND FLOWER PHOTOGRAPHS -->
+        <!-- RIGHT: BOTANICAL PHOTOGRAPHS -->
         <div class="dkey-botanical-panel">
 
             <h3>Source Plant</h3>
@@ -536,48 +582,6 @@ container.innerHTML = `
             </div>
 
         </div>
-
-    </div>
-
-    <!-- POLLEN MORPHOLOGICAL CHARACTERISTICS -->
-    <h3>Pollen Morphological Characteristics</h3>
-
-    <div class="detail-list">
-
-        <p>
-            <strong>Morphologic type:</strong>
-            ${morphology.morphologicType || "Not entered"}
-        </p>
-
-        <p>
-            <strong>Surface pattern:</strong>
-            ${morphology.surfacePattern || "Not entered"}
-        </p>
-
-        <p>
-            <strong>Size category:</strong>
-            ${morphology.sizeCategory || "Not entered"}
-        </p>
-
-        <p>
-            <strong>Aperture count:</strong>
-            ${morphology.apertureCount || "Not entered"}
-        </p>
-
-        <p>
-            <strong>Polar size range:</strong>
-            ${morphology.polarSizeRange || "Not entered"}
-        </p>
-
-        <p>
-            <strong>Equatorial size range:</strong>
-            ${morphology.equatorialSizeRange || "Not entered"}
-        </p>
-
-        <p>
-            <strong>Dispersal form:</strong>
-            ${morphology.dispersalForm || "Not entered"}
-        </p>
 
     </div>
 
