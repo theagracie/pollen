@@ -470,8 +470,7 @@ function showPollenImages(species) {
     const figure = pollenFigureNumbers[species];
     const morphology = pollenMorphologyData[species] || {};
     const container = document.getElementById("key-result");
-const plantPath = getImagePath(species, "plant");
-const flowerPath = getImagePath(species, "flower");
+
     const polarPath = figure
         ? `pollen_images/Fig-${figure}a.jpg`
         : "";
@@ -525,7 +524,7 @@ const flowerPath = getImagePath(species, "flower");
     <strong>Size category:</strong>
     ${morphology.sizeCategory || "Not entered"}
     </p>
-
+    
     <p>
         <strong>Aperture count:</strong>
         ${morphology.apertureCount || "Not entered"}
@@ -550,8 +549,7 @@ const flowerPath = getImagePath(species, "flower");
 
     <br>
 `;
-const dkeyPlantPhoto = document.getElementById("dkey-plant-photo");
-const dkeyFlowerPhoto = document.getElementById("dkey-flower-photo");
+
     const polarPhoto = document.getElementById("polar-photo");
     const equatorialPhoto = document.getElementById("equatorial-photo");
 
@@ -646,32 +644,32 @@ mangroveSpecies.forEach(species => {
 speciesProfile.innerHTML = `
     <hr>
 
-   <h3><i>${species}</i></h3>
+    <h3><i>${species}</i></h3>
 
-<!-- PLANT AND FLOWER PHOTOGRAPHS -->
-<details class="photo-toggle">
+    <!-- FIRST DROPDOWN -->
+    <details class="photo-toggle">
 
-    <summary>Plant and Flower Photographs</summary>
+        <summary>Plant and Flower Photographs</summary>
 
-    <div class="species-images">
+        <div class="species-images">
 
-        <div class="image-card">
-            <h4>Whole Plant</h4>
-            <img id="dkey-plant-photo"
-                 src="${plantPath}"
-                 alt="Whole plant of ${species}">
+            <div class="image-card">
+                <h4>Whole Plant</h4>
+                <img id="plant-photo"
+                     src="${plantPath}"
+                     alt="Whole plant of ${species}">
+            </div>
+
+            <div class="image-card">
+                <h4>Flower</h4>
+                <img id="flower-photo"
+                     src="${flowerPath}"
+                     alt="Flower of ${species}">
+            </div>
+
         </div>
 
-        <div class="image-card">
-            <h4>Flower</h4>
-            <img id="dkey-flower-photo"
-                 src="${flowerPath}"
-                 alt="Flower of ${species}">
-        </div>
-
-    </div>
-
-</details>
+    </details>
     
 
     <!-- SECOND DROPDOWN: PUT IT HERE -->
