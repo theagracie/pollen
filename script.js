@@ -577,7 +577,10 @@ ${figure ? `
 `;
 const dkeyPlantPhoto = document.getElementById("dkey-plant-photo");
 const dkeyFlowerPhoto = document.getElementById("dkey-flower-photo");
+const polarPhoto = document.getElementById("polar-photo");
+const equatorialPhoto = document.getElementById("equatorial-photo");
 
+// WHOLE PLANT
 if (dkeyPlantPhoto) {
     dkeyPlantPhoto.addEventListener("click", function() {
         openImageModal(plantPath, `Whole plant of ${species}`);
@@ -598,37 +601,26 @@ if (dkeyFlowerPhoto) {
         this.replaceWith("Flower photograph not available.");
     };
 }
-if (dkeyFlowerPhoto) {
-    dkeyFlowerPhoto.addEventListener("click", function() {
-        openImageModal(flowerPath, `Flower of ${species}`);
+// POLAR VIEW
+if (polarPhoto) {
+    polarPhoto.addEventListener("click", function() {
+        openImageModal(polarPath, `Polar view of ${species}`);
     });
 
-    dkeyFlowerPhoto.onerror = function() {
-        this.replaceWith("Flower photograph not available.");
+    polarPhoto.onerror = function() {
+        this.replaceWith("Polar image not found. Check filename.");
     };
 }
-    const polarPhoto = document.getElementById("polar-photo");
-    const equatorialPhoto = document.getElementById("equatorial-photo");
 
-    if (polarPhoto) {
-        polarPhoto.addEventListener("click", function() {
-            openImageModal(polarPath, `Polar view of ${species}`);
-        });
+// EQUATORIAL VIEW
+if (equatorialPhoto) {
+    equatorialPhoto.addEventListener("click", function() {
+        openImageModal(equatorialPath, `Equatorial view of ${species}`);
+    });
 
-        polarPhoto.onerror = function() {
-            this.replaceWith("Polar image not found. Check filename.");
-        };
-    }
-
-    if (equatorialPhoto) {
-        equatorialPhoto.addEventListener("click", function() {
-            openImageModal(equatorialPath, `Equatorial view of ${species}`);
-        });
-
-        equatorialPhoto.onerror = function() {
-            this.replaceWith("Equatorial image not found. Check filename.");
-        };
-    }
+    equatorialPhoto.onerror = function() {
+        this.replaceWith("Equatorial image not found. Check filename.");
+    };
 }
 function goBack() {
     if (screenHistory.length > 0) {
