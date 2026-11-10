@@ -194,11 +194,11 @@ const pollenMorphologyData = {
     "Nypa fruticans": {
         morphologicType: "subprolate",
         surfacePattern: "echinate",
-        sizeCategory: "magna",
         polarSizeRange: "25.12μm-55.73μm",
         equatorialSizeRange: "21.29μm-61.72μm",
         apertureCount: "1",
-        dispersalForm: "monad"
+        dispersalForm: "monad",
+        sizeCategory: "magna"
     },
 
     "Sonneratia alba": {
