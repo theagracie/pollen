@@ -625,16 +625,19 @@ if (polarPhoto) {
     };
 }
 
-// EQUATORIAL VIEW
-if (equatorialPhoto) {
-    equatorialPhoto.addEventListener("click", function() {
-        openImageModal(equatorialPath, `Equatorial view of ${species}`);
-    });
+    if (equatorialPhoto) {
+        equatorialPhoto.addEventListener("click", function() {
+            openImageModal(equatorialPath, `Equatorial view of ${species}`);
+        });
 
-    equatorialPhoto.onerror = function() {
-        this.replaceWith("Equatorial image not found. Check filename.");
-    };
+        equatorialPhoto.onerror = function() {
+            this.replaceWith("Equatorial image not found. Check filename.");
+        };
+    }
 }
+
+// CLOSE showPollenImages FUNCTION
+
 function goBack() {
     if (screenHistory.length > 0) {
         const previousCouplet = screenHistory.pop();
