@@ -499,25 +499,24 @@ container.innerHTML = `
 
             <h3>Pollen Photographs</h3>
 
-            <div class="dkey-pollen-images">
+           .dkey-pollen-images {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    align-items: start;
+}
 
-                ${figure ? `
-                    <div class="image-card">
-                        <h4>Polar View</h4>
-                        <img id="polar-photo"
-                             src="${polarPath}"
-                             alt="Polar view of ${species}">
-                    </div>
+.dkey-pollen-images .image-card img {
+    width: 100%;
+    max-height: 380px;
+    object-fit: contain;
+}
 
-                    <div class="image-card">
-                        <h4>Equatorial View</h4>
-                        <img id="equatorial-photo"
-                             src="${equatorialPath}"
-                             alt="Equatorial view of ${species}">
-                    </div>
-                ` : "<p>Pollen photographs are not available.</p>"}
-
-            </div>
+@media (max-width: 600px) {
+    .dkey-pollen-images {
+        grid-template-columns: 1fr;
+    }
+}
 
         </div>
 
