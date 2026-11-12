@@ -595,16 +595,16 @@ const equatorialPhoto = document.getElementById("equatorial-photo");
 
 // WHOLE PLANT
 if (dkeyPlantPhoto) {
+
     dkeyPlantPhoto.addEventListener("click", function() {
         openImageModal(plantPath, `Whole plant of ${species}`);
-
     });
-}
+
     dkeyPlantPhoto.onerror = function() {
         this.replaceWith("Whole-plant photograph not available.");
     };
-}
 
+}
 if (dkeyFlowerPhoto) {
     dkeyFlowerPhoto.addEventListener("click", function() {
         openImageModal(flowerPath, `Flower of ${species}`);
