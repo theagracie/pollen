@@ -917,11 +917,10 @@ function showPage(pageId, sectionId = null) {
         screenHistory = [];
         showCouplet(1, false);
 
-        // Clear comparison sections
-        document.getElementById("intrafamilial-selection").innerHTML = "";
-        document.getElementById("intrafamilial-results").innerHTML = "";
-        document.getElementById("interfamilial-selection").innerHTML = "";
-        document.getElementById("interfamilial-results").innerHTML = "";
+       // Reset comparison sections
+showFamilySpecies("");
+document.getElementById("interfamilial-selection").innerHTML = "";
+document.getElementById("interfamilial-results").innerHTML = "";
     }
 
     window.scrollTo({
