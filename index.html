@@ -1732,7 +1732,19 @@ transition: background 0.2s ease, transform 0.2s ease;}
             <p>Compare pollen characteristics among species within the same family.</p>
         </div>
 
-        <div id="intrafamilial-selection"></div>
+        <div id="intrafamilial-selection">
+
+    <label for="intrafamilial-family">Select Family</label>
+
+    <select id="intrafamilial-family"
+            onchange="showFamilySpecies(this.value)">
+
+        <option value="">Choose a family</option>
+        <option value="Rhizophoraceae">Rhizophoraceae</option>
+
+    </select>
+
+</div>
         <div id="intrafamilial-results"></div>
 
     </div>

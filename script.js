@@ -943,13 +943,26 @@ const rhizophoraceaeSpecies = [
     "Rhizophora stylosa"
 ];
 
+f
 function showFamilySpecies(family) {
 
-    const selection = document.getElementById("comparison-selection");
-    const results = document.getElementById("comparison-results");
+    const selection = document.getElementById("intrafamilial-selection");
+    const results = document.getElementById("intrafamilial-results");
 
     selectedComparisonSpecies = [];
     results.innerHTML = "";
+
+    if (!family) {
+        selection.innerHTML = `
+            <label for="intrafamilial-family">Select Family</label>
+            <select id="intrafamilial-family"
+                    onchange="showFamilySpecies(this.value)">
+                <option value="">Choose a family</option>
+                <option value="Rhizophoraceae">Rhizophoraceae</option>
+            </select>
+        `;
+        return;
+    }
 
     let species = [];
 
@@ -958,6 +971,12 @@ function showFamilySpecies(family) {
     }
 
     selection.innerHTML = `
+        <label for="intrafamilial-family">Select Family</label>
+        <select id="intrafamilial-family"
+                onchange="showFamilySpecies(this.value)">
+            <option value="Rhizophoraceae" selected>Rhizophoraceae</option>
+        </select>
+
         <h3>${family}</h3>
         <p>Select 2–6 species to compare.</p>
 
@@ -981,6 +1000,7 @@ function showFamilySpecies(family) {
         </button>
     `;
 }
+
 
 function updateComparisonSelection(checkbox) {
 
