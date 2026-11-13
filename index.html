@@ -1026,142 +1026,73 @@ transition: background 0.2s ease, transform 0.2s ease;}
 
 #species-profile,
 #key-container,
-#key-result,
-#comparison-results {
-    scroll-margin-top: 25px;
-}
-/* =====================================
-   DICHOTOMOUS KEY TWO-COLUMN LAYOUT
-===================================== */
 
-.dkey-layout {
-    display: flex !important;
-    flex-direction: row !important;
-    gap: 25px;
-    align-items: flex-start;
+/* IDENTIFICATION RESULT WIDTH */
+
+#key-result {
     width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+    margin: 25px auto;
 }
 
-.dkey-left-panel {
-    flex: 0 0 300px;
-}
-
-.dkey-right-panel {
-    flex: 1;
-    min-width: 0;
-}
-
-
-/* LEFT PANEL: COUPLETS */
-
-.dkey-left-panel {
-    background: #f5f7f2;
-    padding: 25px;
-    border-radius: 12px;
-    min-width: 0;
-}
-
-
-/* RIGHT PANEL: POLLEN RESULTS */
-
-.dkey-right-panel {
-    background: #f5f7f2;
-    padding: 25px;
-    border-radius: 12px;
-    min-width: 0;
-    min-height: 300px;
-}
-
-
-/* MESSAGE BEFORE SPECIES IDENTIFICATION */
-
-#key-result:empty::before {
-    content: "Pollen images and morphological characteristics will appear here once a species has been identified.";
-    display: block;
-    color: #777;
-    text-align: center;
-    padding: 80px 20px;
-    line-height: 1.6;
-}
-
-
-/* KEEP IMAGES WITHIN THE RIGHT PANEL */
-
-.dkey-right-panel img {
-    max-width: 100%;
-    height: auto;
-}
-
-
-/* MOBILE LAYOUT */
-
-@media (max-width: 500px) {
-
-    .dkey-layout {
-        grid-template-columns: 1fr;
-        gap: 18px;
-    }
-
-    .dkey-left-panel,
-    .dkey-right-panel {
-        padding: 18px;
-    }
-
-}
-
-/* DKEY IDENTIFICATION RESULT LAYOUT */
+/* MAIN LAYOUT */
 
 .dkey-result-layout {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 25px;
-    align-items: start;
-    margin: 25px 0;
+    width: 100%;
+    grid-template-columns: minmax(0, 1.8fr) minmax(300px, 0.9fr);
+    gap: 22px;
+    align-items: stretch;
 }
 
-/* POLLEN PANEL */
+/* POLLEN IMAGES */
+
 .dkey-pollen-panel {
     min-width: 0;
-}
-
-.dkey-pollen-panel .image-card img {
-    width: 100%;
-    max-height: 350px;
-    object-fit: contain;
-}
-
-/* BOTANICAL REFERENCE PANEL */
-.dkey-botanical-panel {
-    min-width: 0;
-}
-
-.dkey-botanical-panel .image-card img {
-    width: 100%;
-    max-height: 220px;
-    object-fit: contain;
-}
-
-/* MOBILE LAYOUT */
-@media (max-width: 650px) {
-    .dkey-result-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .dkey-pollen-panel .image-card img {
-        max-height: 300px;
-    }
-
-    .dkey-botanical-panel .image-card img {
-        max-height: 250px;
-    }
 }
 
 .dkey-pollen-images {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px;
-    align-items: start;
+    gap: 16px;
+    padding: 0 16px 18px;
 }
+
+.dkey-pollen-images .image-card {
+    min-width: 0;
+    width: 100%;
+}
+
+.dkey-pollen-images img {
+    display: block;
+    width: 100%;
+    height: 400px;
+    object-fit: contain;
+    background: #FAFBF7;
+    cursor: pointer;
+}
+
+/* BOTANICAL IMAGES */
+
+.dkey-botanical-images img {
+    width: 100%;
+    height: 280px;
+    object-fit: contain;
+}
+
+/* SMALL SCREENS */
+
+@media (max-width: 750px) {
+    .dkey-result-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .dkey-pollen-images {
+        grid-template-columns: 1fr;
+    }
+}
+
 
 .dkey-pollen-images .image-card img {
     width: 100%;
