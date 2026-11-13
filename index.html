@@ -1188,23 +1188,35 @@ transition: background 0.2s ease, transform 0.2s ease;}
     grid-column: 1 / -1;
 }
 
+
 .dkey-botanical-images {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 20px;
     padding: 0 18px 18px;
+    align-items: stretch;
 }
 
 .dkey-botanical-images .image-card {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background: #F1F4ED;
+    border-radius: 10px;
+    padding: 12px;
+    min-width: 0;
 }
 
 .dkey-botanical-images img {
     width: 100%;
-    height: 250px;
+    height: 380px;
     object-fit: contain;
+    object-position: center;
+    background: #F1F4ED;
     cursor: pointer;
 }
+
 
 /* RESPONSIVE LAYOUT */
 
