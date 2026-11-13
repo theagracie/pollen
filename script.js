@@ -943,7 +943,6 @@ const rhizophoraceaeSpecies = [
     "Rhizophora stylosa"
 ];
 
-f
 function showFamilySpecies(family) {
 
     const selection = document.getElementById("intrafamilial-selection");
@@ -966,9 +965,63 @@ function showFamilySpecies(family) {
 
     let species = [];
 
-    if (family === "Rhizophoraceae") {
-        species = rhizophoraceaeSpecies;
-    }
+   
+function showFamilySpecies(family) {
+
+    const selection = document.getElementById("intrafamilial-selection");
+    const results = document.getElementById("intrafamilial-results");
+
+    selectedComparisonSpecies = [];
+    results.innerHTML = "";
+
+    const families = Object.keys(familySpecies);
+
+    selection.innerHTML = `
+        <label for="intrafamilial-family">Select Family</label>
+
+        <select id="intrafamilial-family"
+                onchange="showFamilySpecies(this.value)">
+
+            <option value="">Choose a family</option>
+
+            ${families.map(name => `
+                <option value="${name}" ${name === family ? "selected" : ""}>
+                    ${name}
+                </option>
+            `).join("")}
+
+        </select>
+    `;
+
+    if (!family) return;
+
+    const species = familySpecies[family] || [];
+
+    selection.innerHTML += `
+        <h3>${family}</h3>
+        <p>Select 2–6 species to compare.</p>
+
+        <div id="comparison-species-list">
+            ${species.map(name => `
+                <label class="comparison-species-option">
+                    <input type="checkbox"
+                        value="${name}"
+                        onchange="updateComparisonSelection(this)">
+                    ${name}
+                </label>
+            `).join("")}
+        </div>
+
+        <p id="comparison-count">0 species selected</p>
+
+        <button id="compare-selected-button"
+            onclick="compareSelectedSpecies()"
+            disabled>
+            Compare Selected Species
+        </button>
+    `;
+}
+
 
     selection.innerHTML = `
         <label for="intrafamilial-family">Select Family</label>
