@@ -942,6 +942,9 @@ const rhizophoraceaeSpecies = [
     "Rhizophora stylosa"
 ];
 
+const pollenData = {
+    // all 17 species and their Table 4 characteristics
+};
 
 function showFamilySpecies(family) {
 
@@ -951,8 +954,9 @@ function showFamilySpecies(family) {
     selectedComparisonSpecies = [];
     results.innerHTML = "";
 
-    const families = Object.keys(familySpecies);
-
+const families = [...new Set(
+    Object.values(pollenData).map(item => item.family)
+)];
     selection.innerHTML = `
         <label for="intrafamilial-family">Select Family</label>
 
@@ -972,8 +976,9 @@ function showFamilySpecies(family) {
 
     if (!family) return;
 
-    const species = familySpecies[family] || [];
-
+const species = Object.keys(pollenData).filter(
+    name => pollenData[name].family === family
+);
     if (species.length < 2) {
         selection.innerHTML += `
             <p>This family currently has only one recorded species,
@@ -998,7 +1003,7 @@ function showFamilySpecies(family) {
         </div>
 
         <p id="comparison-count">0 species selected</p>
-
+S
         <button id="compare-selected-button"
                 onclick="compareSelectedSpecies()"
                 disabled>
@@ -1007,33 +1012,6 @@ function showFamilySpecies(family) {
     `;
 }
 
-
-function showFamilySpecies(family) {
-
-    const selection = document.getElementById("intrafamilial-selection");
-    const results = document.getElementById("intrafamilial-results");
-
-    selectedComparisonSpecies = [];
-    results.innerHTML = "";
-
-    const families = Object.keys(familySpecies);
-
-    selection.innerHTML = `
-        <label for="intrafamilial-family">Select Family</label>
-
-        <select id="intrafamilial-family"
-                onchange="showFamilySpecies(this.value)">
-
-            <option value="">Choose a family</option>
-
-            ${families.map(name => `
-                <option value="${name}" ${name === family ? "selected" : ""}>
-                    ${name}
-                </option>
-            `).join("")}
-
-        </select>
-    `;
 
     if (!family) return;
 
