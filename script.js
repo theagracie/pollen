@@ -892,6 +892,7 @@ function resetSections() {
 
 
 // PAGE NAVIGATION
+
 function showPage(pageId, sectionId = null) {
 
     const pages = document.querySelectorAll(".page");
@@ -905,7 +906,7 @@ function showPage(pageId, sectionId = null) {
     if (selectedPage) {
         selectedPage.classList.add("active");
     }
-    
+
     // Reset interactive sections when returning Home
     if (pageId === "home-page") {
 
@@ -916,8 +917,11 @@ function showPage(pageId, sectionId = null) {
         screenHistory = [];
         showCouplet(1, false);
 
-        // Clear comparison results
-        document.getElementById("comparison-results").innerHTML = "";
+        // Clear comparison sections
+        document.getElementById("intrafamilial-selection").innerHTML = "";
+        document.getElementById("intrafamilial-results").innerHTML = "";
+        document.getElementById("interfamilial-selection").innerHTML = "";
+        document.getElementById("interfamilial-results").innerHTML = "";
     }
 
     window.scrollTo({
@@ -925,39 +929,7 @@ function showPage(pageId, sectionId = null) {
         behavior: "instant"
     });
 }
-function showComparisonType(type) {
 
-    const selection = document.getElementById("comparison-selection");
-    const results = document.getElementById("comparison-results");
-
-    results.innerHTML = "";
-
-    if (type === "intrafamilial") {
-
-        selection.innerHTML = `
-            <h2>Intrafamily Comparison</h2>
-            <p>Select a family to compare its species.</p>
-
-            <button onclick="showFamilySpecies('Rhizophoraceae')">
-                Rhizophoraceae
-            </button>
-        `;
-
-    }
-
-    else if (type === "interfamilial") {
-
-        selection.innerHTML = `
-            <h2>Interfamily Comparison</h2>
-            <p>Select species from different families to compare.</p>
-
-            <button onclick="showInterfamilySelection()">
-                Select Species
-            </button>
-        `;
-
-    }
-}
 
 // SELECTED SPECIES FOR COMPARISON
 let selectedComparisonSpecies = [];

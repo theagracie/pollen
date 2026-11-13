@@ -1710,6 +1710,7 @@ transition: background 0.2s ease, transform 0.2s ease;}
 </div>
 
 </section>
+
 <!-- COMPARATIVE POLLEN MORPHOLOGY PAGE -->
 <section id="comparison-page" class="page content-page">
 
@@ -1718,30 +1719,39 @@ transition: background 0.2s ease, transform 0.2s ease;}
     </button>
 
     <h1 id="comparison-heading">Compare Pollen Morphology</h1>
-    <p>
-        Similarities and differences in pollen
-        morphology among the mangrove species.
+    <p class="comparison-intro">
+        Explore similarities and differences in pollen
+        morphology among selected mangrove species.
     </p>
 
-    <div class="comparison-options">
+    <!-- INTRAFAMILIAL COMPARISON -->
+    <div class="comparison-section">
 
-        <button onclick="showComparisonType('intrafamilial')">
-            Intrafamilial Comparison
-            <span>Compare species within the same family.</span>
-        </button>
+        <div class="comparison-section-heading">
+            <h2>Intrafamilial Comparison</h2>
+            <p>Compare pollen characteristics among species within the same family.</p>
+        </div>
 
-        <button onclick="showComparisonType('interfamilial')">
-            Interfamilial Comparison
-            <span>Compare species from different families.</span>
-        </button>
+        <div id="intrafamilial-selection"></div>
+        <div id="intrafamilial-results"></div>
 
     </div>
 
-    <div id="comparison-selection"></div>
+    <!-- INTERFAMILIAL COMPARISON -->
+    <div class="comparison-section">
 
-    <div id="comparison-results"></div>
+        <div class="comparison-section-heading">
+            <h2>Interfamilial Comparison</h2>
+            <p>Compare pollen characteristics among species from different families.</p>
+        </div>
+
+        <div id="interfamilial-selection"></div>
+        <div id="interfamilial-results"></div>
+
+    </div>
 
 </section>
+
 
 <!-- ACKNOWLEDGEMENTS PAGE -->
  
