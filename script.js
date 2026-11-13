@@ -575,20 +575,22 @@ ${figure ? `
 
     <br>
 `;
+
 const dkeyPlantPhoto = document.getElementById("dkey-plant-photo");
 const dkeyFlowerPhoto = document.getElementById("dkey-flower-photo");
 
+// WHOLE PLANT
 if (dkeyPlantPhoto) {
     dkeyPlantPhoto.addEventListener("click", function() {
         openImageModal(plantPath, `Whole plant of ${species}`);
-
     });
-}
+
     dkeyPlantPhoto.onerror = function() {
         this.replaceWith("Whole-plant photograph not available.");
     };
 }
 
+// FLOWER
 if (dkeyFlowerPhoto) {
     dkeyFlowerPhoto.addEventListener("click", function() {
         openImageModal(flowerPath, `Flower of ${species}`);
@@ -598,15 +600,8 @@ if (dkeyFlowerPhoto) {
         this.replaceWith("Flower photograph not available.");
     };
 }
-if (dkeyFlowerPhoto) {
-    dkeyFlowerPhoto.addEventListener("click", function() {
-        openImageModal(flowerPath, `Flower of ${species}`);
-    });
 
-    dkeyFlowerPhoto.onerror = function() {
-        this.replaceWith("Flower photograph not available.");
-    };
-}
+
     const polarPhoto = document.getElementById("polar-photo");
     const equatorialPhoto = document.getElementById("equatorial-photo");
 
