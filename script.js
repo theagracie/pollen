@@ -952,16 +952,26 @@ function showFamilySpecies(family) {
     results.innerHTML = "";
 
     if (!family) {
-        selection.innerHTML = `
-            <label for="intrafamilial-family">Select Family</label>
-            <select id="intrafamilial-family"
-                    onchange="showFamilySpecies(this.value)">
-                <option value="">Choose a family</option>
-                <option value="Rhizophoraceae">Rhizophoraceae</option>
-            </select>
-        `;
-        return;
-    }
+       const families = Object.keys(familySpecies);
+
+selection.innerHTML = `
+    <label for="intrafamilial-family">Select Family</label>
+
+    <select id="intrafamilial-family"
+            onchange="showFamilySpecies(this.value)">
+
+        <option value="">Choose a family</option>
+
+        ${families.map(name => `
+            <option value="${name}">${name}</option>
+        `).join("")}
+
+    </select>
+`;
+
+return;
+
+}
 
     let species = [];
 
