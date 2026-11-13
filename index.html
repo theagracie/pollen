@@ -1175,6 +1175,131 @@ transition: background 0.2s ease, transform 0.2s ease;}
     }
 }
 
+
+/* =================================
+   DKEY IDENTIFICATION RESULT LAYOUT
+================================= */
+
+#key-result {
+    width: 100%;
+    max-width: 1100px;
+    margin: 25px auto;
+}
+
+.dkey-result-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    gap: 22px;
+    align-items: stretch;
+}
+
+/* SECTION PANELS */
+
+.dkey-pollen-panel,
+.dkey-characteristics-panel,
+.dkey-botanical-panel {
+    background: #FAFBF7;
+    border: 1px solid #B8CBB8;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.dkey-pollen-panel h3,
+.dkey-characteristics-panel h3,
+.dkey-botanical-panel h3 {
+    background: #31583B;
+    color: white;
+    padding: 14px 18px;
+    margin: 0 0 15px;
+}
+
+/* POLLEN PHOTOGRAPHS */
+
+.dkey-pollen-images {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    padding: 0 15px 15px;
+}
+
+.dkey-pollen-images .image-card {
+    min-width: 0;
+    text-align: center;
+}
+
+.dkey-pollen-images img {
+    width: 100%;
+    height: 340px;
+    object-fit: contain;
+    cursor: pointer;
+}
+
+/* MORPHOLOGICAL CHARACTERISTICS */
+
+.dkey-characteristics-panel {
+    padding-bottom: 15px;
+}
+
+.dkey-characteristics-panel .detail-list {
+    padding: 0 18px;
+}
+
+.dkey-characteristics-panel .detail-list p {
+    padding: 10px 0;
+    margin: 0;
+    border-bottom: 1px solid #DCE5DA;
+    line-height: 1.5;
+}
+
+/* BOTANICAL PHOTOGRAPHS */
+
+.dkey-botanical-panel {
+    grid-column: 1 / -1;
+}
+
+.dkey-botanical-images {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    padding: 0 18px 18px;
+}
+
+.dkey-botanical-images .image-card {
+    text-align: center;
+}
+
+.dkey-botanical-images img {
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+    cursor: pointer;
+}
+
+/* RESPONSIVE LAYOUT */
+
+@media (max-width: 750px) {
+    .dkey-result-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .dkey-botanical-panel {
+        grid-column: auto;
+    }
+
+    .dkey-pollen-images {
+        grid-template-columns: 1fr;
+    }
+
+    .dkey-pollen-images img {
+        height: 300px;
+    }
+
+    .dkey-botanical-images {
+        grid-template-columns: 1fr;
+    }
+}
+
+
     </style>
 </head>
 
