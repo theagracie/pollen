@@ -1008,9 +1008,7 @@ function showFamilySpecies(family) {
     `;
 }
 
-    let species = [];
 
-   
 function showFamilySpecies(family) {
 
     const selection = document.getElementById("intrafamilial-selection");
@@ -1042,6 +1040,14 @@ function showFamilySpecies(family) {
 
     const species = familySpecies[family] || [];
 
+    if (species.length < 2) {
+        selection.innerHTML += `
+            <p>This family currently has only one recorded species,
+            so an intrafamilial comparison is not available.</p>
+        `;
+        return;
+    }
+
     selection.innerHTML += `
         <h3>${family}</h3>
         <p>Select 2–6 species to compare.</p>
@@ -1050,8 +1056,8 @@ function showFamilySpecies(family) {
             ${species.map(name => `
                 <label class="comparison-species-option">
                     <input type="checkbox"
-                        value="${name}"
-                        onchange="updateComparisonSelection(this)">
+                           value="${name}"
+                           onchange="updateComparisonSelection(this)">
                     ${name}
                 </label>
             `).join("")}
@@ -1060,40 +1066,8 @@ function showFamilySpecies(family) {
         <p id="comparison-count">0 species selected</p>
 
         <button id="compare-selected-button"
-            onclick="compareSelectedSpecies()"
-            disabled>
-            Compare Selected Species
-        </button>
-    `;
-}
-
-
-    selection.innerHTML = `
-        <label for="intrafamilial-family">Select Family</label>
-        <select id="intrafamilial-family"
-                onchange="showFamilySpecies(this.value)">
-            <option value="Rhizophoraceae" selected>Rhizophoraceae</option>
-        </select>
-
-        <h3>${family}</h3>
-        <p>Select 2–6 species to compare.</p>
-
-        <div id="comparison-species-list">
-            ${species.map(name => `
-                <label class="comparison-species-option">
-                    <input type="checkbox"
-                        value="${name}"
-                        onchange="updateComparisonSelection(this)">
-                    ${name}
-                </label>
-            `).join("")}
-        </div>
-
-        <p id="comparison-count">0 species selected</p>
-
-        <button id="compare-selected-button"
-            onclick="compareSelectedSpecies()"
-            disabled>
+                onclick="compareSelectedSpecies()"
+                disabled>
             Compare Selected Species
         </button>
     `;
