@@ -1169,6 +1169,7 @@ console.log("Selected family:", family);
 const species = Object.keys(pollenData).filter(
     name => pollenData[name].family === family
 );
+console.log("Species found:", species);
     if (species.length < 2) {
         selection.innerHTML += `
             <p>This family currently has only one recorded species,
