@@ -943,7 +943,194 @@ const rhizophoraceaeSpecies = [
 ];
 
 const pollenData = {
-    // all 17 species and their Table 4 characteristics
+
+    "Acanthus ilicifolius": {
+        family: "Acanthaceae",
+        PA: "50.61 ± 8.53",
+        EA: "40.22 ± 6.61",
+        PE: "1.29 ± 0.29",
+        shape: "Subprolate",
+        aperture: "Tricolpate",
+        ornamentation: "Reticulate",
+        size: "Magna"
+    },
+
+    "Nypa fruticans": {
+        family: "Arecaceae",
+        PA: "46.22 ± 8.49",
+        EA: "37.31 ± 10.65",
+        PE: "1.36 ± 0.48",
+        shape: "Subprolate",
+        aperture: "1-Zonosulcate",
+        ornamentation: "Echinate",
+        size: "Magna"
+    },
+
+    "Avicennia marina": {
+        family: "Avicenniaceae",
+        PA: "38.18 ± 4.04",
+        EA: "35.30 ± 4.97",
+        PE: "1.09 ± 0.12",
+        shape: "Prolate",
+        aperture: "Tricolporate",
+        ornamentation: "Microreticulate",
+        size: "Media"
+    },
+
+    "Avicennia rumphiana": {
+        family: "Avicenniaceae",
+        PA: "26.80 ± 9.43",
+        EA: "24.52 ± 8.63",
+        PE: "1.10 ± 0.08",
+        shape: "Subprolate",
+        aperture: "Tricolporate",
+        ornamentation: "Reticulate",
+        size: "Media"
+    },
+
+    "Lumnitzera littorea": {
+        family: "Combretaceae",
+        PA: "43.26 ± 4.43",
+        EA: "40.55 ± 4.40",
+        PE: "1.07 ± 0.10",
+        shape: "Circular",
+        aperture: "Tricolporate",
+        ornamentation: "Granulate",
+        size: "Media"
+    },
+
+    "Lumnitzera racemosa": {
+        family: "Combretaceae",
+        PA: "28.24 ± 5.00",
+        EA: "25.78 ± 5.60",
+        PE: "1.11 ± 0.12",
+        shape: "Circular",
+        aperture: "Tricolporate",
+        ornamentation: "Reticulate",
+        size: "Media"
+    },
+
+    "Excoecaria agallocha": {
+        family: "Euphorbiaceae",
+        PA: "33.51 ± 5.45",
+        EA: "28.94 ± 3.41",
+        PE: "1.17 ± 0.20",
+        shape: "Suboblate",
+        aperture: "Tricolporate",
+        ornamentation: "Reticulate",
+        size: "Media"
+    },
+
+    "Pemphis acidula": {
+        family: "Lythraceae",
+        PA: "36.70 ± 4.92",
+        EA: "34.18 ± 4.61",
+        PE: "1.08 ± 0.09",
+        shape: "Circular",
+        aperture: "Tricolporate",
+        ornamentation: "Scabrate",
+        size: "Media"
+    },
+
+    "Sonneratia alba": {
+        family: "Lythraceae",
+        PA: "63.86 ± 5.58",
+        EA: "53.79 ± 4.84",
+        PE: "1.20 ± 0.15",
+        shape: "Prolate",
+        aperture: "Triporate",
+        ornamentation: "Granulate",
+        size: "Magna"
+    },
+
+    "Xylocarpus granatum": {
+        family: "Meliaceae",
+        PA: "21.12 ± 2.49",
+        EA: "18.94 ± 2.75",
+        PE: "1.12 ± 0.09",
+        shape: "Subprolate",
+        aperture: "Tetracolporate",
+        ornamentation: "Granulate",
+        size: "Media"
+    },
+
+    "Bruguiera gymnorhiza": {
+        family: "Rhizophoraceae",
+        PA: "23.06 ± 2.64",
+        EA: "21.12 ± 2.43",
+        PE: "1.10 ± 0.09",
+        shape: "Subprolate",
+        aperture: "Tricolporate",
+        ornamentation: "Reticulate",
+        size: "Minuta"
+    },
+
+    "Ceriops decandra": {
+        family: "Rhizophoraceae",
+        PA: "21.15 ± 4.31",
+        EA: "20.16 ± 3.61",
+        PE: "1.07 ± 0.25",
+        shape: "Prolate",
+        aperture: "Tricolporate",
+        ornamentation: "Psilate",
+        size: "Minuta"
+    },
+
+    "Ceriops tagal": {
+        family: "Rhizophoraceae",
+        PA: "17.47 ± 1.61",
+        EA: "16.12 ± 1.43",
+        PE: "1.09 ± 0.07",
+        shape: "Subprolate",
+        aperture: "Tricolporate",
+        ornamentation: "Scabrate",
+        size: "Minuta"
+    },
+
+    "Rhizophora apiculata": {
+        family: "Rhizophoraceae",
+        PA: "21.20 ± 3.25",
+        EA: "19.12 ± 2.97",
+        PE: "1.11 ± 0.11",
+        shape: "Subprolate",
+        aperture: "Tricolporate",
+        ornamentation: "Reticulate",
+        size: "Media"
+    },
+
+    "Rhizophora mucronata": {
+        family: "Rhizophoraceae",
+        PA: "21.40 ± 2.40",
+        EA: "18.11 ± 2.43",
+        PE: "1.21 ± 0.23",
+        shape: "Subprolate",
+        aperture: "Tricolporate",
+        ornamentation: "Psilate-scabrate",
+        size: "Minuta"
+    },
+
+    "Rhizophora stylosa": {
+        family: "Rhizophoraceae",
+        PA: "22.83 ± 3.13",
+        EA: "20.04 ± 3.41",
+        PE: "1.15 ± 0.15",
+        shape: "Subprolate",
+        aperture: "Tricolporate",
+        ornamentation: "Perforate",
+        size: "Minuta"
+    },
+
+    "Scyphiphora hydrophylla": {
+        family: "Rubiaceae",
+        PA: "27.88 ± 4.29",
+        EA: "26.65 ± 5.25",
+        PE: "1.07 ± 0.16",
+        shape: "Subprolate",
+        aperture: "Tricolporate",
+        ornamentation: "Reticulate",
+        size: "Media"
+    }
+
 };
 
 function showFamilySpecies(family) {
