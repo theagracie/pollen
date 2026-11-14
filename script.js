@@ -1173,7 +1173,7 @@ console.log("Species found:", species);
     if (species.length < 2) {
         selection.innerHTML += `
             <p>Only one species from this family was included in the study. 
-            An intrafamilial comparison is not available.</p>
+            An intrafamilial comparison is NOT AVAILABLE.</p>
         `;
         return;
     }
