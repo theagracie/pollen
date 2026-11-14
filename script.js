@@ -1230,7 +1230,7 @@ function updateComparisonSelection(checkbox) {
 
 function compareSelectedSpecies() {
 
-    const results = document.getElementById("comparison-results");
+    const results = document.getElementById("intrafamilial-results");
 
     if (selectedComparisonSpecies.length < 2) {
         alert("Please select at least two species.");
@@ -1238,13 +1238,13 @@ function compareSelectedSpecies() {
     }
 
     const characteristics = [
-        "Polar Axis (P)",
-        "Equatorial Diameter (E)",
-        "P/E Ratio",
-        "Pollen Shape",
-        "Aperture Type",
-        "Surface Ornamentation",
-        "Size Category"
+        { label: "Polar Axis (P)", key: "PA" },
+        { label: "Equatorial Axis (E)", key: "EA" },
+        { label: "P/E Ratio", key: "PE" },
+        { label: "Pollen Shape", key: "shape" },
+        { label: "Aperture Type", key: "aperture" },
+        { label: "Surface Ornamentation", key: "ornamentation" },
+        { label: "Size Category", key: "size" }
     ];
 
     let tableHTML = `
@@ -1260,19 +1260,23 @@ function compareSelectedSpecies() {
                 <thead>
                     <tr>
                         <th>Characteristics</th>
+
                         ${selectedComparisonSpecies.map(name =>
                             `<th>${name}</th>`
                         ).join("")}
+
                     </tr>
                 </thead>
 
                 <tbody>
                     ${characteristics.map(characteristic => `
                         <tr>
-                            <th>${characteristic}</th>
-                            ${selectedComparisonSpecies.map(() =>
-                                `<td>To be added</td>`
+                            <th>${characteristic.label}</th>
+
+                            ${selectedComparisonSpecies.map(name =>
+                                `<td>${pollenData[name][characteristic.key]}</td>`
                             ).join("")}
+
                         </tr>
                     `).join("")}
                 </tbody>
