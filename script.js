@@ -1012,19 +1012,6 @@ const species = Object.keys(pollenData).filter(
     `;
 }
 
-
-    if (!family) return;
-
-    const species = familySpecies[family] || [];
-
-    if (species.length < 2) {
-        selection.innerHTML += `
-            <p>This family currently has only one recorded species,
-            so an intrafamilial comparison is not available.</p>
-        `;
-        return;
-    }
-
     selection.innerHTML += `
         <h3>${family}</h3>
         <p>Select 2–6 species to compare.</p>
