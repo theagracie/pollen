@@ -1012,29 +1012,6 @@ const species = Object.keys(pollenData).filter(
     `;
 }
 
-    selection.innerHTML += `
-        <h3>${family}</h3>
-        <p>Select 2–6 species to compare.</p>
-
-        <div id="comparison-species-list">
-            ${species.map(name => `
-                <label class="comparison-species-option">
-                    <input type="checkbox"
-                           value="${name}"
-                           onchange="updateComparisonSelection(this)">
-                    ${name}
-                </label>
-            `).join("")}
-        </div>
-
-        <p id="comparison-count">0 species selected</p>
-
-        <button id="compare-selected-button"
-                onclick="compareSelectedSpecies()"
-                disabled>
-            Compare Selected Species
-        </button>
-    `;
 
 function updateComparisonSelection(checkbox) {
 
