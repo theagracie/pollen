@@ -1003,7 +1003,7 @@ const species = Object.keys(pollenData).filter(
         </div>
 
         <p id="comparison-count">0 species selected</p>
-S
+
         <button id="compare-selected-button"
                 onclick="compareSelectedSpecies()"
                 disabled>
