@@ -1035,8 +1035,6 @@ const species = Object.keys(pollenData).filter(
             Compare Selected Species
         </button>
     `;
-}
-
 
 function updateComparisonSelection(checkbox) {
 
