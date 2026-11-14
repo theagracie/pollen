@@ -1144,6 +1144,9 @@ function showFamilySpecies(family) {
 const families = [...new Set(
     Object.values(pollenData).map(item => item.family)
 )];
+console.log("Pollen data:", pollenData);
+console.log("Families found:", families);
+console.log("Selected family:", family);
     selection.innerHTML = `
         <label for="intrafamilial-family">Select Family</label>
 
