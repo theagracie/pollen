@@ -1172,8 +1172,8 @@ const species = Object.keys(pollenData).filter(
 console.log("Species found:", species);
     if (species.length < 2) {
         selection.innerHTML += `
-            <p>This family currently has only one recorded species,
-            so an intrafamilial comparison is not available.</p>
+            <p>Only <b>one<b> species from this family was <b>included in the study<b>. 
+            An intrafamilial comparison is not available.</p>
         `;
         return;
     }
