@@ -945,13 +945,14 @@ function showPage(pageId, sectionId = null) {
 showFamilySpecies("");
 document.getElementById("interfamilial-selection").innerHTML = "";
 document.getElementById("interfamilial-results").innerHTML = "";
-    }
+        }
+}
 
     window.scrollTo({
         top: 0,
         behavior: "instant"
     });
-}
+
 
 
 // SELECTED SPECIES FOR COMPARISON
