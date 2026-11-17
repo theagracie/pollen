@@ -383,33 +383,6 @@ const pollenFigureNumbers = {
     "Scyphiphora hydrophyllacea": 16,
     "Rhizophora apiculata": 17
 };
-function showCouplet(number, shouldScroll = false) {    const couplet = keyData[number];
-    const container = document.getElementById("key-container");
-
-    const resultContainer = document.getElementById("key-result");
-
-    if (resultContainer) {
-        resultContainer.innerHTML = "";
-    }
-    const pollenFigureNumbers = {
-    // keep all your existing species and figure numbers
-};
-
-function getComparisonPollenImages(species) {
-
-    const figure = pollenFigureNumbers[species];
-
-    if (!figure) return null;
-
-    const polar = `pollen_images/Fig-${figure}a.jpg`;
-
-    const equatorial = figure === 13
-        ? "pollen_images/Fig-13b.jpeg"
-        : `pollen_images/Fig-${figure}b.jpg`;
-
-    return { polar, equatorial };
-}
-
 function getComparisonPollenImages(species) {
     const figure = pollenFigureNumbers[species];
 
