@@ -391,6 +391,20 @@ function showCouplet(number, shouldScroll = false) {    const couplet = keyData[
     if (resultContainer) {
         resultContainer.innerHTML = "";
     }
+    function getComparisonPollenImages(species) {
+
+    const figure = pollenFigureNumbers[species];
+
+    if (!figure) return null;
+
+    const polar = `pollen_images/Fig-${figure}a.jpg`;
+
+    const equatorial = figure === 13
+        ? "pollen_images/Fig-13b.jpeg"
+        : `pollen_images/Fig-${figure}b.jpg`;
+
+    return { polar, equatorial };
+}
 
     if (!couplet) {
         container.innerHTML = "<p>Couplet not found.</p>";
@@ -1246,6 +1260,32 @@ function compareSelectedSpecies() {
         { label: "Surface Ornamentation", key: "ornamentation" },
         { label: "Size Category", key: "size" }
     ];
+const imageHTML = selectedComparisonSpecies.map(name => {
+
+    const images = getComparisonPollenImages(name);
+
+    if (!images) {
+        return `<p>Images unavailable for ${name}</p>`;
+    }
+
+    return `
+        <div class="comparison-pollen-card">
+            <h4>${name}</h4>
+
+            <div class="comparison-pollen-images">
+                <div>
+                    <img src="${images.polar}" alt="${name} polar view">
+                    <p>Polar View</p>
+                </div>
+
+                <div>
+                    <img src="${images.equatorial}" alt="${name} equatorial view">
+                    <p>Equatorial View</p>
+                </div>
+            </div>
+        </div>
+    `;
+}).join("");
 
     let tableHTML = `
         <h2>Comparative Pollen Morphology</h2>
@@ -1254,7 +1294,9 @@ function compareSelectedSpecies() {
             Comparison of selected pollen species based
             on their morphological characteristics.
         </p>
-
+<div class="comparison-pollen-gallery">
+    ${imageHTML}
+</div>
         <div style="overflow-x: auto;">
             <table class="comparison-table">
                 <thead>
