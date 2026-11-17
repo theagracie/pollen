@@ -391,7 +391,11 @@ function showCouplet(number, shouldScroll = false) {    const couplet = keyData[
     if (resultContainer) {
         resultContainer.innerHTML = "";
     }
-    function getComparisonPollenImages(species) {
+    const pollenFigureNumbers = {
+    // keep all your existing species and figure numbers
+};
+
+function getComparisonPollenImages(species) {
 
     const figure = pollenFigureNumbers[species];
 
@@ -404,6 +408,12 @@ function showCouplet(number, shouldScroll = false) {    const couplet = keyData[
         : `pollen_images/Fig-${figure}b.jpg`;
 
     return { polar, equatorial };
+}
+
+function showCouplet(number, shouldScroll = false) {
+    const couplet = keyData[number];
+
+    // keep the rest of your existing code
 }
 
     if (!couplet) {
