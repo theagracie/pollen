@@ -1247,17 +1247,14 @@ function updateComparisonSelection(checkbox) {
     }
 
     const compareButton = document.getElementById("compare-button");
-
     compareButton.disabled = selectedComparisonSpecies.length < 2;
-}
+
     document.getElementById("comparison-count").textContent =
         selectedComparisonSpecies.length + " species selected";
 
     document.getElementById("compare-selected-button").disabled =
         selectedComparisonSpecies.length < 2;
 }
-
-function compareSelectedSpecies() {
 
     const results = document.getElementById("intrafamilial-results");
 
