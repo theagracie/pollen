@@ -945,28 +945,24 @@ function showPage(pageId, sectionId = null) {
         selectedPage.classList.add("active");
     }
 
-    // Reset interactive sections when returning Home
     if (pageId === "home-page") {
 
-        // Close opened species profile
         document.getElementById("species-profile").innerHTML = "";
 
-        // Reset Dichotomous Key
         screenHistory = [];
         showCouplet(1, false);
 
-       // Reset comparison sections
-showFamilySpecies("");
-document.getElementById("interfamilial-selection").innerHTML = "";
-document.getElementById("interfamilial-results").innerHTML = "";
-        }
-}
+        showFamilySpecies("");
+
+        document.getElementById("interfamilial-selection").innerHTML = "";
+        document.getElementById("interfamilial-results").innerHTML = "";
+    }
 
     window.scrollTo({
         top: 0,
         behavior: "instant"
     });
-
+}
 
 
 // SELECTED SPECIES FOR COMPARISON
