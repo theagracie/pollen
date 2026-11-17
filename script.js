@@ -410,29 +410,44 @@ function getComparisonPollenImages(species) {
     return { polar, equatorial };
 }
 
+function getComparisonPollenImages(species) {
+    const figure = pollenFigureNumbers[species];
+
+    if (!figure) return null;
+
+    const polar = `pollen_images/Fig-${figure}a.jpg`;
+
+    const equatorial = figure === 13
+        ? "pollen_images/Fig-13b.jpeg"
+        : `pollen_images/Fig-${figure}b.jpg`;
+
+    return { polar, equatorial };
+}
+
 function showCouplet(number, shouldScroll = false) {
     const couplet = keyData[number];
+    const container = document.getElementById("key-container");
+    const resultContainer = document.getElementById("key-result");
 
-    // keep the rest of your existing code
-}
+    if (resultContainer) {
+        resultContainer.innerHTML = "";
+    }
 
     if (!couplet) {
         container.innerHTML = "<p>Couplet not found.</p>";
         return;
     }
 
-       container.innerHTML = `
+    container.innerHTML = `
         <h3>Couplet ${number}</h3>
 
-        <button id="lead-${number}-A"
-                onclick="chooseLead('A', ${number})">
+        <button id="lead-${number}-A" onclick="chooseLead('A', ${number})">
             ${number}a. ${couplet.leadA.text}
         </button>
 
         <br><br>
 
-        <button id="lead-${number}-B"
-                onclick="chooseLead('B', ${number})">
+        <button id="lead-${number}-B" onclick="chooseLead('B', ${number})">
             ${number}b. ${couplet.leadB.text}
         </button>
 
@@ -453,7 +468,6 @@ function showCouplet(number, shouldScroll = false) {
         });
     }
 }
-
 
 function chooseLead(lead, number) {
 
