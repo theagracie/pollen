@@ -198,16 +198,12 @@
         }
 
         .header-kicker {
-            display: inline-block;
-            color: var(--forest-700);
-            background: var(--bg-muted);
-            padding: 4px 10px;
-            border-radius: 999px;
+            color: var(--text-muted);
             font-size: 11px;
             font-weight: 700;
-            letter-spacing: 1.6px;
+            letter-spacing: 1.8px;
             text-transform: uppercase;
-            margin-bottom: 14px;
+            margin-bottom: 10px;
         }
 
         .header-main {
@@ -263,36 +259,11 @@
             box-shadow: var(--shadow-sm);
         }
 
-        .home-about-header {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: baseline;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
         .home-about h2 {
             font-size: 22px;
-            margin: 0;
+            margin: 0 0 10px;
             text-align: left;
             color: var(--forest-900);
-        }
-
-        .home-stats {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .home-stat-pill {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--forest-800);
-            background: var(--bg-muted);
-            border: 1px solid var(--border-subtle);
-            padding: 4px 11px;
-            border-radius: 999px;
         }
 
         .home-about p {
@@ -349,13 +320,6 @@
             font-size: 22px;
             font-weight: 700;
             color: #C7DAC7;
-            background: rgba(255, 255, 255, 0.1);
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             flex-shrink: 0;
         }
 
@@ -408,21 +372,18 @@
 
         .home-footer-link {
             background: transparent;
-            border: 1px solid var(--border-strong);
+            border: none;
             color: var(--forest-800);
-            padding: 6px 14px;
-            border-radius: 999px;
+            padding: 0;
             font-family: inherit;
             font-size: 12.5px;
             font-weight: 600;
+            text-decoration: underline;
             cursor: pointer;
-            transition: background-color 0.18s ease, color 0.18s ease;
         }
 
         .home-footer-link:hover {
-            background: var(--forest-800);
-            border-color: var(--forest-800);
-            color: #FFFFFF;
+            color: var(--forest-950);
         }
 
         /* =========================================================
@@ -649,16 +610,11 @@
         }
 
         .couplet-badge {
-            display: inline-block;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: 0.6px;
             text-transform: uppercase;
-            color: var(--forest-800);
-            background: var(--bg-surface);
-            border: 1px solid var(--border-strong);
-            padding: 4px 10px;
-            border-radius: 999px;
+            color: var(--text-muted);
         }
 
         .dkey-question-title {
@@ -705,19 +661,18 @@
             font-size: 12px;
             font-weight: 600;
             color: var(--forest-800);
-            background: var(--bg-muted);
-            border: 1px solid var(--border-subtle);
-            padding: 4px 9px;
-            border-radius: 6px;
+            background: transparent;
+            border: none;
+            padding: 0;
+            text-decoration: underline;
             cursor: pointer;
             font-family: inherit;
             text-align: left;
-            line-height: 1.3;
+            line-height: 1.4;
         }
 
         .trail-chip:hover {
-            background: var(--bg-tint);
-            border-color: var(--forest-700);
+            color: var(--forest-950);
         }
 
         .trail-sep {
@@ -799,28 +754,18 @@
         }
 
         .lead-intent-badge {
-            display: inline-flex;
-            align-items: center;
-            align-self: flex-start;
-            gap: 5px;
-            font-size: 11.5px;
-            font-weight: 600;
-            padding: 2px 8px;
-            border-radius: 999px;
-            background: var(--bg-muted);
-            color: var(--forest-700);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
         }
 
         .lead-intent-badge.is-terminal {
-            background: #E6F2EA;
-            color: var(--forest-900);
-            border: 1px solid var(--border-strong);
+            color: var(--forest-700);
+            font-weight: 600;
         }
 
         .couplet-lead-btn.is-selected .lead-intent-badge {
-            background: rgba(255, 255, 255, 0.2);
-            color: #FFFFFF;
-            border-color: transparent;
+            color: #DCE9DC;
         }
 
         .lead-arrow {
@@ -949,17 +894,13 @@
 
         .confirmed-traits-list {
             display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
+            flex-direction: column;
+            gap: 4px;
         }
 
         .confirmed-trait-pill {
-            font-size: 12px;
-            background: var(--bg-surface);
-            border: 1px solid var(--border-subtle);
+            font-size: 13px;
             color: var(--text-main);
-            padding: 3px 9px;
-            border-radius: 999px;
         }
 
         /* Empty & Result states */
@@ -1014,14 +955,9 @@
         }
 
         .family-pill {
-            display: inline-block;
-            font-size: 12.5px;
+            font-size: 14px;
             font-weight: 600;
-            color: var(--forest-800);
-            background: var(--bg-muted);
-            border: 1px solid var(--border-subtle);
-            padding: 5px 12px;
-            border-radius: 999px;
+            color: var(--text-secondary);
         }
 
         .dkey-result-layout {
@@ -1314,28 +1250,10 @@
         }
 
         .step-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
             margin: 0 0 8px;
             font-size: 17px;
             font-family: Georgia, serif;
             color: var(--forest-900);
-        }
-
-        .step-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            background: var(--forest-800);
-            color: #FFFFFF;
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: 700;
-            flex-shrink: 0;
         }
 
         .field-label {
@@ -1841,14 +1759,7 @@
             </header>
 
             <section class="home-about">
-                <div class="home-about-header">
-                    <h2>About the Guide</h2>
-                    <div class="home-stats">
-                        <span class="home-stat-pill">17 Mangrove Species</span>
-                        <span class="home-stat-pill">9 Plant Families</span>
-                        <span class="home-stat-pill">16-Couplet Key</span>
-                    </div>
-                </div>
+                <h2>About the Guide</h2>
 
                 <p>
                     Palynology is the study of spores and plant pollen grains. It provides information relevant to airborne allergies,

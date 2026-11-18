@@ -953,10 +953,10 @@ function renderCandidatePanel(coupletNumber) {
 
 function formatLeadIntent(lead) {
     if (lead.result) {
-        return `<span class="lead-intent-badge is-terminal">Identify Species ✓</span>`;
+        return `<span class="lead-intent-badge is-terminal">Identifies species</span>`;
     }
     const count = getBranchSpecies(lead).length;
-    return `<span class="lead-intent-badge">Next Question (${count} remaining) →</span>`;
+    return `<span class="lead-intent-badge">Continues to next step (${count} remaining)</span>`;
 }
 
 function showCouplet(number, shouldScroll = false) {
@@ -1301,10 +1301,7 @@ function showFamilySpecies(family) {
 
     selection.innerHTML = `
         <div class="comparison-step-box">
-            <h3 class="step-title">
-                <span class="step-badge">1</span>
-                Choose a Plant Family
-            </h3>
+            <h3 class="step-title">Step 1. Choose a Plant Family</h3>
             <label for="intrafamilial-family" class="field-label">Select Family</label>
             <select id="intrafamilial-family" class="styled-select" onchange="showFamilySpecies(this.value)">
                 <option value="">-- Select a family --</option>
@@ -1342,10 +1339,7 @@ function showFamilySpecies(family) {
 
     selection.innerHTML += `
         <div class="comparison-step-box">
-            <h3 class="step-title">
-                <span class="step-badge">2</span>
-                Select 2–6 Species in ${family}
-            </h3>
+            <h3 class="step-title">Step 2. Select 2–6 Species in ${family}</h3>
 
             <div id="comparison-species-list" class="comparison-grid-list">
                 ${species.map(name => `
@@ -1491,10 +1485,7 @@ function showInterfamilialFamilies() {
 
     selection.innerHTML = `
         <div class="comparison-step-box">
-            <h3 class="step-title">
-                <span class="step-badge">1</span>
-                Select 2 to 3 Families to Compare
-            </h3>
+            <h3 class="step-title">Step 1. Select 2 to 3 Families to Compare</h3>
             <div id="interfamilial-family-grid" class="comparison-grid-list">
                 ${families.map(name => {
                     const count = getSpeciesByFamily(name).length;
@@ -1560,10 +1551,7 @@ function showInterfamilialSpecies(selectedFamilies) {
 
     selection.innerHTML = `
         <div class="comparison-step-box">
-            <h3 class="step-title">
-                <span class="step-badge">2</span>
-                Select 2 to 6 Species Across Chosen Families
-            </h3>
+            <h3 class="step-title">Step 2. Select 2 to 6 Species Across Chosen Families</h3>
 
             ${selectedFamilies.map(family => {
                 const spp = getSpeciesByFamily(family);
