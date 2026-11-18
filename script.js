@@ -1003,8 +1003,19 @@ function formatLeadIntent(lead) {
     return `<span class="lead-intent-badge">Continues to next step (${count} remaining)</span>`;
 }
 
+function triggerRevealAnimation(element) {
+    if (!element) return;
+    element.classList.remove("is-animating-reveal");
+    void element.offsetWidth; // Force reflow so re-selecting re-triggers animation
+    element.classList.add("is-animating-reveal");
+}
+
+let suppressSwipeClick = false;
+let isSwipeAnimating = false;
+
 function showCouplet(number, shouldScroll = false) {
     currentCoupletNumber = number;
+    isSwipeAnimating = false;
     const couplet = keyData[number];
     const container = document.getElementById("key-container");
     const resultContainer = document.getElementById("key-result");
@@ -1050,32 +1061,45 @@ function showCouplet(number, shouldScroll = false) {
 
         ${trailMarkup}
 
-        <h3 class="dkey-question-title">${couplet.question}</h3>
+        <div class="swipe-deck">
+            <div class="swipe-deck-ghost ghost-2" aria-hidden="true"></div>
+            <div class="swipe-deck-ghost ghost-1" aria-hidden="true"></div>
 
-        <div class="couplet-leads">
-            <button type="button"
-                    id="lead-${number}-A"
-                    class="couplet-lead-btn"
-                    onclick="chooseLead('A', ${number})">
-                <span class="lead-code">${number}a</span>
-                <span class="lead-body">
-                    <span class="lead-text">${couplet.leadA.text}</span>
-                    ${formatLeadIntent(couplet.leadA)}
-                </span>
-                <span class="lead-arrow" aria-hidden="true">→</span>
-            </button>
+            <div id="swipe-question-card" class="swipe-card">
+                <div class="swipe-hint-row">
+                    <span class="swipe-dir-cue dir-left">← Drag left: ${number}a</span>
+                    <span>Swipe or click</span>
+                    <span class="swipe-dir-cue dir-right">Drag right: ${number}b →</span>
+                </div>
 
-            <button type="button"
-                    id="lead-${number}-B"
-                    class="couplet-lead-btn"
-                    onclick="chooseLead('B', ${number})">
-                <span class="lead-code">${number}b</span>
-                <span class="lead-body">
-                    <span class="lead-text">${couplet.leadB.text}</span>
-                    ${formatLeadIntent(couplet.leadB)}
-                </span>
-                <span class="lead-arrow" aria-hidden="true">→</span>
-            </button>
+                <h3 class="dkey-question-title">${couplet.question}</h3>
+
+                <div class="couplet-leads">
+                    <button type="button"
+                            id="lead-${number}-A"
+                            class="couplet-lead-btn"
+                            onclick="handleLeadButtonClick('A', ${number})">
+                        <span class="lead-code">${number}a</span>
+                        <span class="lead-body">
+                            <span class="lead-text">${couplet.leadA.text}</span>
+                            ${formatLeadIntent(couplet.leadA)}
+                        </span>
+                        <span class="lead-arrow" aria-hidden="true">←</span>
+                    </button>
+
+                    <button type="button"
+                            id="lead-${number}-B"
+                            class="couplet-lead-btn"
+                            onclick="handleLeadButtonClick('B', ${number})">
+                        <span class="lead-code">${number}b</span>
+                        <span class="lead-body">
+                            <span class="lead-text">${couplet.leadB.text}</span>
+                            ${formatLeadIntent(couplet.leadB)}
+                        </span>
+                        <span class="lead-arrow" aria-hidden="true">→</span>
+                    </button>
+                </div>
+            </div>
         </div>
 
         <div class="dkey-controls">
@@ -1093,9 +1117,143 @@ function showCouplet(number, shouldScroll = false) {
         </div>
     `;
 
+    initSwipeCard(number);
+
     if (shouldScroll) {
         container.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
+}
+
+function handleLeadButtonClick(lead, number) {
+    if (suppressSwipeClick || isSwipeAnimating) return;
+
+    const couplet = keyData[number];
+    if (!couplet) return;
+    const selected = lead === "A" ? couplet.leadA : couplet.leadB;
+
+    if (selected.next) {
+        flyOutAndChoose(lead, number);
+    } else {
+        chooseLead(lead, number);
+    }
+}
+
+function flyOutAndChoose(lead, number) {
+    const card = document.getElementById("swipe-question-card");
+    if (!card) {
+        chooseLead(lead, number);
+        return;
+    }
+
+    isSwipeAnimating = true;
+    const direction = lead === "A" ? -1 : 1;
+    card.style.transition = "transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease";
+    card.style.transform = `translateX(${direction * 260}px) rotate(${direction * 8}deg)`;
+    card.style.opacity = "0";
+
+    setTimeout(() => {
+        chooseLead(lead, number);
+    }, 185);
+}
+
+function initSwipeCard(number) {
+    const card = document.getElementById("swipe-question-card");
+    if (!card) return;
+
+    const btnA = document.getElementById(`lead-${number}-A`);
+    const btnB = document.getElementById(`lead-${number}-B`);
+
+    let startX = 0;
+    let startY = 0;
+    let dx = 0;
+    let active = false;
+    let isDragging = false;
+    const SWIPE_THRESHOLD = 80;
+
+    function resetDragVisuals() {
+        card.classList.remove("is-dragging", "is-swiping-left", "is-swiping-right");
+        if (btnA) btnA.classList.remove("is-drag-target");
+        if (btnB) btnB.classList.remove("is-drag-target");
+    }
+
+    card.addEventListener("pointerdown", e => {
+        if (isSwipeAnimating || e.button > 0) return;
+        startX = e.clientX;
+        startY = e.clientY;
+        dx = 0;
+        active = true;
+        isDragging = false;
+    });
+
+    card.addEventListener("pointermove", e => {
+        if (!active || isSwipeAnimating) return;
+        const moveX = e.clientX - startX;
+        const moveY = e.clientY - startY;
+
+        if (!isDragging) {
+            if (Math.abs(moveX) > 10 && Math.abs(moveX) > Math.abs(moveY)) {
+                isDragging = true;
+                card.classList.add("is-dragging");
+                card.style.transition = "none";
+                try {
+                    card.setPointerCapture(e.pointerId);
+                } catch (_) {}
+            } else if (Math.abs(moveY) > 14 && Math.abs(moveY) > Math.abs(moveX)) {
+                active = false;
+                return;
+            } else {
+                return;
+            }
+        }
+
+        dx = moveX;
+        const rotate = Math.max(-12, Math.min(12, dx * 0.03));
+        card.style.transform = `translateX(${dx}px) rotate(${rotate}deg)`;
+
+        const swipingLeft = dx < -22;
+        const swipingRight = dx > 22;
+        card.classList.toggle("is-swiping-left", swipingLeft);
+        card.classList.toggle("is-swiping-right", swipingRight);
+        if (btnA) btnA.classList.toggle("is-drag-target", swipingLeft);
+        if (btnB) btnB.classList.toggle("is-drag-target", swipingRight);
+    });
+
+    function finishDrag() {
+        if (!active) return;
+        active = false;
+
+        if (!isDragging) {
+            resetDragVisuals();
+            return;
+        }
+
+        suppressSwipeClick = true;
+        setTimeout(() => {
+            suppressSwipeClick = false;
+        }, 90);
+
+        if (Math.abs(dx) >= SWIPE_THRESHOLD) {
+            const chosenLead = dx < 0 ? "A" : "B";
+            const couplet = keyData[number];
+            const selected = chosenLead === "A" ? couplet?.leadA : couplet?.leadB;
+            resetDragVisuals();
+
+            if (selected && selected.result) {
+                card.style.transition = "transform 0.24s cubic-bezier(0.22, 1, 0.36, 1)";
+                card.style.transform = "translateX(0) rotate(0)";
+                chooseLead(chosenLead, number);
+            } else {
+                flyOutAndChoose(chosenLead, number);
+            }
+        } else {
+            resetDragVisuals();
+            card.style.transition = "transform 0.24s cubic-bezier(0.22, 1, 0.36, 1)";
+            card.style.transform = "translateX(0) rotate(0)";
+        }
+    }
+
+    card.addEventListener("pointerup", finishDrag);
+    card.addEventListener("pointercancel", finishDrag);
 }
 
 function chooseLead(lead, number) {
@@ -1163,6 +1321,7 @@ function showPollenImages(species, confirmedSteps = []) {
         showAtlasLink: true,
         collapsible: true
     });
+    triggerRevealAnimation(container);
 }
 
 /* =========================================================
@@ -1255,6 +1414,7 @@ function selectSpecies(species, scrollOnMobile = true) {
         showAtlasLink: false,
         collapsible: false
     });
+    triggerRevealAnimation(speciesProfile);
 
     if (scrollOnMobile && window.innerWidth <= 900) {
         speciesProfile.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1521,6 +1681,7 @@ function compareSelectedSpecies() {
     `;
 
     wireComparisonGalleryModals(selectedComparisonSpecies, "intra");
+    triggerRevealAnimation(results);
     results.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
@@ -1734,6 +1895,7 @@ function compareInterfamilialSpecies() {
     `;
 
     wireComparisonGalleryModals(selectedInterfamilialSpecies, "inter");
+    triggerRevealAnimation(results);
     results.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
@@ -1759,6 +1921,19 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("keydown", event => {
         if (event.key === "Escape") {
             closeImageModal();
+            return;
+        }
+
+        const guideActive = document.getElementById("guide-page")?.classList.contains("active");
+        const keyTabActive = document.getElementById("guide-tab-dichotomous")?.classList.contains("active");
+        const modalOpen = document.getElementById("image-modal")?.classList.contains("active");
+        const tag = document.activeElement?.tagName;
+        if (guideActive && keyTabActive && !modalOpen && tag !== "INPUT" && tag !== "SELECT") {
+            if (event.key === "ArrowLeft") {
+                handleLeadButtonClick("A", currentCoupletNumber);
+            } else if (event.key === "ArrowRight") {
+                handleLeadButtonClick("B", currentCoupletNumber);
+            }
         }
     });
 
