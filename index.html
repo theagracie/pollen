@@ -294,27 +294,18 @@
             width: 100%;
         }
 
-        .home-nav-heading {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin: 0 0 12px;
-        }
-
         .home-navigation {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 12px;
         }
 
         .nav-card {
             width: 100%;
             display: flex;
             align-items: center;
-            gap: 16px;
-            padding: 22px 24px;
+            gap: 14px;
+            padding: 18px 20px;
             background: rgba(255, 255, 255, 0.86);
             backdrop-filter: blur(8px);
             color: var(--text-main);
@@ -322,21 +313,12 @@
             border-radius: var(--radius-md);
             cursor: pointer;
             text-align: left;
-            transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.16s ease;
+            transition: background-color 0.18s ease, border-color 0.18s ease;
         }
 
         .nav-card:hover {
             background: rgba(255, 255, 255, 0.98);
             border-color: var(--forest-700);
-            transform: translateX(3px);
-        }
-
-        .nav-card-number {
-            font-family: Georgia, serif;
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text-muted);
-            flex-shrink: 0;
         }
 
         .nav-card-text {
@@ -347,16 +329,16 @@
         .nav-card-text strong {
             display: block;
             font-family: Georgia, serif;
-            font-size: 18px;
+            font-size: 17px;
             color: var(--forest-900);
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
 
         .nav-card-text small {
             display: block;
             font-size: 13px;
             color: var(--text-secondary);
-            line-height: 1.45;
+            line-height: 1.4;
         }
 
         .nav-arrow {
@@ -1894,33 +1876,28 @@
                     </section>
                 </div>
 
-                <aside class="home-modules" aria-label="Guide Modules">
-                    <p class="home-nav-heading">Modules</p>
-
+                <aside class="home-modules" aria-label="Guide Navigation">
                     <div class="home-navigation">
                         <button type="button" class="nav-card" onclick="showPage('guide-page', 'dichotomous')">
-                            <span class="nav-card-number">01</span>
                             <span class="nav-card-text">
                                 <strong>Mangrove Guide</strong>
-                                <small>Dichotomous key and species atlas.</small>
+                                <small>Dichotomous key and species atlas</small>
                             </span>
                             <span class="nav-arrow" aria-hidden="true">→</span>
                         </button>
 
                         <button type="button" class="nav-card" onclick="showPage('comparison-page')">
-                            <span class="nav-card-number">02</span>
                             <span class="nav-card-text">
                                 <strong>Compare Pollens</strong>
-                                <small>Intrafamilial and interfamilial morphological comparisons.</small>
+                                <small>Intrafamilial and interfamilial comparisons</small>
                             </span>
                             <span class="nav-arrow" aria-hidden="true">→</span>
                         </button>
 
                         <button type="button" class="nav-card" onclick="showPage('glossary-page')">
-                            <span class="nav-card-number">03</span>
                             <span class="nav-card-text">
                                 <strong>Glossary</strong>
-                                <small>Standardized palynological terminology and references.</small>
+                                <small>Palynological terms and references</small>
                             </span>
                             <span class="nav-arrow" aria-hidden="true">→</span>
                         </button>
