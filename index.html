@@ -659,9 +659,18 @@
             border-radius: 999px;
         }
 
+        .dkey-question-title {
+            font-family: Georgia, serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--forest-900);
+            margin: 0 0 6px;
+            line-height: 1.3;
+        }
+
         .dkey-prompt {
             margin: 0 0 14px;
-            font-size: 13.5px;
+            font-size: 13px;
             color: var(--text-secondary);
         }
 
@@ -671,7 +680,7 @@
             border: 1px solid var(--border-subtle);
             border-radius: var(--radius-sm);
             padding: 10px 12px;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .dkey-trail-label {
@@ -696,10 +705,12 @@
             color: var(--forest-800);
             background: var(--bg-muted);
             border: 1px solid var(--border-subtle);
-            padding: 3px 8px;
+            padding: 4px 9px;
             border-radius: 6px;
             cursor: pointer;
             font-family: inherit;
+            text-align: left;
+            line-height: 1.3;
         }
 
         .trail-chip:hover {
@@ -723,7 +734,7 @@
         .couplet-lead-btn {
             width: 100%;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 12px;
             padding: 14px 15px;
             background: var(--bg-surface);
@@ -764,6 +775,7 @@
             font-size: 12.5px;
             font-weight: 700;
             flex-shrink: 0;
+            margin-top: 1px;
         }
 
         .couplet-lead-btn.is-selected .lead-code {
@@ -771,16 +783,49 @@
             color: #FFFFFF;
         }
 
-        .lead-text {
+        .lead-body {
             flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .lead-text {
             line-height: 1.4;
-            font-weight: 500;
+            font-weight: 600;
+        }
+
+        .lead-intent-badge {
+            display: inline-flex;
+            align-items: center;
+            align-self: flex-start;
+            gap: 5px;
+            font-size: 11.5px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: var(--bg-muted);
+            color: var(--forest-700);
+        }
+
+        .lead-intent-badge.is-terminal {
+            background: #E6F2EA;
+            color: var(--forest-900);
+            border: 1px solid var(--border-strong);
+        }
+
+        .couplet-lead-btn.is-selected .lead-intent-badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: #FFFFFF;
+            border-color: transparent;
         }
 
         .lead-arrow {
             font-size: 16px;
             color: var(--text-muted);
             flex-shrink: 0;
+            margin-top: 3px;
         }
 
         .couplet-lead-btn.is-selected .lead-arrow {
@@ -796,6 +841,123 @@
 
         .dkey-controls .btn {
             flex: 1;
+        }
+
+        /* Live Candidate Species Panel */
+        .candidate-panel-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding-bottom: 14px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .candidate-panel-header h3 {
+            margin: 0 0 3px;
+            font-size: 19px;
+            color: var(--forest-900);
+        }
+
+        .candidate-panel-header p {
+            margin: 0;
+            font-size: 13.5px;
+        }
+
+        .candidate-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+            gap: 10px;
+        }
+
+        .candidate-card {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 10px;
+            background: var(--bg-page);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            text-align: left;
+            font-family: inherit;
+            transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.14s ease;
+        }
+
+        .candidate-card:hover {
+            border-color: var(--forest-700);
+            background: var(--bg-muted);
+            transform: translateY(-1px);
+        }
+
+        .candidate-thumb {
+            width: 48px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 6px;
+            background: #FFFFFF;
+            border: 1px solid var(--border-subtle);
+            flex-shrink: 0;
+        }
+
+        .candidate-info {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .candidate-name {
+            display: block;
+            font-size: 13.5px;
+            font-weight: 700;
+            font-style: italic;
+            color: var(--forest-900);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .candidate-meta {
+            display: block;
+            font-size: 11.5px;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .confirmed-traits-box {
+            background: var(--bg-muted);
+            border: 1px solid var(--border-subtle);
+            border-left: 4px solid var(--forest-700);
+            border-radius: var(--radius-sm);
+            padding: 12px 15px;
+            margin-bottom: 18px;
+        }
+
+        .confirmed-traits-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.9px;
+            text-transform: uppercase;
+            color: var(--forest-800);
+            margin: 0 0 6px;
+        }
+
+        .confirmed-traits-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .confirmed-trait-pill {
+            font-size: 12px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-main);
+            padding: 3px 9px;
+            border-radius: 999px;
         }
 
         /* Empty & Result states */
@@ -972,67 +1134,79 @@
         }
 
         /* =========================================================
-           SPECIES ATLAS / EXPLORER
+           SPECIES ATLAS / EXPLORER (MASTER-DETAIL LAYOUT)
         ========================================================= */
-        .species-toolbar {
+        .atlas-layout {
+            display: grid;
+            grid-template-columns: minmax(260px, 310px) minmax(0, 1fr);
+            gap: 24px;
+            align-items: start;
+        }
+
+        .atlas-sidebar {
+            background: var(--bg-muted);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            position: sticky;
+            top: 82px;
+        }
+
+        .atlas-filters {
             display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 10px;
         }
 
-        .species-search-wrap {
-            flex: 1;
-            min-width: 220px;
-            max-width: 360px;
-        }
-
-        .species-search-input {
+        .species-search-input,
+        .atlas-family-select {
             width: 100%;
-            padding: 10px 14px;
+            padding: 9px 12px;
             border: 1px solid var(--border-strong);
             border-radius: var(--radius-sm);
             font-family: inherit;
-            font-size: 14px;
+            font-size: 13.5px;
             background: var(--bg-surface);
             color: var(--text-main);
         }
 
         .species-count-label {
-            font-size: 13px;
+            display: block;
+            font-size: 12px;
             font-weight: 600;
             color: var(--text-muted);
+            margin-bottom: 10px;
         }
 
         #species-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-            gap: 10px;
-            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            max-height: 540px;
+            overflow-y: auto;
+            padding-right: 4px;
         }
 
         .species-btn {
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 3px;
-            padding: 11px 14px;
-            background: var(--bg-page);
-            border: 1px solid var(--border-strong);
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 9px 11px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
             border-radius: var(--radius-sm);
             color: var(--text-main);
             font-family: inherit;
             text-align: left;
             cursor: pointer;
-            transition: background-color 0.16s ease, border-color 0.16s ease, transform 0.14s ease, box-shadow 0.16s ease;
+            transition: background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
         }
 
         .species-btn:hover {
-            background: var(--bg-muted);
+            background: var(--bg-page);
             border-color: var(--forest-700);
-            transform: translateY(-1px);
             box-shadow: var(--shadow-sm);
         }
 
@@ -1043,10 +1217,35 @@
             box-shadow: var(--shadow-md);
         }
 
+        .species-btn-thumb {
+            width: 38px;
+            height: 38px;
+            object-fit: cover;
+            border-radius: 6px;
+            background: var(--bg-page);
+            border: 1px solid var(--border-subtle);
+            flex-shrink: 0;
+        }
+
+        .species-btn.is-active .species-btn-thumb {
+            border-color: rgba(255, 255, 255, 0.35);
+        }
+
+        .species-btn-info {
+            min-width: 0;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
         .species-btn-name {
-            font-size: 14px;
+            font-size: 13.5px;
             font-weight: 600;
             font-style: italic;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .species-btn-family {
@@ -1058,9 +1257,19 @@
             color: #D4E4D3;
         }
 
-        .species-profile-card {
-            border-top: 2px solid var(--border-subtle);
-            padding-top: 22px;
+        .atlas-detail {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 22px;
+            min-width: 0;
+        }
+
+        .specimen-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
         }
 
         .profile-details {
@@ -1490,12 +1699,18 @@
                 grid-template-columns: 1fr;
             }
 
-            .dkey-layout {
+            .dkey-layout,
+            .atlas-layout {
                 grid-template-columns: 1fr;
             }
 
-            .dkey-left-panel {
+            .dkey-left-panel,
+            .atlas-sidebar {
                 position: static;
+            }
+
+            #species-list {
+                max-height: 290px;
             }
 
             .dkey-result-layout {
@@ -1723,24 +1938,34 @@
                     <div class="section-header">
                         <h2>Mangrove Species Atlas</h2>
                         <p>
-                            Select any mangrove taxon below to inspect its whole-plant and flower photographs, taxonomic classification, and pollen morphology.
+                            Browse or filter the 17 mangrove taxa on the left to view complete pollen micrographs, morphological measurements, plant photographs, and taxonomic classification.
                         </p>
                     </div>
 
-                    <div class="species-toolbar">
-                        <div class="species-search-wrap">
-                            <input type="search"
-                                   id="species-search"
-                                   class="species-search-input"
-                                   placeholder="Filter by species or family (e.g., Rhizophora)..."
-                                   oninput="filterSpeciesList(this.value)"
-                                   aria-label="Filter mangrove species">
-                        </div>
-                        <span id="species-count-label" class="species-count-label">Showing 17 of 17 species</span>
-                    </div>
+                    <div class="atlas-layout">
+                        <aside class="atlas-sidebar" aria-label="Species directory">
+                            <div class="atlas-filters">
+                                <input type="search"
+                                       id="species-search"
+                                       class="species-search-input"
+                                       placeholder="Search species name..."
+                                       oninput="filterSpeciesList()"
+                                       aria-label="Search mangrove species">
+                                <select id="species-family-filter"
+                                        class="atlas-family-select"
+                                        onchange="filterSpeciesList()"
+                                        aria-label="Filter by plant family">
+                                    <option value="">All Families (17 taxa)</option>
+                                </select>
+                            </div>
+                            <span id="species-count-label" class="species-count-label">Showing 17 of 17 species</span>
+                            <div id="species-list"></div>
+                        </aside>
 
-                    <div id="species-list"></div>
-                    <div id="species-profile"></div>
+                        <div class="atlas-detail dkey-right-panel">
+                            <div id="species-profile"></div>
+                        </div>
+                    </div>
                 </section>
             </div>
         </div>

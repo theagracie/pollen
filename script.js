@@ -3,8 +3,9 @@
 ========================================================= */
 const keyData = {
     1: {
+        question: "Check Aperture Type: Is the pollen grain 1-zonosulcate?",
         leadA: {
-            text: "Aperture 1-zonosulcate (Fig. 1a, 1b)",
+            text: "Aperture 1-zonosulcate",
             result: "Nypa fruticans"
         },
         leadB: {
@@ -13,8 +14,9 @@ const keyData = {
         }
     },
     2: {
+        question: "Check Aperture Type: Is the pollen grain triporate?",
         leadA: {
-            text: "Aperture triporate (Fig. 2a, 2b)",
+            text: "Aperture triporate",
             result: "Sonneratia alba"
         },
         leadB: {
@@ -23,8 +25,9 @@ const keyData = {
         }
     },
     3: {
+        question: "Check Pollen Shape: Is the pollen grain suboblate?",
         leadA: {
-            text: "Pollen shape suboblate (Fig. 3a, 3b)",
+            text: "Pollen shape suboblate",
             result: "Excoecaria agallocha"
         },
         leadB: {
@@ -33,6 +36,7 @@ const keyData = {
         }
     },
     4: {
+        question: "Check Pollen Shape: Is the grain circular or elongated?",
         leadA: {
             text: "Pollen shape circular",
             next: 5
@@ -43,8 +47,9 @@ const keyData = {
         }
     },
     5: {
+        question: "Check Surface Pattern: Does the circular grain have a reticulate pattern?",
         leadA: {
-            text: "Surface pattern reticulate (Fig. 4a, 4b)",
+            text: "Surface pattern reticulate",
             result: "Lumnitzera racemosa"
         },
         leadB: {
@@ -53,6 +58,7 @@ const keyData = {
         }
     },
     6: {
+        question: "Check Pollen Shape: Is the elongated grain prolate or subprolate?",
         leadA: {
             text: "Pollen shape prolate",
             next: 8
@@ -63,28 +69,31 @@ const keyData = {
         }
     },
     7: {
+        question: "Check Surface Pattern: Is the surface granulate or scabrate?",
         leadA: {
-            text: "Surface pattern granulate (Fig. 5a, 5b)",
+            text: "Surface pattern granulate",
             result: "Lumnitzera littorea"
         },
         leadB: {
-            text: "Surface pattern scabrate (Fig. 6a, 6b)",
+            text: "Surface pattern scabrate",
             result: "Pemphis acidula"
         }
     },
     8: {
+        question: "Check Surface Pattern: Is the prolate grain microreticulate or psilate?",
         leadA: {
-            text: "Surface pattern microreticulate (Fig. 7a, 7b)",
+            text: "Surface pattern microreticulate",
             result: "Avicennia marina"
         },
         leadB: {
-            text: "Surface pattern psilate (Fig. 8a, 8b)",
+            text: "Surface pattern psilate",
             result: "Ceriops decandra"
         }
     },
     9: {
+        question: "Check Aperture Count: How many apertures does the grain have?",
         leadA: {
-            text: "Aperture count 4 (Fig. 9a, 9b)",
+            text: "Aperture count 4",
             result: "Xylocarpus granatum"
         },
         leadB: {
@@ -93,8 +102,9 @@ const keyData = {
         }
     },
     10: {
+        question: "Check Aperture Type: Are the 3 apertures tricolpate or tricolporate?",
         leadA: {
-            text: "Aperture type tricolpate (Fig. 10a, 10b)",
+            text: "Aperture type tricolpate",
             result: "Acanthus ilicifolius"
         },
         leadB: {
@@ -103,8 +113,9 @@ const keyData = {
         }
     },
     11: {
+        question: "Check Surface Pattern: Is the surface pattern perforate?",
         leadA: {
-            text: "Surface pattern perforate (Fig. 11a, 11b)",
+            text: "Surface pattern perforate",
             result: "Rhizophora stylosa"
         },
         leadB: {
@@ -113,8 +124,9 @@ const keyData = {
         }
     },
     12: {
+        question: "Check Surface Pattern: Is the surface pattern psilate-scabrate?",
         leadA: {
-            text: "Surface pattern psilate-scabrate (Fig. 12a, 12b)",
+            text: "Surface pattern psilate-scabrate",
             result: "Rhizophora mucronata"
         },
         leadB: {
@@ -123,8 +135,9 @@ const keyData = {
         }
     },
     13: {
+        question: "Check Surface Pattern: Is the surface scabrate or reticulate?",
         leadA: {
-            text: "Surface pattern scabrate (Fig. 13a, 13b)",
+            text: "Surface pattern scabrate",
             result: "Ceriops tagal"
         },
         leadB: {
@@ -133,8 +146,9 @@ const keyData = {
         }
     },
     14: {
+        question: "Check Size Category: Is the pollen grain minuta or media?",
         leadA: {
-            text: "Size category minuta (Fig. 14a, 14b)",
+            text: "Size category minuta",
             result: "Bruguiera gymnorhiza"
         },
         leadB: {
@@ -143,8 +157,9 @@ const keyData = {
         }
     },
     15: {
+        question: "Check Average Size: Is the average grain size above or below 30 µm?",
         leadA: {
-            text: "Average size > 30 µm (Fig. 15a, 15b)",
+            text: "Average size > 30 µm",
             result: "Avicennia rumphiana"
         },
         leadB: {
@@ -153,12 +168,13 @@ const keyData = {
         }
     },
     16: {
+        question: "Check Average Size: Is the average grain size above or below 25 µm?",
         leadA: {
-            text: "Average size > 25 µm (Fig. 16a, 16b)",
+            text: "Average size > 25 µm",
             result: "Scyphiphora hydrophyllacea"
         },
         leadB: {
-            text: "Average size < 25 µm (Fig. 17a, 17b)",
+            text: "Average size < 25 µm",
             result: "Rhizophora apiculata"
         }
     }
@@ -667,12 +683,15 @@ function resetSections() {
     showCouplet(1, false);
 
     // Reset Species Atlas
-    selectedSpecies = null;
     const searchInput = document.getElementById("species-search");
     if (searchInput) searchInput.value = "";
-    renderSpeciesList("");
-    const speciesProfile = document.getElementById("species-profile");
-    if (speciesProfile) speciesProfile.innerHTML = "";
+    const familyFilter = document.getElementById("species-family-filter");
+    if (familyFilter) familyFilter.value = "";
+    selectedSpecies = mangroveSpecies[0];
+    renderSpeciesList("", "");
+    if (selectedSpecies) {
+        selectSpecies(selectedSpecies, false);
+    }
 
     // Reset Comparisons
     showFamilySpecies("");
@@ -682,21 +701,262 @@ function resetSections() {
 }
 
 /* =========================================================
+   UNIFIED SPECIMEN PROFILE RENDERER (KEY + ATLAS)
+========================================================= */
+function renderSpecimenCard(container, species, options = {}) {
+    if (!container || !species) return;
+
+    const {
+        idPrefix = "specimen",
+        kicker = "Taxon Profile",
+        confirmedSteps = null,
+        showAtlasLink = false,
+        collapsible = false
+    } = options;
+
+    const { figure, polarPath, equatorialPath } = getPollenImagePaths(species);
+    const morphology = pollenMorphologyData[species] || {};
+    const quant = pollenData[species] || {};
+    const plantPath = getImagePath(species, "plant");
+    const flowerPath = getImagePath(species, "flower");
+
+    const confirmedTraitsHTML = confirmedSteps && confirmedSteps.length > 0
+        ? `
+            <div class="confirmed-traits-box">
+                <p class="confirmed-traits-title">Diagnostic Path Confirmed</p>
+                <div class="confirmed-traits-list">
+                    ${confirmedSteps.map(step => `
+                        <span class="confirmed-trait-pill">
+                            <b>${step.couplet}${step.lead.toLowerCase()}:</b> ${step.text}
+                        </span>
+                    `).join("")}
+                </div>
+            </div>
+        `
+        : "";
+
+    const pollenMicrographsHTML = `
+        <div class="dkey-pollen-panel">
+            <h3 class="panel-header">Pollen Micrographs</h3>
+            ${figure ? `
+                <div class="dkey-pollen-images">
+                    <div class="image-card">
+                        <h4>Polar View</h4>
+                        <img id="${idPrefix}-polar-photo" src="${polarPath}" alt="Polar view of ${species}">
+                        <p class="zoom-hint">Click to enlarge</p>
+                    </div>
+                    <div class="image-card">
+                        <h4>Equatorial View</h4>
+                        <img id="${idPrefix}-eq-photo" src="${equatorialPath}" alt="Equatorial view of ${species}">
+                        <p class="zoom-hint">Click to enlarge</p>
+                    </div>
+                </div>
+            ` : "<p style='padding: 16px;'>Pollen photographs are not available.</p>"}
+        </div>
+    `;
+
+    const morphologyHTML = `
+        <div class="dkey-characteristics-panel">
+            <h3 class="panel-header">Morphological Profile</h3>
+            <div class="detail-list">
+                <div class="detail-row">
+                    <strong>Morphologic type</strong>
+                    <span>${quant.shape || morphology.morphologicType || "Not entered"}</span>
+                </div>
+                <div class="detail-row">
+                    <strong>Surface pattern</strong>
+                    <span>${quant.ornamentation || morphology.surfacePattern || "Not entered"}</span>
+                </div>
+                <div class="detail-row">
+                    <strong>Aperture type</strong>
+                    <span>${quant.aperture || "Not entered"}</span>
+                </div>
+                <div class="detail-row">
+                    <strong>Aperture count</strong>
+                    <span>${morphology.apertureCount || "Not entered"}</span>
+                </div>
+                <div class="detail-row">
+                    <strong>Polar Axis (mean ± SD)</strong>
+                    <span>${quant.PA ? `${quant.PA} µm` : "Not entered"}</span>
+                </div>
+                <div class="detail-row">
+                    <strong>Polar size range</strong>
+                    <span>${morphology.polarSizeRange || "Not entered"}</span>
+                </div>
+                <div class="detail-row">
+                    <strong>Equatorial Axis (mean ± SD)</strong>
+                    <span>${quant.EA ? `${quant.EA} µm` : "Not entered"}</span>
+                </div>
+                <div class="detail-row">
+                    <strong>Equatorial size range</strong>
+                    <span>${morphology.equatorialSizeRange || "Not entered"}</span>
+                </div>
+                <div class="detail-row">
+                    <strong>P/E Ratio (mean ± SD)</strong>
+                    <span>${quant.PE || "Not entered"}</span>
+                </div>
+                <div class="detail-row">
+                    <strong>Size category</strong>
+                    <span>${quant.size || morphology.sizeCategory || "Not entered"}</span>
+                </div>
+                <div class="detail-row">
+                    <strong>Dispersal form</strong>
+                    <span>${morphology.dispersalForm || "Not entered"}</span>
+                </div>
+            </div>
+        </div>
+    `;
+
+    const botanicalHTML = `
+        <div class="dkey-botanical-panel">
+            <h3 class="panel-header">Botanical Photographs</h3>
+            <div class="dkey-botanical-images">
+                <div class="image-card">
+                    <h4>Whole Plant</h4>
+                    <img id="${idPrefix}-plant-photo" src="${plantPath}" alt="Whole plant of ${species}">
+                    <p class="zoom-hint">Click to enlarge</p>
+                </div>
+                <div class="image-card">
+                    <h4>Flower</h4>
+                    <img id="${idPrefix}-flower-photo" src="${flowerPath}" alt="Flower of ${species}">
+                    <p class="zoom-hint">Click to enlarge</p>
+                </div>
+            </div>
+        </div>
+    `;
+
+    const taxonomyHTML = `
+        <details class="profile-details"${collapsible ? "" : " open"}>
+            <summary>Taxonomic Classification</summary>
+            <div class="detail-list">
+                <div class="detail-row">
+                    <strong>Family</strong>
+                    <span>${quant.family || "Not yet entered"}</span>
+                </div>
+                <div class="detail-row">
+                    <strong>Genus</strong>
+                    <span><i>${species.split(" ")[0]}</i></span>
+                </div>
+                <div class="detail-row">
+                    <strong>Species</strong>
+                    <span><i>${species}</i></span>
+                </div>
+            </div>
+        </details>
+    `;
+
+    container.innerHTML = `
+        <div class="result-banner">
+            <div>
+                <div class="result-kicker">${kicker}${figure ? ` · Fig. ${figure}` : ""}</div>
+                <h2><i>${species}</i></h2>
+            </div>
+            <div class="specimen-actions">
+                ${quant.family ? `<span class="family-pill">Family: ${quant.family}</span>` : ""}
+                ${showAtlasLink ? `
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="openInSpeciesAtlas('${species}')">
+                        Open in Species Atlas →
+                    </button>
+                ` : ""}
+            </div>
+        </div>
+
+        ${confirmedTraitsHTML}
+
+        <div class="dkey-result-layout">
+            ${pollenMicrographsHTML}
+            ${morphologyHTML}
+            ${botanicalHTML}
+        </div>
+
+        ${taxonomyHTML}
+    `;
+
+    attachZoomImageHandler(
+        document.getElementById(`${idPrefix}-polar-photo`),
+        polarPath,
+        `${species} — Pollen Polar View (Fig. ${figure}a)`,
+        "Polar image not found."
+    );
+    attachZoomImageHandler(
+        document.getElementById(`${idPrefix}-eq-photo`),
+        equatorialPath,
+        `${species} — Pollen Equatorial View (Fig. ${figure}b)`,
+        "Equatorial image not found."
+    );
+    attachZoomImageHandler(
+        document.getElementById(`${idPrefix}-plant-photo`),
+        plantPath,
+        `${species} — Whole Plant`,
+        "Whole-plant photograph not available."
+    );
+    attachZoomImageHandler(
+        document.getElementById(`${idPrefix}-flower-photo`),
+        flowerPath,
+        `${species} — Flower`,
+        "Flower photograph not available."
+    );
+}
+
+/* =========================================================
    DICHOTOMOUS KEY FLOW
 ========================================================= */
-function renderEmptyKeyResult() {
+function getBranchSpecies(lead) {
+    if (!lead) return [];
+    if (lead.result) return [lead.result];
+    if (lead.next) return getRemainingSpecies(lead.next);
+    return [];
+}
+
+function getRemainingSpecies(coupletNumber) {
+    const couplet = keyData[coupletNumber];
+    if (!couplet) return [];
+    const list = [
+        ...getBranchSpecies(couplet.leadA),
+        ...getBranchSpecies(couplet.leadB)
+    ];
+    return [...new Set(list)].sort((a, b) => a.localeCompare(b));
+}
+
+function renderCandidatePanel(coupletNumber) {
     const resultContainer = document.getElementById("key-result");
     if (!resultContainer) return;
 
+    const candidates = getRemainingSpecies(coupletNumber);
+
     resultContainer.innerHTML = `
-        <div class="dkey-empty-state">
-            <strong>Awaiting Specimen Identification</strong>
-            <p>
-                Select the matching morphological statement on the left to advance through the dichotomous key.
-                Once identified, pollen micrographs, measurements, and botanical photographs will appear here.
-            </p>
+        <div class="candidate-panel-header">
+            <div>
+                <h3>Remaining Candidate Species (${candidates.length})</h3>
+                <p>Candidates narrow down automatically as you select traits on the left. Click any card to inspect it in the Atlas.</p>
+            </div>
+        </div>
+
+        <div class="candidate-grid">
+            ${candidates.map(species => {
+                const { figure, polarPath } = getPollenImagePaths(species);
+                const quant = pollenData[species] || {};
+                const summary = [quant.shape, quant.ornamentation].filter(Boolean).join(" · ");
+                return `
+                    <button type="button" class="candidate-card" onclick="openInSpeciesAtlas('${species}')">
+                        ${figure ? `<img class="candidate-thumb" src="${polarPath}" alt="${species} pollen">` : ""}
+                        <span class="candidate-info">
+                            <span class="candidate-name">${species}</span>
+                            <span class="candidate-meta">${quant.family || ""}${summary ? ` · ${summary}` : ""}</span>
+                        </span>
+                    </button>
+                `;
+            }).join("")}
         </div>
     `;
+}
+
+function formatLeadIntent(lead) {
+    if (lead.result) {
+        return `<span class="lead-intent-badge is-terminal">Identify Species ✓</span>`;
+    }
+    const count = getBranchSpecies(lead).length;
+    return `<span class="lead-intent-badge">Next Question (${count} remaining) →</span>`;
 }
 
 function showCouplet(number, shouldScroll = false) {
@@ -705,24 +965,25 @@ function showCouplet(number, shouldScroll = false) {
     const container = document.getElementById("key-container");
     if (!container) return;
 
-    renderEmptyKeyResult();
-
     if (!couplet) {
         container.innerHTML = "<p>Couplet not found.</p>";
         return;
     }
 
+    const remainingCount = getRemainingSpecies(number).length;
+    renderCandidatePanel(number);
+
     const trailMarkup = screenHistory.length > 0
         ? `
             <div class="dkey-trail">
-                <div class="dkey-trail-label">Identification Path Taken</div>
+                <div class="dkey-trail-label">Choices Made So Far (click any step to return)</div>
                 <div class="dkey-trail-items">
                     ${screenHistory.map((step, idx) => `
                         <button type="button"
                                 class="trail-chip"
                                 title="Return to Couplet ${step.couplet}"
                                 onclick="jumpToHistoryStep(${idx})">
-                            ${step.couplet}${step.lead.toLowerCase()}
+                            ${step.couplet}${step.lead.toLowerCase()}: ${step.text}
                         </button>
                         <span class="trail-sep">→</span>
                     `).join("")}
@@ -735,11 +996,13 @@ function showCouplet(number, shouldScroll = false) {
     container.innerHTML = `
         <div class="dkey-step-meta">
             <span class="couplet-badge">Couplet ${number} of 16</span>
+            <span class="couplet-badge">${remainingCount} possible ${remainingCount === 1 ? "species" : "taxa"}</span>
         </div>
 
         ${trailMarkup}
 
-        <p class="dkey-prompt">Choose the characteristic that matches your pollen grain:</p>
+        <h3 class="dkey-question-title">${couplet.question}</h3>
+        <p class="dkey-prompt">Select the statement that matches your pollen sample:</p>
 
         <div class="couplet-leads">
             <button type="button"
@@ -747,7 +1010,10 @@ function showCouplet(number, shouldScroll = false) {
                     class="couplet-lead-btn"
                     onclick="chooseLead('A', ${number})">
                 <span class="lead-code">${number}a</span>
-                <span class="lead-text">${couplet.leadA.text}</span>
+                <span class="lead-body">
+                    <span class="lead-text">${couplet.leadA.text}</span>
+                    ${formatLeadIntent(couplet.leadA)}
+                </span>
                 <span class="lead-arrow" aria-hidden="true">→</span>
             </button>
 
@@ -756,7 +1022,10 @@ function showCouplet(number, shouldScroll = false) {
                     class="couplet-lead-btn"
                     onclick="chooseLead('B', ${number})">
                 <span class="lead-code">${number}b</span>
-                <span class="lead-text">${couplet.leadB.text}</span>
+                <span class="lead-body">
+                    <span class="lead-text">${couplet.leadB.text}</span>
+                    ${formatLeadIntent(couplet.leadB)}
+                </span>
                 <span class="lead-arrow" aria-hidden="true">→</span>
             </button>
         </div>
@@ -788,13 +1057,16 @@ function chooseLead(lead, number) {
     const selected = lead === "A" ? couplet.leadA : couplet.leadB;
 
     if (selected.result) {
-        // Highlight selected lead while keeping both options visible for verification
         const btnA = document.getElementById(`lead-${number}-A`);
         const btnB = document.getElementById(`lead-${number}-B`);
         if (btnA) btnA.classList.toggle("is-selected", lead === "A");
         if (btnB) btnB.classList.toggle("is-selected", lead === "B");
 
-        showPollenImages(selected.result);
+        const confirmedSteps = [
+            ...screenHistory,
+            { couplet: number, lead, text: selected.text }
+        ];
+        showPollenImages(selected.result, confirmedSteps);
 
         if (window.innerWidth <= 900) {
             const res = document.getElementById("key-result");
@@ -829,138 +1101,51 @@ function restartKey() {
     showCouplet(1, false);
 }
 
-function showPollenImages(species) {
-    const { figure, polarPath, equatorialPath } = getPollenImagePaths(species);
-    const morphology = pollenMorphologyData[species] || {};
-    const quant = pollenData[species] || {};
+function showPollenImages(species, confirmedSteps = []) {
     const container = document.getElementById("key-result");
-    if (!container) return;
-
-    const plantPath = getImagePath(species, "plant");
-    const flowerPath = getImagePath(species, "flower");
-
-    container.innerHTML = `
-        <div class="result-banner">
-            <div>
-                <div class="result-kicker">Identification Result${figure ? ` · Fig. ${figure}` : ""}</div>
-                <h2><i>${species}</i></h2>
-            </div>
-            ${quant.family ? `<span class="family-pill">Family: ${quant.family}</span>` : ""}
-        </div>
-
-        <div class="dkey-result-layout">
-            <div class="dkey-pollen-panel">
-                <h3 class="panel-header">Pollen Micrographs</h3>
-                ${figure ? `
-                    <div class="dkey-pollen-images">
-                        <div class="image-card">
-                            <h4>Polar View</h4>
-                            <img id="polar-photo" src="${polarPath}" alt="Polar view of ${species}">
-                            <p class="zoom-hint">Click to enlarge</p>
-                        </div>
-                        <div class="image-card">
-                            <h4>Equatorial View</h4>
-                            <img id="equatorial-photo" src="${equatorialPath}" alt="Equatorial view of ${species}">
-                            <p class="zoom-hint">Click to enlarge</p>
-                        </div>
-                    </div>
-                ` : "<p style='padding: 16px;'>Pollen photographs are not available.</p>"}
-            </div>
-
-            <div class="dkey-characteristics-panel">
-                <h3 class="panel-header">Morphological Characteristics</h3>
-                <div class="detail-list">
-                    <div class="detail-row">
-                        <strong>Morphologic type</strong>
-                        <span>${morphology.morphologicType || "Not entered"}</span>
-                    </div>
-                    <div class="detail-row">
-                        <strong>Surface pattern</strong>
-                        <span>${morphology.surfacePattern || "Not entered"}</span>
-                    </div>
-                    <div class="detail-row">
-                        <strong>Size category</strong>
-                        <span>${morphology.sizeCategory || "Not entered"}</span>
-                    </div>
-                    <div class="detail-row">
-                        <strong>Aperture count</strong>
-                        <span>${morphology.apertureCount || "Not entered"}</span>
-                    </div>
-                    <div class="detail-row">
-                        <strong>Polar size range</strong>
-                        <span>${morphology.polarSizeRange || "Not entered"}</span>
-                    </div>
-                    <div class="detail-row">
-                        <strong>Equatorial size range</strong>
-                        <span>${morphology.equatorialSizeRange || "Not entered"}</span>
-                    </div>
-                    <div class="detail-row">
-                        <strong>P/E Ratio (mean ± SD)</strong>
-                        <span>${quant.PE || "Not entered"}</span>
-                    </div>
-                    <div class="detail-row">
-                        <strong>Dispersal form</strong>
-                        <span>${morphology.dispersalForm || "Not entered"}</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="dkey-botanical-panel">
-                <h3 class="panel-header">Botanical Photographs</h3>
-                <div class="dkey-botanical-images">
-                    <div class="image-card">
-                        <h4>Whole Plant</h4>
-                        <img id="dkey-plant-photo" src="${plantPath}" alt="Whole plant of ${species}">
-                        <p class="zoom-hint">Click photograph to enlarge</p>
-                    </div>
-                    <div class="image-card">
-                        <h4>Flower</h4>
-                        <img id="dkey-flower-photo" src="${flowerPath}" alt="Flower of ${species}">
-                        <p class="zoom-hint">Click photograph to enlarge</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-
-    attachZoomImageHandler(
-        document.getElementById("polar-photo"),
-        polarPath,
-        `${species} — Pollen Polar View (Fig. ${figure}a)`,
-        "Polar image not found."
-    );
-    attachZoomImageHandler(
-        document.getElementById("equatorial-photo"),
-        equatorialPath,
-        `${species} — Pollen Equatorial View (Fig. ${figure}b)`,
-        "Equatorial image not found."
-    );
-    attachZoomImageHandler(
-        document.getElementById("dkey-plant-photo"),
-        plantPath,
-        `${species} — Whole Plant`,
-        "Whole-plant photograph not available."
-    );
-    attachZoomImageHandler(
-        document.getElementById("dkey-flower-photo"),
-        flowerPath,
-        `${species} — Flower`,
-        "Flower photograph not available."
-    );
+    renderSpecimenCard(container, species, {
+        idPrefix: "dkey",
+        kicker: "Identification Complete",
+        confirmedSteps,
+        showAtlasLink: true,
+        collapsible: true
+    });
 }
 
 /* =========================================================
-   SPECIES ATLAS / EXPLORER
+   SPECIES ATLAS / EXPLORER (MASTER-DETAIL)
 ========================================================= */
-function renderSpeciesList(filterText = "") {
+function initSpeciesAtlas() {
+    const familyFilter = document.getElementById("species-family-filter");
+    if (familyFilter) {
+        const families = getSortedFamilies();
+        familyFilter.innerHTML = `
+            <option value="">All Families (${mangroveSpecies.length} taxa)</option>
+            ${families.map(family => {
+                const count = getSpeciesByFamily(family).length;
+                return `<option value="${family}">${family} (${count})</option>`;
+            }).join("")}
+        `;
+    }
+
+    selectedSpecies = mangroveSpecies[0] || null;
+    renderSpeciesList("", "");
+    if (selectedSpecies) {
+        selectSpecies(selectedSpecies, false);
+    }
+}
+
+function renderSpeciesList(filterText = "", familyFilterValue = "") {
     const speciesList = document.getElementById("species-list");
     const countLabel = document.getElementById("species-count-label");
     if (!speciesList) return;
 
     const query = filterText.trim().toLowerCase();
     const filtered = mangroveSpecies.filter(species => {
-        const family = (pollenData[species]?.family || "").toLowerCase();
-        return species.toLowerCase().includes(query) || family.includes(query);
+        const family = pollenData[species]?.family || "";
+        const matchesQuery = species.toLowerCase().includes(query) || family.toLowerCase().includes(query);
+        const matchesFamily = !familyFilterValue || family === familyFilterValue;
+        return matchesQuery && matchesFamily;
     });
 
     if (countLabel) {
@@ -970,171 +1155,71 @@ function renderSpeciesList(filterText = "") {
     speciesList.innerHTML = "";
 
     if (filtered.length === 0) {
-        speciesList.innerHTML = `<p style="grid-column: 1 / -1; margin: 8px 0;">No species matched "${filterText}".</p>`;
+        speciesList.innerHTML = `<p style="margin: 8px 0; font-size: 13px;">No species matched your filter.</p>`;
         return;
     }
 
     filtered.forEach(species => {
         const family = pollenData[species]?.family || "";
+        const { figure, polarPath } = getPollenImagePaths(species);
         const button = document.createElement("button");
         button.type = "button";
         button.className = `species-btn${selectedSpecies === species ? " is-active" : ""}`;
         button.innerHTML = `
-            <span class="species-btn-name">${species}</span>
-            <span class="species-btn-family">${family}</span>
+            ${figure ? `<img class="species-btn-thumb" src="${polarPath}" alt="">` : ""}
+            <span class="species-btn-info">
+                <span class="species-btn-name">${species}</span>
+                <span class="species-btn-family">${family}</span>
+            </span>
         `;
-        button.addEventListener("click", () => selectSpecies(species));
+        button.addEventListener("click", () => selectSpecies(species, true));
         speciesList.appendChild(button);
     });
 }
 
-function filterSpeciesList(value) {
-    renderSpeciesList(value);
+function filterSpeciesList() {
+    const searchInput = document.getElementById("species-search");
+    const familyFilter = document.getElementById("species-family-filter");
+    renderSpeciesList(
+        searchInput ? searchInput.value : "",
+        familyFilter ? familyFilter.value : ""
+    );
 }
 
-function selectSpecies(species) {
+function selectSpecies(species, scrollOnMobile = true) {
     selectedSpecies = species;
-    const searchInput = document.getElementById("species-search");
-    renderSpeciesList(searchInput ? searchInput.value : "");
+    filterSpeciesList();
 
     const speciesProfile = document.getElementById("species-profile");
     if (!speciesProfile) return;
 
-    const plantPath = getImagePath(species, "plant");
-    const flowerPath = getImagePath(species, "flower");
-    const { figure, polarPath, equatorialPath } = getPollenImagePaths(species);
-    const quant = pollenData[species] || {};
-    const morphology = pollenMorphologyData[species] || {};
+    renderSpecimenCard(speciesProfile, species, {
+        idPrefix: "atlas",
+        kicker: "Species Atlas Profile",
+        confirmedSteps: null,
+        showAtlasLink: false,
+        collapsible: false
+    });
 
-    speciesProfile.innerHTML = `
-        <div class="species-profile-card">
-            <div class="result-banner">
-                <div>
-                    <div class="result-kicker">Taxon Profile${figure ? ` · Fig. ${figure}` : ""}</div>
-                    <h2><i>${species}</i></h2>
-                </div>
-                ${quant.family ? `<span class="family-pill">Family: ${quant.family}</span>` : ""}
-            </div>
+    if (scrollOnMobile && window.innerWidth <= 900) {
+        speciesProfile.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+}
 
-            <details class="profile-details" open>
-                <summary>Plant and Flower Photographs</summary>
-                <div class="species-images">
-                    <div class="image-card">
-                        <h4>Whole Plant</h4>
-                        <img id="plant-photo" src="${plantPath}" alt="Whole plant of ${species}">
-                        <p class="zoom-hint">Click photograph to enlarge</p>
-                    </div>
-                    <div class="image-card">
-                        <h4>Flower</h4>
-                        <img id="flower-photo" src="${flowerPath}" alt="Flower of ${species}">
-                        <p class="zoom-hint">Click photograph to enlarge</p>
-                    </div>
-                </div>
-            </details>
+function openInSpeciesAtlas(species) {
+    switchGuideTab("species");
+    const searchInput = document.getElementById("species-search");
+    if (searchInput) searchInput.value = "";
+    const familyFilter = document.getElementById("species-family-filter");
+    if (familyFilter) familyFilter.value = "";
+    selectSpecies(species, false);
 
-            <details class="profile-details" open>
-                <summary>Pollen Micrographs &amp; Morphology</summary>
-                <div class="dkey-result-layout" style="margin-top: 8px;">
-                    <div class="dkey-pollen-panel">
-                        <h3 class="panel-header">Pollen Views</h3>
-                        ${figure ? `
-                            <div class="dkey-pollen-images">
-                                <div class="image-card">
-                                    <h4>Polar View</h4>
-                                    <img id="atlas-polar-photo" src="${polarPath}" alt="Polar view of ${species}">
-                                    <p class="zoom-hint">Click to enlarge</p>
-                                </div>
-                                <div class="image-card">
-                                    <h4>Equatorial View</h4>
-                                    <img id="atlas-equatorial-photo" src="${equatorialPath}" alt="Equatorial view of ${species}">
-                                    <p class="zoom-hint">Click to enlarge</p>
-                                </div>
-                            </div>
-                        ` : "<p style='padding: 14px;'>Pollen photographs not available.</p>"}
-                    </div>
+    const activeBtn = document.querySelector("#species-list .species-btn.is-active");
+    if (activeBtn) {
+        activeBtn.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }
 
-                    <div class="dkey-characteristics-panel">
-                        <h3 class="panel-header">Morphological Profile</h3>
-                        <div class="detail-list">
-                            <div class="detail-row">
-                                <strong>Polar Axis (mean ± SD)</strong>
-                                <span>${quant.PA ? `${quant.PA} µm` : "Not entered"}</span>
-                            </div>
-                            <div class="detail-row">
-                                <strong>Equatorial Axis (mean ± SD)</strong>
-                                <span>${quant.EA ? `${quant.EA} µm` : "Not entered"}</span>
-                            </div>
-                            <div class="detail-row">
-                                <strong>P/E Ratio</strong>
-                                <span>${quant.PE || "Not entered"}</span>
-                            </div>
-                            <div class="detail-row">
-                                <strong>Pollen shape</strong>
-                                <span>${quant.shape || morphology.morphologicType || "Not entered"}</span>
-                            </div>
-                            <div class="detail-row">
-                                <strong>Aperture type</strong>
-                                <span>${quant.aperture || "Not entered"}</span>
-                            </div>
-                            <div class="detail-row">
-                                <strong>Surface pattern</strong>
-                                <span>${quant.ornamentation || morphology.surfacePattern || "Not entered"}</span>
-                            </div>
-                            <div class="detail-row">
-                                <strong>Size category</strong>
-                                <span>${quant.size || morphology.sizeCategory || "Not entered"}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </details>
-
-            <details class="profile-details">
-                <summary>Taxonomic Classification</summary>
-                <div class="detail-list">
-                    <div class="detail-row">
-                        <strong>Family</strong>
-                        <span>${quant.family || "Not yet entered"}</span>
-                    </div>
-                    <div class="detail-row">
-                        <strong>Genus</strong>
-                        <span><i>${species.split(" ")[0]}</i></span>
-                    </div>
-                    <div class="detail-row">
-                        <strong>Species</strong>
-                        <span><i>${species}</i></span>
-                    </div>
-                </div>
-            </details>
-        </div>
-    `;
-
-    attachZoomImageHandler(
-        document.getElementById("plant-photo"),
-        plantPath,
-        `${species} — Whole Plant`,
-        "Whole-plant photograph not available."
-    );
-    attachZoomImageHandler(
-        document.getElementById("flower-photo"),
-        flowerPath,
-        `${species} — Flower`,
-        "Flower photograph not available."
-    );
-    attachZoomImageHandler(
-        document.getElementById("atlas-polar-photo"),
-        polarPath,
-        `${species} — Pollen Polar View (Fig. ${figure}a)`,
-        "Polar image not available."
-    );
-    attachZoomImageHandler(
-        document.getElementById("atlas-equatorial-photo"),
-        equatorialPath,
-        `${species} — Pollen Equatorial View (Fig. ${figure}b)`,
-        "Equatorial image not available."
-    );
-
-    speciesProfile.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 /* =========================================================
@@ -1636,7 +1721,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Initialize interactive sections
     showCouplet(1, false);
-    renderSpeciesList("");
+    initSpeciesAtlas();
     showFamilySpecies("");
     showInterfamilialFamilies();
 });
