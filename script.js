@@ -1150,8 +1150,10 @@ console.log("Selected family:", family);
     selection.innerHTML = `
         <label for="intrafamilial-family">Select Family</label>
 
-      <select id="interfamilial-family-select"
-        onchange="addInterfamilialFamily(this)">
+      <select id="intrafamilial-family"
+        onchange="showFamilySpecies(this.value)">
+
+    <option value="">Choose a family</option>
 
             ${families.map(name => `
                 <option value="${name}" ${name === family ? "selected" : ""}>
