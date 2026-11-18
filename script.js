@@ -932,7 +932,7 @@ document.getElementById("interfamilial-results").innerHTML = "";
 
 // SELECTED SPECIES FOR COMPARISON
 let selectedComparisonSpecies = [];
-
+let selectedInterfamilialSpecies = [];
 const rhizophoraceaeSpecies = [
     "Bruguiera gymnorhiza",
     "Ceriops decandra",
@@ -1277,6 +1277,177 @@ function compareSelectedSpecies() {
                                 `<td>${pollenData[name][characteristic.key]}</td>`
                             ).join("")}
 
+                        </tr>
+                    `).join("")}
+                </tbody>
+            </table>
+        </div>
+    `;
+
+    results.innerHTML = tableHTML;
+
+    results.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+function showInterfamilialFamilies() {
+
+    const selection = document.getElementById("interfamilial-selection");
+    const results = document.getElementById("interfamilial-results");
+
+    selectedInterfamilialSpecies = [];
+    results.innerHTML = "";
+
+    const families = [...new Set(
+        Object.values(pollenData).map(item => item.family)
+    )];
+
+    selection.innerHTML = `
+        <h3>Select Families to Compare</h3>
+        <p>Choose at least two different families.</p>
+
+        <div id="interfamilial-family-list">
+            ${families.map(name => `
+                <label class="comparison-species-option">
+                    <input type="checkbox"
+                           value="${name}"
+                           onchange="updateInterfamilialFamilies(this)">
+                    ${name}
+                </label>
+            `).join("")}
+        </div>
+    `;
+}
+function updateInterfamilialFamilies(checkbox) {
+
+    const selectedFamilies = Array.from(
+        document.querySelectorAll(
+            "#interfamilial-family-list input:checked"
+        )
+    ).map(input => input.value);
+
+    if (selectedFamilies.length > 3) {
+        checkbox.checked = false;
+        alert("You can select up to 3 families.");
+        return;
+    }
+
+    selectedInterfamilialSpecies = [];
+
+    const results = document.getElementById("interfamilial-results");
+    results.innerHTML = "";
+
+    showInterfamilialSpecies(selectedFamilies);
+}
+function updateInterfamilialSpecies(checkbox) {
+
+    if (checkbox.checked) {
+        if (selectedInterfamilialSpecies.length >= 6) {
+            checkbox.checked = false;
+            alert("You can select up to 6 species.");
+            return;
+        }
+
+        selectedInterfamilialSpecies.push(checkbox.value);
+
+    } else {
+        selectedInterfamilialSpecies =
+            selectedInterfamilialSpecies.filter(
+                name => name !== checkbox.value
+            );
+    }
+
+    document.getElementById("interfamilial-count").textContent =
+        selectedInterfamilialSpecies.length + " species selected";
+
+    document.getElementById("compare-interfamilial-button").disabled =
+        selectedInterfamilialSpecies.length < 2;
+}
+function showInterfamilialSpecies(selectedFamilies) {
+
+    const selection = document.getElementById("interfamilial-selection");
+
+    const speciesByFamily = {};
+
+    selectedFamilies.forEach(family => {
+        speciesByFamily[family] = Object.keys(pollenData).filter(
+            name => pollenData[name].family === family
+        );
+    });
+
+    selection.innerHTML += `
+        <h3>Select Species to Compare</h3>
+        <p>Select 2–6 species from your chosen families.</p>
+
+        ${selectedFamilies.map(family => `
+            <h4>${family}</h4>
+
+            <div class="comparison-species-list">
+                ${speciesByFamily[family].map(name => `
+                    <label class="comparison-species-option">
+                        <input type="checkbox"
+                               value="${name}"
+                               onchange="updateInterfamilialSpecies(this)">
+                        ${name}
+                    </label>
+                `).join("")}
+            </div>
+        `).join("")}
+
+        <p id="interfamilial-count">0 species selected</p>
+
+        <button id="compare-interfamilial-button"
+                onclick="compareInterfamilialSpecies()"
+                disabled>
+            Compare Selected Species
+        </button>
+    `;
+}
+
+function compareInterfamilialSpecies() {
+
+    const results = document.getElementById("interfamilial-results");
+
+    if (selectedInterfamilialSpecies.length < 2) {
+        alert("Please select at least two species.");
+        return;
+    }
+
+    const characteristics = [
+        { label: "Family", key: "family" },
+        { label: "Polar Axis (P)", key: "PA" },
+        { label: "Equatorial Axis (E)", key: "EA" },
+        { label: "P/E Ratio", key: "PE" },
+        { label: "Pollen Shape", key: "shape" },
+        { label: "Aperture Type", key: "aperture" },
+        { label: "Surface Ornamentation", key: "ornamentation" },
+        { label: "Size Category", key: "size" }
+    ];
+
+    const tableHTML = `
+        <h2>Interfamilial Comparative Pollen Morphology</h2>
+
+        <p>Comparison of pollen characteristics among selected families.</p>
+
+        <div style="overflow-x: auto;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Characteristics</th>
+                        ${selectedInterfamilialSpecies.map(name =>
+                            `<th>${name}</th>`
+                        ).join("")}
+                    </tr>
+                </thead>
+
+                <tbody>
+                    ${characteristics.map(characteristic => `
+                        <tr>
+                            <th>${characteristic.label}</th>
+                            ${selectedInterfamilialSpecies.map(name =>
+                                `<td>${pollenData[name][characteristic.key] ?? "Not available"}</td>`
+                            ).join("")}
                         </tr>
                     `).join("")}
                 </tbody>
