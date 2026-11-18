@@ -932,7 +932,7 @@ document.getElementById("interfamilial-results").innerHTML = "";
 
 // SELECTED SPECIES FOR COMPARISON
 let selectedComparisonSpecies = [];
-let selectedInterfamilialSpecies = [];
+let selectedInterfamilialFamilies = [];
 const rhizophoraceaeSpecies = [
     "Bruguiera gymnorhiza",
     "Ceriops decandra",
@@ -1298,6 +1298,7 @@ function showInterfamilialFamilies() {
     const results = document.getElementById("interfamilial-results");
 
     selectedInterfamilialSpecies = [];
+    selectedInterfamilialFamilies = [];
     results.innerHTML = "";
 
     const families = [...new Set(
