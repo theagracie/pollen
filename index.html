@@ -171,8 +171,8 @@
         .home-page {
             min-height: 100vh;
             flex-direction: column;
-            align-items: center;
-            padding: 36px 24px 24px;
+            align-items: stretch;
+            padding: clamp(18px, 2.5vw, 36px) clamp(14px, 3vw, 48px) 24px;
             background:
                 radial-gradient(circle at top right, rgba(61, 117, 86, 0.08), transparent 45%),
                 radial-gradient(circle at bottom left, rgba(35, 74, 53, 0.06), transparent 45%),
@@ -181,7 +181,7 @@
 
         .home-shell {
             width: 100%;
-            max-width: 1080px;
+            max-width: none;
             display: flex;
             flex-direction: column;
             flex: 1;
@@ -315,7 +315,7 @@
 
         .home-navigation {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 16px;
             margin-bottom: 32px;
         }
@@ -439,9 +439,10 @@
         }
 
         .site-topbar-inner {
-            max-width: 1140px;
+            width: 100%;
+            max-width: none;
             margin: 0 auto;
-            padding: 12px 24px;
+            padding: 12px clamp(14px, 3vw, 48px);
             display: flex;
             flex-wrap: wrap;
             align-items: center;
@@ -517,9 +518,10 @@
         }
 
         .content-wrap {
-            max-width: 1140px;
+            width: 100%;
+            max-width: none;
             margin: 0 auto;
-            padding: 28px 24px 56px;
+            padding: clamp(18px, 2.2vw, 32px) clamp(14px, 3vw, 48px) 56px;
         }
 
         .page-hero {
@@ -535,7 +537,7 @@
         .page-hero p {
             margin: 0;
             font-size: 15px;
-            max-width: 780px;
+            max-width: 105ch;
         }
 
         .content-section {
@@ -615,7 +617,7 @@
         ========================================================= */
         .dkey-layout {
             display: grid;
-            grid-template-columns: minmax(290px, 340px) minmax(0, 1fr);
+            grid-template-columns: clamp(300px, 27vw, 410px) minmax(0, 1fr);
             gap: 24px;
             align-items: start;
         }
@@ -1138,7 +1140,7 @@
         ========================================================= */
         .atlas-layout {
             display: grid;
-            grid-template-columns: minmax(260px, 310px) minmax(0, 1fr);
+            grid-template-columns: clamp(260px, 24vw, 360px) minmax(0, 1fr);
             gap: 24px;
             align-items: start;
         }
@@ -1694,6 +1696,16 @@
         /* =========================================================
            RESPONSIVE BREAKPOINTS
         ========================================================= */
+        @media (min-width: 1280px) {
+            .dkey-right-panel .dkey-result-layout {
+                grid-template-columns: minmax(0, 1.35fr) minmax(340px, 1fr);
+            }
+
+            .dkey-right-panel .detail-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (max-width: 900px) {
             .home-navigation {
                 grid-template-columns: 1fr;
@@ -1724,11 +1736,11 @@
 
         @media (max-width: 650px) {
             .home-page {
-                padding: 18px 14px;
+                padding: 16px 12px 20px;
             }
 
             .home-header {
-                padding: 20px 18px;
+                padding: 18px 16px;
             }
 
             .header-main {
@@ -1743,19 +1755,51 @@
             }
 
             .home-about {
-                padding: 20px 18px;
+                padding: 18px 16px;
             }
 
             .site-topbar-inner {
-                padding: 10px 14px;
+                padding: 10px 12px;
+                gap: 10px;
+            }
+
+            .topbar-nav {
+                width: 100%;
+                gap: 4px;
+            }
+
+            .topbar-tab {
+                flex: 1 1 auto;
+                text-align: center;
+                padding: 7px 9px;
+                font-size: 12.5px;
+            }
+
+            .segmented-tabs {
+                display: flex;
+                width: 100%;
+            }
+
+            .segmented-tab {
+                flex: 1 1 auto;
+                text-align: center;
+                padding: 9px 10px;
+                font-size: 13px;
             }
 
             .content-wrap {
-                padding: 20px 14px 40px;
+                padding: 16px 12px 36px;
             }
 
             .content-section {
-                padding: 18px 16px;
+                padding: 16px 14px;
+            }
+
+            .dkey-left-panel,
+            .dkey-right-panel,
+            .atlas-sidebar,
+            .atlas-detail {
+                padding: 16px 14px;
             }
 
             .dkey-pollen-images,
