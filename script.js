@@ -1007,6 +1007,8 @@ function showCouplet(number, shouldScroll = false) {
     currentCoupletNumber = number;
     const couplet = keyData[number];
     const container = document.getElementById("key-container");
+    const resultContainer = document.getElementById("key-result");
+    const dkeyLayout = document.querySelector(".dkey-layout");
     if (!container) return;
 
     if (!couplet) {
@@ -1014,7 +1016,12 @@ function showCouplet(number, shouldScroll = false) {
         return;
     }
 
-    renderCandidatePanel(number);
+    if (dkeyLayout) {
+        dkeyLayout.classList.add("is-question-only");
+    }
+    if (resultContainer) {
+        resultContainer.innerHTML = "";
+    }
 
     const trailMarkup = screenHistory.length > 0
         ? `
@@ -1143,6 +1150,11 @@ function restartKey() {
 }
 
 function showPollenImages(species, confirmedSteps = []) {
+    const dkeyLayout = document.querySelector(".dkey-layout");
+    if (dkeyLayout) {
+        dkeyLayout.classList.remove("is-question-only");
+    }
+
     const container = document.getElementById("key-result");
     renderSpecimenCard(container, species, {
         idPrefix: "dkey",

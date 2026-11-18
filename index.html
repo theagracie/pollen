@@ -579,6 +579,19 @@
             align-items: start;
         }
 
+        .dkey-layout.is-question-only {
+            grid-template-columns: minmax(0, 720px);
+            justify-content: center;
+        }
+
+        .dkey-layout.is-question-only .dkey-left-panel {
+            position: static;
+        }
+
+        .dkey-layout.is-question-only .dkey-right-panel {
+            display: none;
+        }
+
         .dkey-left-panel {
             background: var(--bg-muted);
             border: 1px solid var(--border-subtle);
@@ -1628,6 +1641,10 @@
         /* =========================================================
            ACKNOWLEDGEMENTS PAGE
         ========================================================= */
+        #acknowledgements-page .content-wrap {
+            max-width: 760px;
+        }
+
         .acknowledgement-prose p {
             font-size: 15.5px;
             line-height: 1.8;
