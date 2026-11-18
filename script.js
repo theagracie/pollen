@@ -1151,9 +1151,7 @@ console.log("Selected family:", family);
         <label for="intrafamilial-family">Select Family</label>
 
       <select id="interfamilial-family-select"
-        multiple
-        size="12"
-        onchange="updateInterfamilialFamilies(this)">
+        onchange="addInterfamilialFamily(this)">
 
             ${families.map(name => `
                 <option value="${name}" ${name === family ? "selected" : ""}>
