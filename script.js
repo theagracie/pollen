@@ -383,23 +383,9 @@ const pollenFigureNumbers = {
     "Scyphiphora hydrophyllacea": 16,
     "Rhizophora apiculata": 17
 };
-function getComparisonPollenImages(species) {
-    const figure = pollenFigureNumbers[species];
-
-    if (!figure) return null;
-
-    const polar = `pollen_images/Fig-${figure}a.jpg`;
-
-    const equatorial = figure === 13
-        ? "pollen_images/Fig-13b.jpeg"
-        : `pollen_images/Fig-${figure}b.jpg`;
-
-    return { polar, equatorial };
-}
-
-function showCouplet(number, shouldScroll = false) {
-    const couplet = keyData[number];
+function showCouplet(number, shouldScroll = false) {    const couplet = keyData[number];
     const container = document.getElementById("key-container");
+
     const resultContainer = document.getElementById("key-result");
 
     if (resultContainer) {
@@ -411,16 +397,18 @@ function showCouplet(number, shouldScroll = false) {
         return;
     }
 
-    container.innerHTML = `
+       container.innerHTML = `
         <h3>Couplet ${number}</h3>
 
-        <button id="lead-${number}-A" onclick="chooseLead('A', ${number})">
+        <button id="lead-${number}-A"
+                onclick="chooseLead('A', ${number})">
             ${number}a. ${couplet.leadA.text}
         </button>
 
         <br><br>
 
-        <button id="lead-${number}-B" onclick="chooseLead('B', ${number})">
+        <button id="lead-${number}-B"
+                onclick="chooseLead('B', ${number})">
             ${number}b. ${couplet.leadB.text}
         </button>
 
@@ -441,6 +429,8 @@ function showCouplet(number, shouldScroll = false) {
         });
     }
 }
+
+
 function chooseLead(lead, number) {
 
     const couplet = keyData[number];
@@ -917,17 +907,20 @@ function showPage(pageId, sectionId = null) {
         selectedPage.classList.add("active");
     }
 
+    // Reset interactive sections when returning Home
     if (pageId === "home-page") {
 
+        // Close opened species profile
         document.getElementById("species-profile").innerHTML = "";
 
+        // Reset Dichotomous Key
         screenHistory = [];
         showCouplet(1, false);
 
-        showFamilySpecies("");
-
-        document.getElementById("interfamilial-selection").innerHTML = "";
-        document.getElementById("interfamilial-results").innerHTML = "";
+       // Reset comparison sections
+showFamilySpecies("");
+document.getElementById("interfamilial-selection").innerHTML = "";
+document.getElementById("interfamilial-results").innerHTML = "";
     }
 
     window.scrollTo({
@@ -1211,6 +1204,30 @@ console.log("Species found:", species);
 }
 
 
+function updateComparisonSelection(checkbox) {
+
+    if (checkbox.checked) {
+        if (selectedComparisonSpecies.length >= 6) {
+            checkbox.checked = false;
+            return;
+        }
+
+        selectedComparisonSpecies.push(checkbox.value);
+
+    } else {
+        selectedComparisonSpecies =
+            selectedComparisonSpecies.filter(
+                name => name !== checkbox.value
+            );
+    }
+
+    document.getElementById("comparison-count").textContent =
+        selectedComparisonSpecies.length + " species selected";
+
+    document.getElementById("compare-selected-button").disabled =
+        selectedComparisonSpecies.length < 2;
+}
+
 function compareSelectedSpecies() {
 
     const results = document.getElementById("intrafamilial-results");
@@ -1222,7 +1239,7 @@ function compareSelectedSpecies() {
 
     const characteristics = [
         { label: "Polar Axis (P)", key: "PA" },
-        { label: "Equatorial Diameter (E)", key: "EA" },
+        { label: "Equatorial Axis (E)", key: "EA" },
         { label: "P/E Ratio", key: "PE" },
         { label: "Pollen Shape", key: "shape" },
         { label: "Aperture Type", key: "aperture" },
@@ -1238,54 +1255,6 @@ function compareSelectedSpecies() {
             on their morphological characteristics.
         </p>
 
-        <div style="overflow-x: auto;">
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Characteristics</th>
-
-                        ${selectedComparisonSpecies.map(name =>
-                            `<th>${name}</th>`
-                        ).join("")}
-
-                    </tr>
-                </thead>
-
-                <tbody>
-                    ${characteristics.map(characteristic => `
-                        <tr>
-                            <th>${characteristic.label}</th>
-
-                            ${selectedComparisonSpecies.map(name =>
-                                `<td>${pollenData[name][characteristic.key]}</td>`
-                            ).join("")}
-
-                        </tr>
-                    `).join("")}
-                </tbody>
-            </table>
-        </div>
-    `;
-
-    results.innerHTML = tableHTML;
-
-    results.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
-}
-}).join("");
-
-    let tableHTML = `
-        <h2>Comparative Pollen Morphology</h2>
-
-        <p>
-            Comparison of selected pollen species based
-            on their morphological characteristics.
-        </p>
-<div class="comparison-pollen-gallery">
-    ${imageHTML}
-</div>
         <div style="overflow-x: auto;">
             <table class="comparison-table">
                 <thead>
