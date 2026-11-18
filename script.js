@@ -1150,10 +1150,10 @@ console.log("Selected family:", family);
     selection.innerHTML = `
         <label for="intrafamilial-family">Select Family</label>
 
-        <select id="intrafamilial-family"
-                onchange="showFamilySpecies(this.value)">
-
-            <option value="">Choose a family</option>
+      <select id="interfamilial-family-select"
+        multiple
+        size="4"
+        onchange="updateInterfamilialFamilies(this)">
 
             ${families.map(name => `
                 <option value="${name}" ${name === family ? "selected" : ""}>
@@ -1293,7 +1293,7 @@ function compareSelectedSpecies() {
 }
 function showInterfamilialFamilies() {
 
-    const selection = document.getElementById("interfamilial-selection");
+    const selection = document.getElementById("interfamilial-species-selection");
     const results = document.getElementById("interfamilial-results");
 
     selectedInterfamilialSpecies = [];
@@ -1319,24 +1319,20 @@ function showInterfamilialFamilies() {
         </div>
     `;
 }
-function updateInterfamilialFamilies(checkbox) {
+function updateInterfamilialFamilies(select) {
 
-    const selectedFamilies = Array.from(
-        document.querySelectorAll(
-            "#interfamilial-family-list input:checked"
-        )
-    ).map(input => input.value);
+    const selectedFamilies = Array.from(select.selectedOptions)
+        .map(option => option.value)
+        .filter(value => value !== "");
 
     if (selectedFamilies.length > 3) {
-        checkbox.checked = false;
         alert("You can select up to 3 families.");
         return;
     }
 
     selectedInterfamilialSpecies = [];
 
-    const results = document.getElementById("interfamilial-results");
-    results.innerHTML = "";
+    document.getElementById("interfamilial-results").innerHTML = "";
 
     showInterfamilialSpecies(selectedFamilies);
 }
