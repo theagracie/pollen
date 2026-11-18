@@ -1308,16 +1308,16 @@ function showInterfamilialFamilies() {
         <h3>Select Families to Compare</h3>
         <p>Choose at least two different families (maximum of 3).</p>
 
-        <select id="interfamilial-family-select"
-                multiple
-                size="4"
-                onchange="updateInterfamilialFamilies(this)">
+       <select id="interfamilial-family-select"
+        onchange="updateInterfamilialFamilies(this)">
 
-            ${families.map(name => `
-                <option value="${name}">${name}</option>
-            `).join("")}
+    <option value="">Choose a family</option>
 
-        </select>
+    ${families.map(name => `
+        <option value="${name}">${name}</option>
+    `).join("")}
+
+</select>
 
         <div id="interfamilial-species-selection"></div>
     `;
