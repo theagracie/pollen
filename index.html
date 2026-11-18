@@ -1453,81 +1453,184 @@
         }
 
         /* =========================================================
-           GLOSSARY PAGE
+           GLOSSARY PAGE (ACADEMIC PAPER LAYOUT)
         ========================================================= */
-        .glossary-toolbar {
+        .glossary-paper {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 4px;
+            padding: clamp(22px, 4vw, 48px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .glossary-paper-header {
+            border-bottom: 2px solid var(--forest-900);
+            padding-bottom: 18px;
+            margin-bottom: 22px;
+        }
+
+        .glossary-paper-header h2 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(22px, 2.5vw, 28px);
+            text-align: left;
+            margin: 0 0 6px;
+            letter-spacing: 0.2px;
+        }
+
+        .glossary-paper-header p {
+            margin: 0;
+            font-size: 14.5px;
+            color: var(--text-secondary);
+        }
+
+        .glossary-controls {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .glossary-category {
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-md);
-            padding: 16px 20px;
-            margin-bottom: 14px;
-            background: var(--bg-page);
-        }
-
-        .glossary-category summary {
-            cursor: pointer;
-            font-family: Georgia, serif;
-            font-size: 17px;
-            font-weight: 700;
-            color: var(--forest-900);
-            padding: 4px 0;
-        }
-
-        .glossary-category[open] summary {
-            margin-bottom: 14px;
-            padding-bottom: 10px;
+            justify-content: space-between;
+            gap: 16px;
+            padding-bottom: 18px;
+            margin-bottom: 28px;
             border-bottom: 1px solid var(--border-subtle);
         }
 
-        .glossary-grid {
+        .glossary-filter-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .glossary-filter-link {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            padding: 4px 2px;
+            font-family: inherit;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.15s ease, border-color 0.15s ease;
+        }
+
+        .glossary-filter-link:hover {
+            color: var(--forest-900);
+        }
+
+        .glossary-filter-link.active {
+            color: var(--forest-900);
+            border-bottom-color: var(--forest-800);
+        }
+
+        .glossary-search-input {
+            width: 100%;
+            max-width: 280px;
+            padding: 8px 12px;
+            border: 1px solid var(--border-strong);
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 13.5px;
+            background: var(--bg-surface);
+            color: var(--text-main);
+        }
+
+        .glossary-section {
+            margin-bottom: 34px;
+        }
+
+        .glossary-section.is-hidden {
+            display: none;
+        }
+
+        .glossary-section-title {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--forest-900);
+            margin: 0 0 18px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-strong);
+            letter-spacing: 0.3px;
+        }
+
+        .glossary-columns {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            column-gap: 36px;
+            row-gap: 20px;
         }
 
         .glossary-entry {
-            background: var(--bg-surface);
-            padding: 14px 16px;
-            border: 1px solid var(--border-subtle);
-            border-left: 4px solid var(--forest-700);
-            border-radius: var(--radius-sm);
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+
+        .glossary-entry.is-hidden {
+            display: none;
+        }
+
+        .glossary-entry-head {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .glossary-term-num {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: var(--text-muted);
+            min-width: 18px;
         }
 
         .glossary-entry strong {
-            display: block;
+            font-family: Georgia, "Times New Roman", serif;
             color: var(--forest-900);
-            font-size: 15px;
-            margin-bottom: 4px;
+            font-size: 14.5px;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
         }
 
         .glossary-entry p {
             margin: 0;
-            font-size: 13.5px;
+            padding-left: 26px;
+            font-size: 13.8px;
+            line-height: 1.65;
             color: var(--text-secondary);
         }
 
+        .glossary-empty {
+            display: none;
+            font-size: 14px;
+            color: var(--text-muted);
+            font-style: italic;
+            padding: 12px 0;
+        }
+
         .glossary-sources {
-            margin-top: 28px;
-            padding-top: 18px;
-            border-top: 1px solid var(--border-subtle);
+            margin-top: 34px;
+            padding-top: 20px;
+            border-top: 2px solid var(--forest-900);
             font-size: 13.5px;
         }
 
         .glossary-sources h3 {
-            margin: 0 0 10px;
+            margin: 0 0 12px;
+            font-family: Georgia, "Times New Roman", serif;
             font-size: 17px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .glossary-sources p {
             margin: 6px 0;
+            padding-left: 2em;
+            text-indent: -2em;
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
 
         /* =========================================================
@@ -2043,200 +2146,214 @@
                 <p>Standardized definitions of pollen morphology and palynological terminology referenced throughout the guide.</p>
             </div>
 
-            <section class="content-section">
-                <div class="glossary-toolbar">
-                    <div class="section-header" style="border-bottom: none; padding-bottom: 0; margin-bottom: 0;">
-                        <h2>Palynological Terms</h2>
-                        <p>Select a category below to view definitions.</p>
-                    </div>
-                    <div class="action-btn-group">
-                        <button type="button" class="btn btn-secondary btn-sm" onclick="toggleAllGlossary(true)">Expand All</button>
-                        <button type="button" class="btn btn-ghost btn-sm" onclick="toggleAllGlossary(false)">Collapse All</button>
-                    </div>
+            <article class="glossary-paper">
+                <div class="glossary-paper-header">
+                    <h2>Glossary of Palynological Terms</h2>
+                    <p>Classified reference of surface ornamentation, grain geometry, aperture structures, dispersal units, and exine stratification.</p>
                 </div>
 
-                <!-- CATEGORY 1: SURFACE PATTERNS -->
-                <details class="glossary-category" open>
-                    <summary>Pollen Grain Surface Patterns</summary>
-                    <div class="glossary-grid">
+                <div class="glossary-controls">
+                    <div class="glossary-filter-links" role="tablist" aria-label="Glossary categories">
+                        <button type="button" class="glossary-filter-link active" data-category="all" onclick="setGlossaryCategory('all')">All Categories</button>
+                        <button type="button" class="glossary-filter-link" data-category="surface" onclick="setGlossaryCategory('surface')">Surface Patterns</button>
+                        <button type="button" class="glossary-filter-link" data-category="shapes" onclick="setGlossaryCategory('shapes')">Pollen Shapes</button>
+                        <button type="button" class="glossary-filter-link" data-category="apertures" onclick="setGlossaryCategory('apertures')">Apertures</button>
+                        <button type="button" class="glossary-filter-link" data-category="dispersal" onclick="setGlossaryCategory('dispersal')">Dispersal Forms</button>
+                        <button type="button" class="glossary-filter-link" data-category="exine" onclick="setGlossaryCategory('exine')">Wall &amp; Exine</button>
+                    </div>
+
+                    <input type="search"
+                           id="glossary-search"
+                           class="glossary-search-input"
+                           placeholder="Search terms or definitions..."
+                           oninput="filterGlossary()"
+                           aria-label="Search glossary terms">
+                </div>
+
+                <p id="glossary-empty" class="glossary-empty">No matching palynological terms found.</p>
+
+                <!-- SECTION I: SURFACE PATTERNS -->
+                <section class="glossary-section" data-category="surface">
+                    <h3 class="glossary-section-title">I. Pollen Grain Surface Patterns</h3>
+                    <div class="glossary-columns">
                         <div class="glossary-entry">
-                            <strong>Psilate</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">01</span><strong>Psilate</strong></div>
                             <p>A completely smooth pollen surface.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Perforate</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">02</span><strong>Perforate</strong></div>
                             <p>A surface with small holes or depressions less than 1 µm in diameter.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Foveolate</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">03</span><strong>Foveolate</strong></div>
                             <p>A surface with holes or depressions (lumina) measuring 1 µm or greater in diameter.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Scabrate</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">04</span><strong>Scabrate</strong></div>
                             <p>A surface with irregular sculptural elements less than 1 µm in diameter.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Granulate</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">05</span><strong>Granulate</strong></div>
                             <p>A surface characterized by small granular sculptural elements less than 1 µm in diameter.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Echinate</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">06</span><strong>Echinate</strong></div>
                             <p>A surface with pointed sculptural elements called echini, at least 1 µm in height.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Microechinate</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">07</span><strong>Microechinate</strong></div>
                             <p>A surface with pointed sculptural elements less than 1 µm in height.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Verrucate</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">08</span><strong>Verrucate</strong></div>
                             <p>A surface with wart-like sculptural elements that are generally broader than they are high.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Reticulate</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">09</span><strong>Reticulate</strong></div>
                             <p>A network-like surface pattern formed by ridges called muri, enclosing spaces called lumina.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Microreticulate</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">10</span><strong>Microreticulate</strong></div>
                             <p>A fine network-like pattern with lumina less than 1 µm in diameter.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Baculate</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">11</span><strong>Baculate</strong></div>
                             <p>A surface with rod-shaped sculptural elements longer than they are wide.</p>
                         </div>
                     </div>
-                </details>
+                </section>
 
-                <!-- CATEGORY 2: POLLEN SHAPES -->
-                <details class="glossary-category">
-                    <summary>Pollen Grain Shapes</summary>
-                    <div class="glossary-grid">
+                <!-- SECTION II: POLLEN SHAPES -->
+                <section class="glossary-section" data-category="shapes">
+                    <h3 class="glossary-section-title">II. Pollen Grain Shapes</h3>
+                    <div class="glossary-columns">
                         <div class="glossary-entry">
-                            <strong>Circular</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">12</span><strong>Circular</strong></div>
                             <p>A grain whose polar and equatorial axes are approximately equal.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Oblate</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">13</span><strong>Oblate</strong></div>
                             <p>A grain with a polar axis shorter than its equatorial diameter.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Suboblate</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">14</span><strong>Suboblate</strong></div>
                             <p>A somewhat flattened grain with a polar axis shorter than its equatorial diameter.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Subprolate</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">15</span><strong>Subprolate</strong></div>
                             <p>A somewhat elongated grain with a polar axis longer than its equatorial diameter.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Prolate</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">16</span><strong>Prolate</strong></div>
                             <p>An elongated grain with a polar axis considerably longer than its equatorial diameter.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Perprolate</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">17</span><strong>Perprolate</strong></div>
                             <p>A strongly elongated grain with a polar axis approximately twice its equatorial diameter.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Elliptic</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">18</span><strong>Elliptic</strong></div>
                             <p>A grain with unequal vertical and horizontal axes.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Lobate</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">19</span><strong>Lobate</strong></div>
                             <p>A pollen grain with distinct lobes formed by inward folding of its apertures.</p>
                         </div>
                     </div>
-                </details>
+                </section>
 
-                <!-- CATEGORY 3: APERTURES -->
-                <details class="glossary-category">
-                    <summary>Aperture Terminology</summary>
-                    <div class="glossary-grid">
+                <!-- SECTION III: APERTURES -->
+                <section class="glossary-section" data-category="apertures">
+                    <h3 class="glossary-section-title">III. Aperture Terminology</h3>
+                    <div class="glossary-columns">
                         <div class="glossary-entry">
-                            <strong>Aperture</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">20</span><strong>Aperture</strong></div>
                             <p>A specialized region of the pollen wall, typically thinner than the surrounding wall and associated with pollen germination.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Colpus</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">21</span><strong>Colpus</strong></div>
                             <p>An elongated aperture positioned along the equatorial region or regularly distributed over the pollen grain.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Pore</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">22</span><strong>Pore</strong></div>
                             <p>An opening in the pollen wall that may occur at the equator or be distributed over the grain.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Colporus</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">23</span><strong>Colporus</strong></div>
                             <p>A compound aperture consisting of a colpus and a pore.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Annulus</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">24</span><strong>Annulus</strong></div>
                             <p>A ring-like area surrounding a pore that differs from the surrounding exine in thickness or ornamentation.</p>
                         </div>
                     </div>
-                </details>
+                </section>
 
-                <!-- CATEGORY 4: DISPERSAL FORMS -->
-                <details class="glossary-category">
-                    <summary>Pollen Grain Dispersal Forms</summary>
-                    <div class="glossary-grid">
+                <!-- SECTION IV: DISPERSAL FORMS -->
+                <section class="glossary-section" data-category="dispersal">
+                    <h3 class="glossary-section-title">IV. Pollen Grain Dispersal Forms</h3>
+                    <div class="glossary-columns">
                         <div class="glossary-entry">
-                            <strong>Monad</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">25</span><strong>Monad</strong></div>
                             <p>A dispersal unit consisting of a single pollen grain.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Dyad</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">26</span><strong>Dyad</strong></div>
                             <p>A dispersal unit consisting of two pollen grains.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Tetrad</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">27</span><strong>Tetrad</strong></div>
                             <p>A dispersal unit consisting of four pollen grains.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Polyad</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">28</span><strong>Polyad</strong></div>
                             <p>A dispersal unit consisting of more than four pollen grains.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Linear Tetrad</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">29</span><strong>Linear Tetrad</strong></div>
                             <p>A tetrad in which four pollen grains are arranged in a row.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Tetrahedral Tetrad</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">30</span><strong>Tetrahedral Tetrad</strong></div>
                             <p>A multiplanar tetrad in which each unit contacts the other three units.</p>
                         </div>
                     </div>
-                </details>
+                </section>
 
-                <!-- CATEGORY 5: EXINE TERMINOLOGY -->
-                <details class="glossary-category">
-                    <summary>Pollen Wall and Exine Terminology</summary>
-                    <div class="glossary-grid">
+                <!-- SECTION V: EXINE TERMINOLOGY -->
+                <section class="glossary-section" data-category="exine">
+                    <h3 class="glossary-section-title">V. Pollen Wall and Exine Terminology</h3>
+                    <div class="glossary-columns">
                         <div class="glossary-entry">
-                            <strong>Exine</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">31</span><strong>Exine</strong></div>
                             <p>The outer layer of the pollen wall.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Tectate</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">32</span><strong>Tectate</strong></div>
                             <p>A pollen grain with a continuous tectum.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Semitectate</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">33</span><strong>Semitectate</strong></div>
                             <p>A pollen grain with a discontinuous tectum covering less than 50% of its surface.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Intectate</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">34</span><strong>Intectate</strong></div>
                             <p>A pollen grain lacking a tectum.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Sexine</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">35</span><strong>Sexine</strong></div>
                             <p>The sculptured outer layer of the exine.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Nexine</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">36</span><strong>Nexine</strong></div>
                             <p>The inner, non-sculptured part of the exine, beneath the sexine.</p>
                         </div>
                         <div class="glossary-entry">
-                            <strong>Tectum</strong>
+                            <div class="glossary-entry-head"><span class="glossary-term-num">37</span><strong>Tectum</strong></div>
                             <p>The outer layer of the exine.</p>
                         </div>
                     </div>
-                </details>
+                </section>
 
                 <!-- REFERENCES -->
                 <div class="glossary-sources">
@@ -2246,7 +2363,7 @@
                     <p>Hoen, P. (1999). <i>Glossary of Pollen and Spore Terminology.</i></p>
                     <p>Moore, P., Webb, J., &amp; Collinson, M. (1991). <i>Pollen Analysis</i> (2nd ed.).</p>
                 </div>
-            </section>
+            </article>
         </div>
     </section>
 

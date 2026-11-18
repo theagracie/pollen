@@ -671,10 +671,49 @@ function switchComparisonTab(tabName) {
     }
 }
 
-function toggleAllGlossary(shouldOpen) {
-    document.querySelectorAll("#glossary-page .glossary-category").forEach(detail => {
-        detail.open = shouldOpen;
+let activeGlossaryCategory = "all";
+
+function setGlossaryCategory(category) {
+    activeGlossaryCategory = category;
+    document.querySelectorAll(".glossary-filter-link").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.category === category);
     });
+    filterGlossary();
+}
+
+function filterGlossary() {
+    const searchInput = document.getElementById("glossary-search");
+    const query = searchInput ? searchInput.value.trim().toLowerCase() : "";
+    const sections = document.querySelectorAll("#glossary-page .glossary-section");
+    let totalVisible = 0;
+
+    sections.forEach(section => {
+        const matchesCategory =
+            activeGlossaryCategory === "all" || section.dataset.category === activeGlossaryCategory;
+
+        if (!matchesCategory) {
+            section.classList.add("is-hidden");
+            return;
+        }
+
+        let sectionVisible = 0;
+        section.querySelectorAll(".glossary-entry").forEach(entry => {
+            const text = entry.textContent.toLowerCase();
+            const showEntry = !query || text.includes(query);
+            entry.classList.toggle("is-hidden", !showEntry);
+            if (showEntry) {
+                sectionVisible++;
+                totalVisible++;
+            }
+        });
+
+        section.classList.toggle("is-hidden", sectionVisible === 0);
+    });
+
+    const emptyNotice = document.getElementById("glossary-empty");
+    if (emptyNotice) {
+        emptyNotice.style.display = totalVisible === 0 ? "block" : "none";
+    }
 }
 
 function resetSections() {
@@ -696,6 +735,11 @@ function resetSections() {
     // Reset Comparisons
     showFamilySpecies("");
     showInterfamilialFamilies();
+
+    // Reset Glossary
+    const glossarySearch = document.getElementById("glossary-search");
+    if (glossarySearch) glossarySearch.value = "";
+    setGlossaryCategory("all");
 
     closeImageModal();
 }
