@@ -971,8 +971,8 @@ function renderCandidatePanel(coupletNumber) {
     resultContainer.innerHTML = `
         <div class="candidate-panel-header">
             <div>
-                <h3>Remaining Candidate Species (${candidates.length})</h3>
-                <p>Candidates narrow down automatically as you select traits on the left. Click any card to inspect it in the Atlas.</p>
+                <h3>Candidate Species (${candidates.length})</h3>
+                <p>Click any species to inspect its full profile.</p>
             </div>
         </div>
 
@@ -1014,7 +1014,6 @@ function showCouplet(number, shouldScroll = false) {
         return;
     }
 
-    const remainingCount = getRemainingSpecies(number).length;
     renderCandidatePanel(number);
 
     const trailMarkup = screenHistory.length > 0
@@ -1040,13 +1039,11 @@ function showCouplet(number, shouldScroll = false) {
     container.innerHTML = `
         <div class="dkey-step-meta">
             <span class="couplet-badge">Couplet ${number} of 16</span>
-            <span class="couplet-badge">${remainingCount} possible ${remainingCount === 1 ? "species" : "taxa"}</span>
         </div>
 
         ${trailMarkup}
 
         <h3 class="dkey-question-title">${couplet.question}</h3>
-        <p class="dkey-prompt">Select the statement that matches your pollen sample:</p>
 
         <div class="couplet-leads">
             <button type="button"
@@ -1164,7 +1161,7 @@ function initSpeciesAtlas() {
     if (familyFilter) {
         const families = getSortedFamilies();
         familyFilter.innerHTML = `
-            <option value="">All Families (${mangroveSpecies.length} taxa)</option>
+            <option value="">All Families</option>
             ${families.map(family => {
                 const count = getSpeciesByFamily(family).length;
                 return `<option value="${family}">${family} (${count})</option>`;
@@ -1193,7 +1190,9 @@ function renderSpeciesList(filterText = "", familyFilterValue = "") {
     });
 
     if (countLabel) {
-        countLabel.textContent = `Showing ${filtered.length} of ${mangroveSpecies.length} species`;
+        countLabel.textContent = filtered.length === mangroveSpecies.length
+            ? `${mangroveSpecies.length} species`
+            : `${filtered.length} of ${mangroveSpecies.length} species`;
     }
 
     speciesList.innerHTML = "";
