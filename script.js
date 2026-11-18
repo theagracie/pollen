@@ -1293,7 +1293,8 @@ function compareSelectedSpecies() {
 }
 function showInterfamilialFamilies() {
 
-    const selection = document.getElementById("interfamilial-species-selection");
+    const selection = document.getElementById("interfamilial-selection");
+    console.log("Interfamilial selection:", selection);
     const results = document.getElementById("interfamilial-results");
 
     selectedInterfamilialSpecies = [];
@@ -1305,18 +1306,20 @@ function showInterfamilialFamilies() {
 
     selection.innerHTML = `
         <h3>Select Families to Compare</h3>
-        <p>Choose at least two different families.</p>
+        <p>Choose at least two different families (maximum of 3).</p>
 
-        <div id="interfamilial-family-list">
+        <select id="interfamilial-family-select"
+                multiple
+                size="4"
+                onchange="updateInterfamilialFamilies(this)">
+
             ${families.map(name => `
-                <label class="comparison-species-option">
-                    <input type="checkbox"
-                           value="${name}"
-                           onchange="updateInterfamilialFamilies(this)">
-                    ${name}
-                </label>
+                <option value="${name}">${name}</option>
             `).join("")}
-        </div>
+
+        </select>
+
+        <div id="interfamilial-species-selection"></div>
     `;
 }
 function updateInterfamilialFamilies(select) {
