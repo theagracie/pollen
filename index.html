@@ -169,8 +169,14 @@
             min-height: 100vh;
             flex-direction: column;
             align-items: stretch;
-            padding: clamp(18px, 2.5vw, 36px) clamp(14px, 3vw, 48px) 24px;
-            background: var(--bg-page);
+            padding: clamp(18px, 2.5vw, 32px) clamp(16px, 4vw, 56px);
+            background-color: var(--bg-page);
+            background-image:
+                linear-gradient(112deg, rgba(250, 250, 248, 0.95) 0%, rgba(250, 250, 248, 0.88) 48%, rgba(244, 246, 243, 0.72) 100%),
+                url("flower_images/flower_sonneratia_alba.jpg");
+            background-size: cover;
+            background-position: center right;
+            background-repeat: no-repeat;
         }
 
         .home-shell {
@@ -178,16 +184,18 @@
             max-width: none;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
             flex: 1;
         }
 
-        .home-header {
-            width: 100%;
-            padding: 24px 0;
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid var(--border-strong);
-            border-radius: 0;
+        .home-masthead {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(195, 204, 195, 0.75);
         }
 
         .header-kicker {
@@ -196,63 +204,79 @@
             font-weight: 700;
             letter-spacing: 1.8px;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            margin: 0;
         }
 
-        .header-main {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 28px;
+        .home-masthead-meta {
+            font-size: 12px;
+            color: var(--text-muted);
         }
 
-        .header-copy {
+        .home-stage {
             flex: 1;
+            display: grid;
+            grid-template-columns: minmax(0, 1.3fr) minmax(320px, 460px);
+            gap: clamp(28px, 4vw, 64px);
+            align-items: center;
+            padding: clamp(24px, 4vh, 52px) 0;
+        }
+
+        .home-editorial {
             min-width: 0;
         }
 
-        .home-header h1 {
-            font-size: clamp(30px, 4.2vw, 46px);
+        .home-brand-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 18px;
+        }
+
+        .header-logo {
+            width: clamp(72px, 7vw, 108px);
+            height: clamp(72px, 7vw, 108px);
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .home-editorial h1 {
+            font-size: clamp(34px, 4.6vw, 62px);
             color: var(--forest-900);
             margin: 0 0 8px;
-            letter-spacing: -0.3px;
+            letter-spacing: -0.4px;
+            line-height: 1.08;
         }
 
         .home-subtitle {
-            font-size: clamp(17px, 2vw, 21px);
+            font-size: clamp(18px, 2vw, 24px);
             font-style: italic;
             color: var(--forest-700);
-            margin: 0 0 12px;
+            margin: 0 0 8px;
         }
 
         .home-authors {
-            font-size: 13px;
+            font-size: 13.5px;
             font-weight: 600;
             color: var(--text-muted);
             margin: 0;
             letter-spacing: 0.2px;
         }
 
-        .header-logo {
-            width: 138px;
-            height: 138px;
-            object-fit: contain;
-            flex-shrink: 0;
+        .home-divider {
+            width: 72px;
+            height: 1px;
+            background: var(--border-strong);
+            margin: 26px 0 22px;
         }
 
         /* ABOUT THE GUIDE */
         .home-about {
             width: 100%;
-            margin: 24px 0 28px;
-            padding: 0 0 24px;
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid var(--border-subtle);
-            border-radius: 0;
+            max-width: 68ch;
         }
 
         .home-about h2 {
-            font-size: 22px;
+            font-size: 19px;
             margin: 0 0 10px;
             text-align: left;
             color: var(--forest-900);
@@ -260,48 +284,51 @@
 
         .home-about p {
             margin: 0;
-            font-size: 15px;
-            line-height: 1.75;
+            font-size: clamp(15px, 1.15vw, 16.5px);
+            line-height: 1.8;
             color: var(--text-secondary);
-            text-align: justify;
         }
 
         /* HOME NAVIGATION CARDS */
+        .home-modules {
+            width: 100%;
+        }
+
         .home-nav-heading {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
-            letter-spacing: 1.4px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
             color: var(--text-muted);
             margin: 0 0 12px;
         }
 
         .home-navigation {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 16px;
-            margin-bottom: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
         }
 
         .nav-card {
             width: 100%;
-            min-height: 92px;
             display: flex;
             align-items: center;
-            gap: 14px;
-            padding: 18px 20px;
-            background: var(--bg-surface);
+            gap: 16px;
+            padding: 22px 24px;
+            background: rgba(255, 255, 255, 0.86);
+            backdrop-filter: blur(8px);
             color: var(--text-main);
-            border: 1px solid var(--border-subtle);
+            border: 1px solid rgba(195, 204, 195, 0.9);
             border-radius: var(--radius-md);
             cursor: pointer;
             text-align: left;
-            transition: background-color 0.18s ease, border-color 0.18s ease;
+            transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.16s ease;
         }
 
         .nav-card:hover {
-            background: var(--bg-muted);
+            background: rgba(255, 255, 255, 0.98);
             border-color: var(--forest-700);
+            transform: translateX(3px);
         }
 
         .nav-card-number {
@@ -320,7 +347,7 @@
         .nav-card-text strong {
             display: block;
             font-family: Georgia, serif;
-            font-size: 17px;
+            font-size: 18px;
             color: var(--forest-900);
             margin-bottom: 4px;
         }
@@ -347,9 +374,8 @@
         /* HOME FOOTER */
         .home-footer {
             width: 100%;
-            margin-top: auto;
-            padding-top: 18px;
-            border-top: 1px solid var(--border-subtle);
+            padding-top: 14px;
+            border-top: 1px solid rgba(195, 204, 195, 0.75);
             color: var(--text-muted);
             font-size: 12.5px;
             display: flex;
@@ -1711,11 +1737,22 @@
             }
         }
 
-        @media (max-width: 900px) {
-            .home-navigation {
-                grid-template-columns: 1fr;
+        @media (max-width: 960px) {
+            .home-page {
+                background-image:
+                    linear-gradient(180deg, rgba(250, 250, 248, 0.93) 0%, rgba(250, 250, 248, 0.88) 100%),
+                    url("flower_images/flower_sonneratia_alba.jpg");
+                background-position: center;
             }
 
+            .home-stage {
+                grid-template-columns: 1fr;
+                align-items: start;
+                gap: 28px;
+            }
+        }
+
+        @media (max-width: 900px) {
             .dkey-layout,
             .atlas-layout {
                 grid-template-columns: 1fr;
@@ -1741,26 +1778,22 @@
 
         @media (max-width: 650px) {
             .home-page {
-                padding: 16px 12px 20px;
+                padding: 16px 14px 20px;
             }
 
-            .home-header {
-                padding: 18px 16px;
-            }
-
-            .header-main {
-                flex-direction: column-reverse;
+            .home-brand-row {
+                flex-direction: column;
                 align-items: flex-start;
-                gap: 14px;
+                gap: 12px;
             }
 
             .header-logo {
-                width: 84px;
-                height: 84px;
+                width: 72px;
+                height: 72px;
             }
 
-            .home-about {
-                padding: 18px 16px;
+            .nav-card {
+                padding: 16px 18px;
             }
 
             .site-topbar-inner {
@@ -1829,66 +1862,74 @@
     <section id="home-page" class="page home-page active">
         <div class="home-shell">
 
-            <header class="home-header">
-                <div class="header-kicker">Palynology · Mangrove Flora</div>
-
-                <div class="header-main">
-                    <div class="header-copy">
-                        <h1>Pagburak kan Bakhaw</h1>
-                        <p class="home-subtitle">A Guide to Mangrove Pollen Morphology</p>
-                        <p class="home-authors">Ebuenga, Althea Grace &nbsp;|&nbsp; Imperial, Roma Aliyah</p>
-                    </div>
-
-                    <img src="mangrove-logo/mangrove-logo.png"
-                         alt="Pagburak kan Bakhaw Mangrove Pollen Guide Logo"
-                         class="header-logo">
-                </div>
+            <header class="home-masthead">
+                <span class="header-kicker">Palynology · Mangrove Flora</span>
+                <span class="home-masthead-meta">BS Biology &nbsp;|&nbsp; Ateneo de Naga University &nbsp;|&nbsp; A.Y. 2026–2027</span>
             </header>
 
-            <section class="home-about">
-                <h2>About the Guide</h2>
+            <main class="home-stage">
+                <div class="home-editorial">
+                    <div class="home-brand-row">
+                        <img src="mangrove-logo/mangrove-logo.png"
+                             alt="Pagburak kan Bakhaw Mangrove Pollen Guide Logo"
+                             class="header-logo">
 
-                <p>
-                    Palynology is the study of spores and plant pollen grains. It provides information relevant to airborne allergies,
-                    ecosystem changes due to global warming, plant reproduction, and understanding bee foraging. This guide serves as a
-                    reference for the identification and characterization of mangrove pollen grains through light micrographs, morphological
-                    measurements, and an interactive dichotomous key.
-                </p>
-            </section>
+                        <div>
+                            <h1>Pagburak kan Bakhaw</h1>
+                            <p class="home-subtitle">A Guide to Mangrove Pollen Morphology</p>
+                            <p class="home-authors">Ebuenga, Althea Grace &nbsp;|&nbsp; Imperial, Roma Aliyah</p>
+                        </div>
+                    </div>
 
-            <p class="home-nav-heading">Select a Module to Begin</p>
+                    <div class="home-divider"></div>
 
-            <div class="home-navigation">
-                <button type="button" class="nav-card" onclick="showPage('guide-page', 'dichotomous')">
-                    <span class="nav-card-number">01</span>
-                    <span class="nav-card-text">
-                        <strong>Mangrove Guide</strong>
-                        <small>Interactive dichotomous key &amp; 17-species botanical atlas.</small>
-                    </span>
-                    <span class="nav-arrow" aria-hidden="true">→</span>
-                </button>
+                    <section class="home-about">
+                        <h2>About the Guide</h2>
+                        <p>
+                            Palynology is the study of spores and plant pollen grains. It provides information relevant to airborne allergies,
+                            ecosystem changes due to global warming, plant reproduction, and understanding bee foraging. This guide serves as a
+                            reference for the identification and characterization of mangrove pollen grains through light micrographs, morphological
+                            measurements, and an interactive dichotomous key.
+                        </p>
+                    </section>
+                </div>
 
-                <button type="button" class="nav-card" onclick="showPage('comparison-page')">
-                    <span class="nav-card-number">02</span>
-                    <span class="nav-card-text">
-                        <strong>Compare Pollens</strong>
-                        <small>Intrafamilial and interfamilial morphological comparisons.</small>
-                    </span>
-                    <span class="nav-arrow" aria-hidden="true">→</span>
-                </button>
+                <aside class="home-modules" aria-label="Guide Modules">
+                    <p class="home-nav-heading">Modules</p>
 
-                <button type="button" class="nav-card" onclick="showPage('glossary-page')">
-                    <span class="nav-card-number">03</span>
-                    <span class="nav-card-text">
-                        <strong>Glossary</strong>
-                        <small>Standardized palynological terminology and references.</small>
-                    </span>
-                    <span class="nav-arrow" aria-hidden="true">→</span>
-                </button>
-            </div>
+                    <div class="home-navigation">
+                        <button type="button" class="nav-card" onclick="showPage('guide-page', 'dichotomous')">
+                            <span class="nav-card-number">01</span>
+                            <span class="nav-card-text">
+                                <strong>Mangrove Guide</strong>
+                                <small>Dichotomous key and species atlas.</small>
+                            </span>
+                            <span class="nav-arrow" aria-hidden="true">→</span>
+                        </button>
+
+                        <button type="button" class="nav-card" onclick="showPage('comparison-page')">
+                            <span class="nav-card-number">02</span>
+                            <span class="nav-card-text">
+                                <strong>Compare Pollens</strong>
+                                <small>Intrafamilial and interfamilial morphological comparisons.</small>
+                            </span>
+                            <span class="nav-arrow" aria-hidden="true">→</span>
+                        </button>
+
+                        <button type="button" class="nav-card" onclick="showPage('glossary-page')">
+                            <span class="nav-card-number">03</span>
+                            <span class="nav-card-text">
+                                <strong>Glossary</strong>
+                                <small>Standardized palynological terminology and references.</small>
+                            </span>
+                            <span class="nav-arrow" aria-hidden="true">→</span>
+                        </button>
+                    </div>
+                </aside>
+            </main>
 
             <footer class="home-footer">
-                <span>BS Biology &nbsp;|&nbsp; Ateneo de Naga University &nbsp;|&nbsp; A.Y. 2026–2027</span>
+                <span>17 Mangrove Taxa · Prieto Diaz, Sorsogon Reference Collection</span>
                 <button type="button" class="home-footer-link" onclick="showPage('acknowledgements-page')">
                     Acknowledgements
                 </button>
