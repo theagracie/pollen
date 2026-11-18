@@ -1362,7 +1362,7 @@ function updateInterfamilialSpecies(checkbox) {
 }
 function showInterfamilialSpecies(selectedFamilies) {
 
-    const selection = document.getElementById("interfamilial-selection");
+    const selection = document.getElementById("interfamilial-species-selection");
 
     const speciesByFamily = {};
 
@@ -1372,7 +1372,7 @@ function showInterfamilialSpecies(selectedFamilies) {
         );
     });
 
-    selection.innerHTML += `
+    selection.innerHTML = `
         <h3>Select Species to Compare</h3>
         <p>Select 2–6 species from your chosen families.</p>
 
