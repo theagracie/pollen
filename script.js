@@ -1695,6 +1695,7 @@ function showInterfamilialFamilies() {
 
     selectedInterfamilialFamilies = [];
     selectedInterfamilialSpecies = [];
+    selectedInterfamilialFamilies = [];
     results.innerHTML = "";
 
     const families = getSortedFamilies();
