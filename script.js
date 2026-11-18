@@ -1152,7 +1152,7 @@ console.log("Selected family:", family);
 
       <select id="interfamilial-family-select"
         multiple
-        size="4"
+        size="12"
         onchange="updateInterfamilialFamilies(this)">
 
             ${families.map(name => `
