@@ -383,61 +383,6 @@ const pollenFigureNumbers = {
     "Scyphiphora hydrophyllacea": 16,
     "Rhizophora apiculata": 17
 };
-function showCouplet(number, shouldScroll = false) {    const couplet = keyData[number];
-    const container = document.getElementById("key-container");
-
-    const resultContainer = document.getElementById("key-result");
-
-    if (resultContainer) {
-        resultContainer.innerHTML = "";
-    }
-    const pollenFigureNumbers = {
-    // keep all your existing species and figure numbers
-};
-
-function getComparisonPollenImages(species) {
-
-    const figure = pollenFigureNumbers[species];
-
-    if (!figure) return null;
-
-    const polar = `pollen_images/Fig-${figure}a.jpg`;
-
-    const equatorial = figure === 13
-        ? "pollen_images/Fig-13b.jpeg"
-        : `pollen_images/Fig-${figure}b.jpg`;
-
-    return { polar, equatorial };
-}
-
-function getComparisonPollenImages(species) {
-    const figure = pollenFigureNumbers[species];
-
-    if (!figure) return null;
-
-    const polar = `pollen_images/Fig-${figure}a.jpg`;
-
-    const equatorial = figure === 13
-        ? "pollen_images/Fig-13b.jpeg"
-        : `pollen_images/Fig-${figure}b.jpg`;
-
-    return { polar, equatorial };
-}
-
-function getComparisonPollenImages(species) {
-    const figure = pollenFigureNumbers[species];
-
-    if (!figure) return null;
-
-    const polar = `pollen_images/Fig-${figure}a.jpg`;
-
-    const equatorial = figure === 13
-        ? "pollen_images/Fig-13b.jpeg"
-        : `pollen_images/Fig-${figure}b.jpg`;
-
-    return { polar, equatorial };
-}
-
 function getComparisonPollenImages(species) {
     const figure = pollenFigureNumbers[species];
 
@@ -1266,32 +1211,7 @@ console.log("Species found:", species);
 }
 
 
-function updateComparisonSelection(checkbox) {
-
-    if (checkbox.checked) {
-        if (selectedComparisonSpecies.length >= 6) {
-            checkbox.checked = false;
-            return;
-        }
-
-        selectedComparisonSpecies.push(checkbox.value);
-
-    } else {
-        selectedComparisonSpecies =
-            selectedComparisonSpecies.filter(
-                name => name !== checkbox.value
-            );
-    }
-
-    const compareButton = document.getElementById("compare-button");
-    compareButton.disabled = selectedComparisonSpecies.length < 2;
-
-    document.getElementById("comparison-count").textContent =
-        selectedComparisonSpecies.length + " species selected";
-
-    document.getElementById("compare-selected-button").disabled =
-        selectedComparisonSpecies.length < 2;
-}
+function compareSelectedSpecies() {
 
     const results = document.getElementById("intrafamilial-results");
 
@@ -1302,38 +1222,58 @@ function updateComparisonSelection(checkbox) {
 
     const characteristics = [
         { label: "Polar Axis (P)", key: "PA" },
-        { label: "Equatorial Axis (E)", key: "EA" },
+        { label: "Equatorial Diameter (E)", key: "EA" },
         { label: "P/E Ratio", key: "PE" },
         { label: "Pollen Shape", key: "shape" },
         { label: "Aperture Type", key: "aperture" },
         { label: "Surface Ornamentation", key: "ornamentation" },
         { label: "Size Category", key: "size" }
     ];
-const imageHTML = selectedComparisonSpecies.map(name => {
 
-    const images = getComparisonPollenImages(name);
+    let tableHTML = `
+        <h2>Comparative Pollen Morphology</h2>
 
-    if (!images) {
-        return `<p>Images unavailable for ${name}</p>`;
-    }
+        <p>
+            Comparison of selected pollen species based
+            on their morphological characteristics.
+        </p>
 
-    return `
-        <div class="comparison-pollen-card">
-            <h4>${name}</h4>
+        <div style="overflow-x: auto;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Characteristics</th>
 
-            <div class="comparison-pollen-images">
-                <div>
-                    <img src="${images.polar}" alt="${name} polar view">
-                    <p>Polar View</p>
-                </div>
+                        ${selectedComparisonSpecies.map(name =>
+                            `<th>${name}</th>`
+                        ).join("")}
 
-                <div>
-                    <img src="${images.equatorial}" alt="${name} equatorial view">
-                    <p>Equatorial View</p>
-                </div>
-            </div>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    ${characteristics.map(characteristic => `
+                        <tr>
+                            <th>${characteristic.label}</th>
+
+                            ${selectedComparisonSpecies.map(name =>
+                                `<td>${pollenData[name][characteristic.key]}</td>`
+                            ).join("")}
+
+                        </tr>
+                    `).join("")}
+                </tbody>
+            </table>
         </div>
     `;
+
+    results.innerHTML = tableHTML;
+
+    results.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
 }).join("");
 
     let tableHTML = `
