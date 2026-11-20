@@ -83,7 +83,7 @@
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: none;
             }
         }
 
@@ -135,7 +135,12 @@
 
         .page.active {
             display: block;
-            animation: pageFadeIn 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+            animation: pageFadeIn 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .is-fs-host {
+            animation: none !important;
+            transform: none !important;
         }
 
         .home-page.page.active {
@@ -641,7 +646,7 @@
 
         .tab-panel.active {
             display: block;
-            animation: pageFadeIn 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+            animation: pageFadeIn 0.22s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         /* =========================================================
@@ -1477,6 +1482,35 @@
         .flowchart-scaler {
             position: relative;
             transform-origin: top left;
+            margin: 0 auto;
+        }
+
+        .flowchart-shell.is-fullscreen {
+            position: fixed;
+            inset: 0;
+            z-index: 9500;
+            background: var(--bg-page);
+            padding: 14px;
+            height: 100vh;
+            align-items: stretch;
+        }
+
+        .flowchart-shell.is-fullscreen .flowchart-board {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .flowchart-shell.is-fullscreen .flowchart-viewport {
+            flex: 1;
+            height: auto;
+            min-height: 0;
+        }
+
+        .flowchart-shell.is-fullscreen .flowchart-detail-panel {
+            position: static;
+            height: 100%;
+            max-height: none;
         }
 
         .flowchart-canvas {
@@ -2237,6 +2271,19 @@
                 max-height: none;
             }
 
+            .flowchart-shell.is-fullscreen {
+                overflow-y: auto;
+            }
+
+            .flowchart-shell.is-fullscreen .flowchart-board {
+                height: auto;
+                min-height: 60vh;
+            }
+
+            .flowchart-shell.is-fullscreen.is-chart-only .flowchart-board {
+                height: 100%;
+            }
+
             #species-list {
                 max-height: 290px;
             }
@@ -2503,6 +2550,7 @@
                                 <button type="button" class="btn btn-secondary btn-sm" onclick="zoomFlowchart(-0.15)" aria-label="Zoom out">−</button>
                                 <span id="flowchart-zoom-label" class="flowchart-zoom-label">100%</span>
                                 <button type="button" class="btn btn-secondary btn-sm" onclick="zoomFlowchart(0.15)" aria-label="Zoom in">+</button>
+                                <button type="button" id="flowchart-fullscreen-btn" class="btn btn-secondary btn-sm" onclick="toggleFlowchartFullscreen()">⛶ Fullscreen</button>
                                 <button type="button" class="btn btn-ghost btn-sm" onclick="clearFlowchartSelection()">Clear</button>
                             </div>
                         </div>

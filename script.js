@@ -650,6 +650,10 @@ function switchGuideTab(tabName) {
         }
     });
 
+    if (target !== "flowchart") {
+        setFlowchartFullscreen(false);
+    }
+
     if (target === "flowchart") {
         ensureFlowchartRendered();
         if (!flowchartHasFitted) {
@@ -751,6 +755,7 @@ function resetSections() {
     setGlossaryCategory("all");
 
     // Reset Flowchart
+    setFlowchartFullscreen(false);
     clearFlowchartSelection();
 
     closeImageModal();
@@ -2256,11 +2261,42 @@ function initFlowchartPan() {
     });
 }
 
+function setFlowchartFullscreen(shouldBeFullscreen) {
+    const shell = document.getElementById("flowchart-shell");
+    const btn = document.getElementById("flowchart-fullscreen-btn");
+    const guidePage = document.getElementById("guide-page");
+    const guideTab = document.getElementById("guide-tab-flowchart");
+    if (!shell) return;
+
+    const currentlyFs = shell.classList.contains("is-fullscreen");
+    if (currentlyFs === shouldBeFullscreen) return;
+
+    if (guidePage) guidePage.classList.toggle("is-fs-host", shouldBeFullscreen);
+    if (guideTab) guideTab.classList.toggle("is-fs-host", shouldBeFullscreen);
+    shell.classList.toggle("is-fullscreen", shouldBeFullscreen);
+    document.body.style.overflow = shouldBeFullscreen ? "hidden" : "";
+    if (btn) {
+        btn.textContent = shouldBeFullscreen ? "✕ Exit Fullscreen" : "⛶ Fullscreen";
+    }
+
+    requestAnimationFrame(() => {
+        fitFlowchartToContainer();
+    });
+}
+
+function toggleFlowchartFullscreen() {
+    const shell = document.getElementById("flowchart-shell");
+    if (!shell) return;
+    setFlowchartFullscreen(!shell.classList.contains("is-fullscreen"));
+}
+
 function applyFlowchartZoom(zoomValue) {
+    const prevZoom = flowchartZoom;
     flowchartZoom = Math.max(0.35, Math.min(1.4, zoomValue));
     const canvas = document.getElementById("flowchart-canvas");
     const scaler = document.getElementById("flowchart-scaler");
     const label = document.getElementById("flowchart-zoom-label");
+    const viewport = document.getElementById("flowchart-viewport");
 
     if (canvas) {
         canvas.style.transform = `scale(${flowchartZoom})`;
@@ -2272,6 +2308,13 @@ function applyFlowchartZoom(zoomValue) {
     if (label) {
         label.textContent = `${Math.round(flowchartZoom * 100)}%`;
     }
+    if (viewport && prevZoom > 0 && prevZoom !== flowchartZoom) {
+        const ratio = flowchartZoom / prevZoom;
+        const centerX = viewport.scrollLeft + viewport.clientWidth / 2;
+        const centerY = viewport.scrollTop + viewport.clientHeight / 2;
+        viewport.scrollLeft = Math.max(0, centerX * ratio - viewport.clientWidth / 2);
+        viewport.scrollTop = Math.max(0, centerY * ratio - viewport.clientHeight / 2);
+    }
 }
 
 function zoomFlowchart(delta) {
@@ -2282,12 +2325,12 @@ function fitFlowchartToContainer() {
     const viewport = document.getElementById("flowchart-viewport");
     if (!viewport || !flowchartDims.width) return;
 
-    const availW = viewport.clientWidth - 20;
+    const availW = viewport.clientWidth - 24;
     if (availW <= 0) return;
 
-    const fitScale = Math.min(1, Math.max(0.4, availW / flowchartDims.width));
+    const fitScale = Math.min(1, Math.max(0.38, availW / flowchartDims.width));
     applyFlowchartZoom(fitScale);
-    viewport.scrollLeft = 0;
+    viewport.scrollLeft = Math.max(0, (flowchartDims.width * fitScale - viewport.clientWidth) / 2);
     viewport.scrollTop = 0;
 }
 
@@ -2453,7 +2496,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.addEventListener("keydown", event => {
         if (event.key === "Escape") {
-            closeImageModal();
+            const modalOpen = document.getElementById("image-modal")?.classList.contains("active");
+            if (modalOpen) {
+                closeImageModal();
+            } else {
+                setFlowchartFullscreen(false);
+            }
             return;
         }
 
