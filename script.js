@@ -634,21 +634,34 @@ function showPage(pageId, subTab = null) {
 }
 
 function switchGuideTab(tabName) {
-    const isDichotomous = tabName === "dichotomous";
+    const tabs = ["dichotomous", "flowchart", "species"];
+    const target = tabs.includes(tabName) ? tabName : "dichotomous";
 
-    const btnDich = document.getElementById("tab-btn-dichotomous");
-    const btnSpec = document.getElementById("tab-btn-species");
-    const panelDich = document.getElementById("guide-tab-dichotomous");
-    const panelSpec = document.getElementById("guide-tab-species");
+    tabs.forEach(name => {
+        const btn = document.getElementById(`tab-btn-${name}`);
+        const panel = document.getElementById(`guide-tab-${name}`);
+        const isActive = name === target;
+        if (btn) {
+            btn.classList.toggle("active", isActive);
+            btn.setAttribute("aria-selected", String(isActive));
+        }
+        if (panel) {
+            panel.classList.toggle("active", isActive);
+        }
+    });
 
-    if (btnDich && btnSpec && panelDich && panelSpec) {
-        btnDich.classList.toggle("active", isDichotomous);
-        btnDich.setAttribute("aria-selected", String(isDichotomous));
-        btnSpec.classList.toggle("active", !isDichotomous);
-        btnSpec.setAttribute("aria-selected", String(!isDichotomous));
+    if (target !== "flowchart") {
+        setFlowchartFullscreen(false);
+    }
 
-        panelDich.classList.toggle("active", isDichotomous);
-        panelSpec.classList.toggle("active", !isDichotomous);
+    if (target === "flowchart") {
+        ensureFlowchartRendered();
+        if (!flowchartHasFitted) {
+            requestAnimationFrame(() => {
+                fitFlowchartToContainer();
+                flowchartHasFitted = true;
+            });
+        }
     }
 }
 
@@ -740,6 +753,10 @@ function resetSections() {
     const glossarySearch = document.getElementById("glossary-search");
     if (glossarySearch) glossarySearch.value = "";
     setGlossaryCategory("all");
+
+    // Reset Flowchart
+    setFlowchartFullscreen(false);
+    clearFlowchartSelection();
 
     closeImageModal();
 }
@@ -1901,6 +1918,564 @@ function compareInterfamilialSpecies() {
 }
 
 /* =========================================================
+   INTERACTIVE KEY FLOWCHART
+========================================================= */
+let flowchartZoom = 1;
+let flowchartDims = { width: 1200, height: 1000 };
+let flowchartRendered = false;
+let flowchartHasFitted = false;
+
+const FC_LAYOUT = {
+    Q_W: 214,
+    Q_H: 82,
+    B_W: 162,
+    B_H: 52,
+    S_W: 186,
+    S_H: 64,
+    ROOT_W: 250,
+    ROOT_H: 42,
+    GAP_X: 26,
+    Q_TO_B: 112,
+    B_TO_CHILD: 86,
+    PAD_X: 48,
+    PAD_TOP: 28
+};
+
+function buildFlowchartTree(coupletNumber) {
+    const couplet = keyData[coupletNumber];
+    if (!couplet) return null;
+
+    function buildBranch(leadKey, leadObj) {
+        const child = leadObj.result
+            ? {
+                kind: "species",
+                species: leadObj.result,
+                width: FC_LAYOUT.S_W,
+                height: FC_LAYOUT.S_H
+            }
+            : buildFlowchartTree(leadObj.next);
+
+        return {
+            kind: "branch",
+            couplet: coupletNumber,
+            lead: leadKey,
+            text: leadObj.text,
+            result: leadObj.result || null,
+            next: leadObj.next || null,
+            width: FC_LAYOUT.B_W,
+            height: FC_LAYOUT.B_H,
+            child
+        };
+    }
+
+    return {
+        kind: "question",
+        couplet: coupletNumber,
+        question: couplet.question,
+        width: FC_LAYOUT.Q_W,
+        height: FC_LAYOUT.Q_H,
+        left: buildBranch("A", couplet.leadA),
+        right: buildBranch("B", couplet.leadB)
+    };
+}
+
+function layoutSubtree(node) {
+    if (node.kind === "species") {
+        node.relX = 0;
+        node.relY = 0;
+        return {
+            node,
+            contour: [{ minX: -node.width / 2, maxX: node.width / 2 }]
+        };
+    }
+
+    // Question node with left & right branches
+    const leftChildLayout = layoutSubtree(node.left.child);
+    const rightChildLayout = layoutSubtree(node.right.child);
+
+    // Combine branch row (index 0 below question) + child rows (index 1+)
+    const leftBranchRow = { minX: -node.left.width / 2, maxX: node.left.width / 2 };
+    const rightBranchRow = { minX: -node.right.width / 2, maxX: node.right.width / 2 };
+
+    const leftRows = [leftBranchRow, ...leftChildLayout.contour];
+    const rightRows = [rightBranchRow, ...rightChildLayout.contour];
+
+    const sharedDepth = Math.min(leftRows.length, rightRows.length);
+    let requiredSep = FC_LAYOUT.B_W + FC_LAYOUT.GAP_X;
+    for (let i = 0; i < sharedDepth; i++) {
+        const needed = leftRows[i].maxX - rightRows[i].minX + FC_LAYOUT.GAP_X;
+        if (needed > requiredSep) {
+            requiredSep = needed;
+        }
+    }
+
+    const halfSep = requiredSep / 2;
+    node.relX = 0;
+    node.relY = 0;
+
+    node.left.relX = -halfSep;
+    node.left.relY = FC_LAYOUT.Q_TO_B;
+    node.left.child.relX = -halfSep;
+    node.left.child.relY = FC_LAYOUT.Q_TO_B + FC_LAYOUT.B_TO_CHILD;
+
+    node.right.relX = halfSep;
+    node.right.relY = FC_LAYOUT.Q_TO_B;
+    node.right.child.relX = halfSep;
+    node.right.child.relY = FC_LAYOUT.Q_TO_B + FC_LAYOUT.B_TO_CHILD;
+
+    const maxDepth = Math.max(leftRows.length, rightRows.length);
+    const combinedContour = [{ minX: -node.width / 2, maxX: node.width / 2 }];
+
+    for (let i = 0; i < maxDepth; i++) {
+        const lRow = leftRows[i];
+        const rRow = rightRows[i];
+        const minX = lRow ? lRow.minX - halfSep : rRow.minX + halfSep;
+        const maxX = rRow ? rRow.maxX + halfSep : lRow.maxX - halfSep;
+        combinedContour.push({ minX, maxX });
+    }
+
+    return { node, contour: combinedContour };
+}
+
+function collectPositionedNodes(treeRoot) {
+    const items = [];
+    const edges = [];
+
+    function walk(node, originX, originY) {
+        const x = originX + node.relX;
+        const y = originY + node.relY;
+        node.x = x;
+        node.y = y;
+        items.push(node);
+
+        if (node.kind === "question") {
+            const branches = [node.left, node.right];
+            branches.forEach(branch => {
+                const bx = x + branch.relX;
+                const by = y + branch.relY;
+                branch.x = bx;
+                branch.y = by;
+                items.push(branch);
+
+                edges.push({
+                    type: "q-to-b",
+                    couplet: node.couplet,
+                    lead: branch.lead,
+                    x1: x,
+                    y1: y + node.height,
+                    x2: bx,
+                    y2: by
+                });
+
+                const cx = x + branch.child.relX;
+                const cy = y + branch.child.relY;
+                edges.push({
+                    type: "b-to-c",
+                    couplet: node.couplet,
+                    lead: branch.lead,
+                    nextCouplet: branch.next || null,
+                    species: branch.result || null,
+                    x1: bx,
+                    y1: by + branch.height,
+                    x2: cx,
+                    y2: cy
+                });
+
+                walk(branch.child, x, y);
+            });
+        }
+    }
+
+    walk(treeRoot, 0, 0);
+    return { items, edges };
+}
+
+function ensureFlowchartRendered() {
+    if (flowchartRendered) return;
+    const canvas = document.getElementById("flowchart-canvas");
+    if (!canvas) return;
+
+    const rootTree = buildFlowchartTree(1);
+    const { contour } = layoutSubtree(rootTree);
+
+    let minLeft = -FC_LAYOUT.ROOT_W / 2;
+    let maxRight = FC_LAYOUT.ROOT_W / 2;
+    contour.forEach(row => {
+        if (row.minX < minLeft) minLeft = row.minX;
+        if (row.maxX > maxRight) maxRight = row.maxX;
+    });
+
+    const shiftX = -minLeft + FC_LAYOUT.PAD_X;
+    const rootTopY = FC_LAYOUT.PAD_TOP + FC_LAYOUT.ROOT_H + 34;
+
+    const { items, edges } = collectPositionedNodes(rootTree);
+    let maxBottom = 0;
+    items.forEach(item => {
+        item.x += shiftX;
+        item.y += rootTopY;
+        if (item.y + item.height > maxBottom) {
+            maxBottom = item.y + item.height;
+        }
+    });
+    edges.forEach(edge => {
+        edge.x1 += shiftX;
+        edge.x2 += shiftX;
+        edge.y1 += rootTopY;
+        edge.y2 += rootTopY;
+    });
+
+    const totalWidth = Math.ceil(maxRight - minLeft + FC_LAYOUT.PAD_X * 2);
+    const totalHeight = Math.ceil(maxBottom + FC_LAYOUT.PAD_TOP + 24);
+    flowchartDims = { width: totalWidth, height: totalHeight };
+
+    const rootX = shiftX;
+    const rootY = FC_LAYOUT.PAD_TOP;
+
+    const svgEdgesHTML = `
+        <svg class="flowchart-svg" width="${totalWidth}" height="${totalHeight}" viewBox="0 0 ${totalWidth} ${totalHeight}">
+            <defs>
+                <marker id="fc-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 8 5 L 0 9 z" fill="#9AA89C"></path>
+                </marker>
+                <marker id="fc-arrow-active" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 8 5 L 0 9 z" fill="#334C3E"></path>
+                </marker>
+            </defs>
+            <path class="fc-edge is-root-edge"
+                  d="M ${rootX} ${rootY + FC_LAYOUT.ROOT_H} L ${rootX} ${rootTopY}"
+                  marker-end="url(#fc-arrow)"></path>
+            ${edges.map(edge => {
+                if (edge.type === "q-to-b") {
+                    const midY = edge.y1 + Math.round((edge.y2 - edge.y1) / 2);
+                    return `<path class="fc-edge"
+                                  data-edge-couplet="${edge.couplet}"
+                                  data-edge-lead="${edge.lead}"
+                                  data-edge-kind="q-to-b"
+                                  d="M ${edge.x1} ${edge.y1} L ${edge.x1} ${midY} L ${edge.x2} ${midY} L ${edge.x2} ${edge.y2}"
+                                  marker-end="url(#fc-arrow)"></path>`;
+                }
+                return `<path class="fc-edge"
+                              data-edge-couplet="${edge.couplet}"
+                              data-edge-lead="${edge.lead}"
+                              data-edge-kind="b-to-c"
+                              d="M ${edge.x1} ${edge.y1} L ${edge.x2} ${edge.y2}"
+                              marker-end="url(#fc-arrow)"></path>`;
+            }).join("")}
+        </svg>
+    `;
+
+    const rootNodeHTML = `
+        <div class="fc-node fc-root"
+             style="left: ${rootX - FC_LAYOUT.ROOT_W / 2}px; top: ${rootY}px; width: ${FC_LAYOUT.ROOT_W}px;">
+            Dichotomous Key Flowchart
+        </div>
+    `;
+
+    const nodesHTML = items.map(item => {
+        const left = item.x - item.width / 2;
+        const top = item.y;
+
+        if (item.kind === "question") {
+            return `
+                <button type="button"
+                        class="fc-node fc-question"
+                        data-fc-question="${item.couplet}"
+                        style="left: ${left}px; top: ${top}px; width: ${item.width}px; min-height: ${item.height}px;"
+                        onclick="selectFlowchartQuestion(${item.couplet})">
+                    <span class="fc-q-tag">Couplet ${item.couplet}</span>
+                    <span class="fc-q-text">${item.question}</span>
+                </button>
+            `;
+        }
+
+        if (item.kind === "branch") {
+            const labelCode = `${item.couplet}${item.lead.toLowerCase()}.`;
+            return `
+                <button type="button"
+                        class="fc-node fc-branch"
+                        data-fc-branch="${item.couplet}-${item.lead}"
+                        style="left: ${left}px; top: ${top}px; width: ${item.width}px; min-height: ${item.height}px;"
+                        onclick="selectFlowchartBranch(${item.couplet}, '${item.lead}')">
+                    <span class="fc-branch-code">${labelCode}</span>${item.text}
+                </button>
+            `;
+        }
+
+        const { figure, polarPath } = getPollenImagePaths(item.species);
+        const family = pollenData[item.species]?.family || "";
+        return `
+            <button type="button"
+                    class="fc-node fc-species"
+                    data-fc-species="${item.species}"
+                    style="left: ${left}px; top: ${top}px; width: ${item.width}px; min-height: ${item.height}px;"
+                    onclick="selectFlowchartSpecies('${item.species}')">
+                ${figure ? `<img class="fc-species-thumb" src="${polarPath}" alt="">` : ""}
+                <span class="fc-species-info">
+                    <span class="fc-species-name">${item.species}</span>
+                    <span class="fc-species-family">${family}</span>
+                </span>
+            </button>
+        `;
+    }).join("");
+
+    canvas.style.width = `${totalWidth}px`;
+    canvas.style.height = `${totalHeight}px`;
+    canvas.innerHTML = svgEdgesHTML + rootNodeHTML + nodesHTML;
+
+    initFlowchartPan();
+    flowchartRendered = true;
+    applyFlowchartZoom(flowchartZoom);
+}
+
+function initFlowchartPan() {
+    const viewport = document.getElementById("flowchart-viewport");
+    if (!viewport || viewport.dataset.panBound) return;
+    viewport.dataset.panBound = "true";
+
+    let panning = false;
+    let startX = 0;
+    let startY = 0;
+    let scrollLeft = 0;
+    let scrollTop = 0;
+
+    viewport.addEventListener("pointerdown", e => {
+        if (e.button > 0 || e.target.closest(".fc-node")) return;
+        panning = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        scrollLeft = viewport.scrollLeft;
+        scrollTop = viewport.scrollTop;
+        viewport.classList.add("is-panning");
+    });
+
+    window.addEventListener("pointermove", e => {
+        if (!panning) return;
+        viewport.scrollLeft = scrollLeft - (e.clientX - startX);
+        viewport.scrollTop = scrollTop - (e.clientY - startY);
+    });
+
+    window.addEventListener("pointerup", () => {
+        if (!panning) return;
+        panning = false;
+        viewport.classList.remove("is-panning");
+    });
+}
+
+function setFlowchartFullscreen(shouldBeFullscreen) {
+    const shell = document.getElementById("flowchart-shell");
+    const btn = document.getElementById("flowchart-fullscreen-btn");
+    const guidePage = document.getElementById("guide-page");
+    const guideTab = document.getElementById("guide-tab-flowchart");
+    if (!shell) return;
+
+    const currentlyFs = shell.classList.contains("is-fullscreen");
+    if (currentlyFs === shouldBeFullscreen) return;
+
+    if (guidePage) guidePage.classList.toggle("is-fs-host", shouldBeFullscreen);
+    if (guideTab) guideTab.classList.toggle("is-fs-host", shouldBeFullscreen);
+    shell.classList.toggle("is-fullscreen", shouldBeFullscreen);
+    document.body.style.overflow = shouldBeFullscreen ? "hidden" : "";
+    if (btn) {
+        btn.textContent = shouldBeFullscreen ? "✕ Exit Fullscreen" : "⛶ Fullscreen";
+    }
+
+    requestAnimationFrame(() => {
+        fitFlowchartToContainer();
+    });
+}
+
+function toggleFlowchartFullscreen() {
+    const shell = document.getElementById("flowchart-shell");
+    if (!shell) return;
+    setFlowchartFullscreen(!shell.classList.contains("is-fullscreen"));
+}
+
+function applyFlowchartZoom(zoomValue) {
+    const prevZoom = flowchartZoom;
+    flowchartZoom = Math.max(0.35, Math.min(1.4, zoomValue));
+    const canvas = document.getElementById("flowchart-canvas");
+    const scaler = document.getElementById("flowchart-scaler");
+    const label = document.getElementById("flowchart-zoom-label");
+    const viewport = document.getElementById("flowchart-viewport");
+
+    if (canvas) {
+        canvas.style.transform = `scale(${flowchartZoom})`;
+    }
+    if (scaler) {
+        scaler.style.width = `${Math.ceil(flowchartDims.width * flowchartZoom)}px`;
+        scaler.style.height = `${Math.ceil(flowchartDims.height * flowchartZoom)}px`;
+    }
+    if (label) {
+        label.textContent = `${Math.round(flowchartZoom * 100)}%`;
+    }
+    if (viewport && prevZoom > 0 && prevZoom !== flowchartZoom) {
+        const ratio = flowchartZoom / prevZoom;
+        const centerX = viewport.scrollLeft + viewport.clientWidth / 2;
+        const centerY = viewport.scrollTop + viewport.clientHeight / 2;
+        viewport.scrollLeft = Math.max(0, centerX * ratio - viewport.clientWidth / 2);
+        viewport.scrollTop = Math.max(0, centerY * ratio - viewport.clientHeight / 2);
+    }
+}
+
+function zoomFlowchart(delta) {
+    applyFlowchartZoom(flowchartZoom + delta);
+}
+
+function fitFlowchartToContainer() {
+    const viewport = document.getElementById("flowchart-viewport");
+    if (!viewport || !flowchartDims.width) return;
+
+    const availW = viewport.clientWidth - 24;
+    if (availW <= 0) return;
+
+    const fitScale = Math.min(1, Math.max(0.38, availW / flowchartDims.width));
+    applyFlowchartZoom(fitScale);
+    viewport.scrollLeft = Math.max(0, (flowchartDims.width * fitScale - viewport.clientWidth) / 2);
+    viewport.scrollTop = 0;
+}
+
+function findFlowchartPathTo(coupletTarget, speciesTarget = null) {
+    function dfs(coupletNum, steps) {
+        const couplet = keyData[coupletNum];
+        if (!couplet) return null;
+
+        if (!speciesTarget && coupletNum === coupletTarget) {
+            return steps;
+        }
+
+        for (const leadKey of ["A", "B"]) {
+            const leadObj = leadKey === "A" ? couplet.leadA : couplet.leadB;
+            const nextSteps = [...steps, { couplet: coupletNum, lead: leadKey, text: leadObj.text }];
+
+            if (speciesTarget && leadObj.result === speciesTarget) {
+                return nextSteps;
+            }
+            if (leadObj.next) {
+                const found = dfs(leadObj.next, nextSteps);
+                if (found) return found;
+            }
+        }
+        return null;
+    }
+
+    return dfs(1, []) || [];
+}
+
+function highlightFlowchartPath(steps, terminalSpecies = null, activeQuestion = null) {
+    const canvas = document.getElementById("flowchart-canvas");
+    if (!canvas) return;
+
+    canvas.querySelectorAll(".is-on-path, .is-next-option").forEach(el => {
+        el.classList.remove("is-on-path", "is-next-option");
+    });
+    canvas.querySelectorAll(".fc-edge").forEach(edge => {
+        edge.setAttribute("marker-end", "url(#fc-arrow)");
+    });
+
+    canvas.classList.add("has-active-path");
+    const rootNode = canvas.querySelector(".fc-root");
+    if (rootNode) rootNode.classList.add("is-on-path");
+    const rootEdge = canvas.querySelector(".is-root-edge");
+    if (rootEdge) {
+        rootEdge.classList.add("is-on-path");
+        rootEdge.setAttribute("marker-end", "url(#fc-arrow-active)");
+    }
+
+    steps.forEach(step => {
+        const qNode = canvas.querySelector(`[data-fc-question="${step.couplet}"]`);
+        const bNode = canvas.querySelector(`[data-fc-branch="${step.couplet}-${step.lead}"]`);
+        if (qNode) qNode.classList.add("is-on-path");
+        if (bNode) bNode.classList.add("is-on-path");
+
+        canvas.querySelectorAll(`[data-edge-couplet="${step.couplet}"][data-edge-lead="${step.lead}"]`).forEach(edge => {
+            edge.classList.add("is-on-path");
+            edge.setAttribute("marker-end", "url(#fc-arrow-active)");
+        });
+    });
+
+    if (activeQuestion) {
+        const qNode = canvas.querySelector(`[data-fc-question="${activeQuestion}"]`);
+        if (qNode) qNode.classList.add("is-on-path");
+        ["A", "B"].forEach(leadKey => {
+            const bNode = canvas.querySelector(`[data-fc-branch="${activeQuestion}-${leadKey}"]`);
+            if (bNode) bNode.classList.add("is-next-option");
+        });
+    }
+
+    if (terminalSpecies) {
+        const sNode = canvas.querySelector(`[data-fc-species="${terminalSpecies}"]`);
+        if (sNode) sNode.classList.add("is-on-path");
+    }
+}
+
+function selectFlowchartQuestion(coupletNum) {
+    const steps = findFlowchartPathTo(coupletNum);
+    highlightFlowchartPath(steps, null, coupletNum);
+
+    const shell = document.getElementById("flowchart-shell");
+    if (shell) shell.classList.add("is-chart-only");
+}
+
+function selectFlowchartBranch(coupletNum, leadKey) {
+    const couplet = keyData[coupletNum];
+    if (!couplet) return;
+    const leadObj = leadKey === "A" ? couplet.leadA : couplet.leadB;
+
+    if (leadObj.result) {
+        selectFlowchartSpecies(leadObj.result);
+    } else if (leadObj.next) {
+        const steps = findFlowchartPathTo(leadObj.next);
+        highlightFlowchartPath(steps, null, leadObj.next);
+
+        const shell = document.getElementById("flowchart-shell");
+        if (shell) shell.classList.add("is-chart-only");
+    }
+}
+
+function selectFlowchartSpecies(species) {
+    const steps = findFlowchartPathTo(null, species);
+    highlightFlowchartPath(steps, species, null);
+
+    const shell = document.getElementById("flowchart-shell");
+    const resultContainer = document.getElementById("flowchart-species-result");
+    if (shell) shell.classList.remove("is-chart-only");
+
+    if (resultContainer) {
+        renderSpecimenCard(resultContainer, species, {
+            idPrefix: "fc",
+            kicker: "Identified from Flowchart",
+            confirmedSteps: steps,
+            showAtlasLink: true,
+            collapsible: true
+        });
+        triggerRevealAnimation(resultContainer);
+    }
+
+    if (window.innerWidth <= 900 && resultContainer) {
+        resultContainer.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+}
+
+function clearFlowchartSelection() {
+    const canvas = document.getElementById("flowchart-canvas");
+    if (canvas) {
+        canvas.classList.remove("has-active-path");
+        canvas.querySelectorAll(".is-on-path, .is-next-option").forEach(el => {
+            el.classList.remove("is-on-path", "is-next-option");
+        });
+        canvas.querySelectorAll(".fc-edge").forEach(edge => {
+            edge.setAttribute("marker-end", "url(#fc-arrow)");
+        });
+    }
+
+    const shell = document.getElementById("flowchart-shell");
+    if (shell) shell.classList.add("is-chart-only");
+
+    const resultContainer = document.getElementById("flowchart-species-result");
+    if (resultContainer) resultContainer.innerHTML = "";
+}
+
+/* =========================================================
    INITIALIZATION & MODAL EVENTS
 ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
@@ -1921,7 +2496,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.addEventListener("keydown", event => {
         if (event.key === "Escape") {
-            closeImageModal();
+            const modalOpen = document.getElementById("image-modal")?.classList.contains("active");
+            if (modalOpen) {
+                closeImageModal();
+            } else {
+                setFlowchartFullscreen(false);
+            }
             return;
         }
 

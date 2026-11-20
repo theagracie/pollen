@@ -83,7 +83,7 @@
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: none;
             }
         }
 
@@ -135,7 +135,12 @@
 
         .page.active {
             display: block;
-            animation: pageFadeIn 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+            animation: pageFadeIn 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .is-fs-host {
+            animation: none !important;
+            transform: none !important;
         }
 
         .home-page.page.active {
@@ -641,7 +646,7 @@
 
         .tab-panel.active {
             display: block;
-            animation: pageFadeIn 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+            animation: pageFadeIn 0.22s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         /* =========================================================
@@ -1398,6 +1403,338 @@
         }
 
         /* =========================================================
+           INTERACTIVE KEY FLOWCHART
+        ========================================================= */
+        .flowchart-shell {
+            display: grid;
+            grid-template-columns: minmax(0, 1.45fr) minmax(340px, 460px);
+            gap: 20px;
+            align-items: start;
+        }
+
+        .flowchart-shell.is-chart-only {
+            grid-template-columns: 1fr;
+        }
+
+        .flowchart-shell.is-chart-only .flowchart-detail-panel {
+            display: none;
+        }
+
+        .flowchart-board {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            min-width: 0;
+        }
+
+        .flowchart-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 12px 16px;
+            background: var(--bg-muted);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .flowchart-hint {
+            margin: 0;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .flowchart-controls {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .flowchart-zoom-label {
+            min-width: 44px;
+            text-align: center;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .flowchart-viewport {
+            position: relative;
+            width: 100%;
+            height: min(72vh, 760px);
+            min-height: 460px;
+            overflow: auto;
+            cursor: grab;
+            background-color: var(--bg-page);
+            background-image:
+                linear-gradient(to right, rgba(195, 204, 195, 0.25) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(195, 204, 195, 0.25) 1px, transparent 1px);
+            background-size: 28px 28px;
+        }
+
+        .flowchart-viewport.is-panning {
+            cursor: grabbing;
+            user-select: none;
+        }
+
+        .flowchart-scaler {
+            position: relative;
+            transform-origin: top left;
+            margin: 0 auto;
+        }
+
+        .flowchart-shell.is-fullscreen {
+            position: fixed;
+            inset: 0;
+            z-index: 9500;
+            background: var(--bg-page);
+            padding: 14px;
+            height: 100vh;
+            align-items: stretch;
+        }
+
+        .flowchart-shell.is-fullscreen .flowchart-board {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .flowchart-shell.is-fullscreen .flowchart-viewport {
+            flex: 1;
+            height: auto;
+            min-height: 0;
+        }
+
+        .flowchart-shell.is-fullscreen .flowchart-detail-panel {
+            position: static;
+            height: 100%;
+            max-height: none;
+        }
+
+        .flowchart-canvas {
+            position: relative;
+            transform-origin: top left;
+            transition: transform 0.18s ease;
+        }
+
+        .flowchart-svg {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: visible;
+        }
+
+        .fc-edge {
+            fill: none;
+            stroke: #BCC6BC;
+            stroke-width: 1.6;
+            transition: stroke 0.18s ease, stroke-width 0.18s ease, opacity 0.18s ease;
+        }
+
+        .flowchart-canvas.has-active-path .fc-edge {
+            opacity: 0.35;
+        }
+
+        .flowchart-canvas.has-active-path .fc-edge.is-on-path {
+            opacity: 1;
+            stroke: var(--forest-800);
+            stroke-width: 2.6;
+        }
+
+        .fc-node {
+            position: absolute;
+            font-family: inherit;
+            text-align: left;
+            transition: border-color 0.16s ease, background-color 0.16s ease, opacity 0.18s ease, transform 0.15s ease;
+        }
+
+        .flowchart-canvas.has-active-path .fc-node {
+            opacity: 0.48;
+        }
+
+        .flowchart-canvas.has-active-path .fc-node.is-on-path,
+        .flowchart-canvas.has-active-path .fc-node.is-next-option {
+            opacity: 1;
+        }
+
+        .fc-root {
+            background: var(--bg-surface);
+            border: 1.5px solid var(--border-strong);
+            border-radius: var(--radius-sm);
+            padding: 10px 16px;
+            text-align: center;
+            font-family: Georgia, serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--forest-900);
+        }
+
+        .fc-question {
+            background: var(--bg-surface);
+            border: 1.5px solid var(--border-strong);
+            border-radius: var(--radius-sm);
+            padding: 10px 12px;
+            cursor: pointer;
+        }
+
+        .fc-question:hover {
+            border-color: var(--forest-700);
+            background: var(--bg-muted);
+        }
+
+        .fc-question.is-on-path {
+            border-color: var(--forest-800);
+            background: var(--bg-tint);
+        }
+
+        .fc-q-tag {
+            display: block;
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 0.7px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 3px;
+        }
+
+        .fc-q-text {
+            display: block;
+            font-family: Georgia, serif;
+            font-size: 12.5px;
+            font-weight: 700;
+            line-height: 1.3;
+            color: var(--forest-900);
+        }
+
+        .fc-branch {
+            background: var(--bg-page);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-sm);
+            padding: 8px 10px;
+            cursor: pointer;
+            font-size: 12px;
+            line-height: 1.3;
+            color: var(--text-main);
+        }
+
+        .fc-branch:hover {
+            border-color: var(--forest-700);
+            background: var(--bg-tint);
+        }
+
+        .fc-branch.is-on-path {
+            background: var(--bg-tint);
+            border: 1.5px solid var(--forest-800);
+            color: var(--forest-950);
+            font-weight: 600;
+        }
+
+        .fc-branch.is-next-option {
+            border-color: var(--forest-700);
+            background: var(--bg-surface);
+        }
+
+        .fc-branch-code {
+            font-weight: 700;
+            color: var(--forest-800);
+            margin-right: 4px;
+        }
+
+        .fc-species {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            background: var(--bg-surface);
+            border: 1.5px solid var(--border-strong);
+            border-radius: var(--radius-sm);
+            padding: 8px 10px;
+            cursor: pointer;
+        }
+
+        .fc-species:hover {
+            border-color: var(--forest-700);
+            background: var(--bg-muted);
+            transform: translateY(-1px);
+        }
+
+        .fc-species.is-on-path {
+            background: var(--bg-tint);
+            border: 2px solid var(--forest-800);
+        }
+
+        .fc-species-thumb {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid var(--border-subtle);
+            background: var(--bg-page);
+            flex-shrink: 0;
+        }
+
+        .fc-species-info {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .fc-species-name {
+            display: block;
+            font-size: 12.5px;
+            font-weight: 700;
+            font-style: italic;
+            color: var(--forest-900);
+            line-height: 1.25;
+        }
+
+        .fc-species-family {
+            display: block;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .flowchart-detail-panel {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            min-width: 0;
+            position: sticky;
+            top: 82px;
+            max-height: calc(100vh - 104px);
+            overflow-y: auto;
+        }
+
+        .flowchart-detail-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .flowchart-detail-topbar span {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            color: var(--text-muted);
+        }
+
+        .flowchart-detail-panel.dkey-right-panel .dkey-result-layout,
+        .flowchart-detail-panel.dkey-right-panel .detail-list {
+            grid-template-columns: 1fr;
+        }
+
+        .flowchart-detail-panel .image-card img {
+            height: 165px;
+        }
+
+        /* =========================================================
            COMPARISON PAGE
         ========================================================= */
         .comparison-step-box {
@@ -1922,13 +2259,29 @@
 
         @media (max-width: 900px) {
             .dkey-layout,
-            .atlas-layout {
+            .atlas-layout,
+            .flowchart-shell {
                 grid-template-columns: 1fr;
             }
 
             .dkey-left-panel,
-            .atlas-sidebar {
+            .atlas-sidebar,
+            .flowchart-detail-panel {
                 position: static;
+                max-height: none;
+            }
+
+            .flowchart-shell.is-fullscreen {
+                overflow-y: auto;
+            }
+
+            .flowchart-shell.is-fullscreen .flowchart-board {
+                height: auto;
+                min-height: 60vh;
+            }
+
+            .flowchart-shell.is-fullscreen.is-chart-only .flowchart-board {
+                height: 100%;
             }
 
             #species-list {
@@ -2154,6 +2507,14 @@
                     Dichotomous Key
                 </button>
                 <button type="button"
+                        id="tab-btn-flowchart"
+                        class="segmented-tab"
+                        role="tab"
+                        aria-selected="false"
+                        onclick="switchGuideTab('flowchart')">
+                    Key Flowchart
+                </button>
+                <button type="button"
                         id="tab-btn-species"
                         class="segmented-tab"
                         role="tab"
@@ -2176,7 +2537,42 @@
                 </div>
             </div>
 
-            <!-- TAB 2: SPECIES ATLAS -->
+            <!-- TAB 2: INTERACTIVE KEY FLOWCHART -->
+            <div id="guide-tab-flowchart" class="tab-panel">
+                <div id="flowchart-shell" class="flowchart-shell is-chart-only">
+                    <div class="flowchart-board">
+                        <div class="flowchart-toolbar">
+                            <p class="flowchart-hint">
+                                Click any question or species in the chart to trace its path and inspect the specimen. Drag empty space to pan.
+                            </p>
+                            <div class="flowchart-controls">
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="fitFlowchartToContainer()">Fit</button>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="zoomFlowchart(-0.15)" aria-label="Zoom out">−</button>
+                                <span id="flowchart-zoom-label" class="flowchart-zoom-label">100%</span>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="zoomFlowchart(0.15)" aria-label="Zoom in">+</button>
+                                <button type="button" id="flowchart-fullscreen-btn" class="btn btn-secondary btn-sm" onclick="toggleFlowchartFullscreen()">⛶ Fullscreen</button>
+                                <button type="button" class="btn btn-ghost btn-sm" onclick="clearFlowchartSelection()">Clear</button>
+                            </div>
+                        </div>
+
+                        <div id="flowchart-viewport" class="flowchart-viewport">
+                            <div id="flowchart-scaler" class="flowchart-scaler">
+                                <div id="flowchart-canvas" class="flowchart-canvas"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <aside id="flowchart-detail-panel" class="flowchart-detail-panel dkey-right-panel">
+                        <div class="flowchart-detail-topbar">
+                            <span>Selected Species</span>
+                            <button type="button" class="btn btn-ghost btn-sm" onclick="clearFlowchartSelection()">Close ×</button>
+                        </div>
+                        <div id="flowchart-species-result"></div>
+                    </aside>
+                </div>
+            </div>
+
+            <!-- TAB 3: SPECIES ATLAS -->
             <div id="guide-tab-species" class="tab-panel">
                 <div class="atlas-layout">
                     <aside class="atlas-sidebar" aria-label="Species directory">
